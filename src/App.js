@@ -1,11 +1,14 @@
 import React from 'react';
 
+import Index from "./pages/index";
+
 function App() {
   return (
-    <div className="App">
-      Hello
+    <div>
+      <Index />
     </div>
   );
 }
 
-export default App;git s
+export default App;
+  

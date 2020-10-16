@@ -1,0 +1,139 @@
+//globals
+@import "../globals";
+
+.topBar {
+  background-color: $primaryColor;
+  width: 100%;
+  height: 4rem;
+  @include totalCenter();
+  font-size: 1.7rem;
+  & > ul {
+    & > li:first-child {
+      font-weight: 700;
+    }
+    @include horizontalCenterSpaceBetween();
+  }
+
+  &Links {
+    @include horizontalCenterSpaceBetween();
+    & > li {
+      margin-left: 5rem;
+      cursor: pointer;
+      & > span {
+        margin-left: 1rem;
+      }
+    }
+  }
+}
+
+.middleBar {
+  padding: 1rem 0;
+  & > div:first-child {
+    @include horizontalCenterSpaceBetween();
+  }
+
+  &Logo {
+    width: 25rem;
+  }
+
+  &Links {
+    & > ul {
+      @include horizontalCenterSpaceBetween();
+
+      & > li {
+        margin-left: 3rem;
+        cursor: pointer;
+        font-size: 2rem;
+        & span {
+          margin-left: 1rem;
+        }
+      }
+    }
+  }
+}
+
+.search {
+  display: flex;
+  & input {
+    width: 70rem;
+    height: 4rem;
+    outline: none;
+    border: none;
+    background-color: $lightBackground;
+    border-top-left-radius: 3rem;
+    border-bottom-left-radius: 3rem;
+    padding: 0rem 3rem;
+    font-size: 1.5rem;
+  }
+
+  & button {
+    width: 9rem;
+    height: 4rem;
+    border-top-right-radius: 3rem;
+    border-bottom-right-radius: 3rem;
+    outline: none;
+    border: none;
+    background-color: $secondaryColor;
+    color: $white;
+    font-size: 1.7rem;
+    cursor: pointer;
+  }
+}
+
+.categoryBar {
+  background-color: $primaryColor;
+  width: 100%;
+  height: 5rem;
+  @include totalCenter();
+
+  & ul {
+    @include horizontalCenterSpaceBetween();
+    & > li {
+      font-size: 2rem;
+      font-weight: 600;
+
+      text-transform: capitalize;
+
+      & > span {
+        cursor: pointer;
+      }
+    }
+  }
+
+  &Links {
+    & > li {
+      position: relative;
+      padding: 2rem;
+      &:hover {
+        & > ul {
+          display: block;
+        }
+      }
+      & > ul {
+        margin-top: 1rem;
+        @include columnCenter();
+        position: absolute;
+        padding: 3rem;
+        background-color: $white;
+        box-shadow: 0 0 5px rgb(177, 177, 177);
+        border-radius: 5px;
+        display: none;
+        width: max-content;
+        & > li {
+          &:not(:last-child) {
+            margin-bottom: 2rem;
+          }
+          cursor: pointer;
+          font-size: 1.5rem;
+          font-weight: 400;
+          transition: all 0.25s;
+          border-bottom: 1px solid transparent;
+          width: fit-content;
+          &:hover {
+            border-bottom: 1px solid;
+          }
+        }
+      }
+    }
+  }
+}
