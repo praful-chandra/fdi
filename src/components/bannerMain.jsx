@@ -12,7 +12,7 @@ export default function BannerMain() {
         </div>
         <div>
           <img
-            src="https://lh3.googleusercontent.com/proxy/fMg6dCwjsy7dmnTG6Wa3pPGP64rA0gUQ4-dWXB-AVc-qi-tZrVoyTGA_fM5ikgnNgmQzlxZQCBw0KIDpAg_Q2vJmKtpUslyVJQg8xBU0BW9A"
+            src="https://i.imgur.com/O1D43CX.png"
             alt="banner"
             
           />

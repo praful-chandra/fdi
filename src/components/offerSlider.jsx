@@ -1,8 +1,86 @@
 import React from "react";
-
 import styles from "../sass/modules/offerSlider.module.scss";
+import Slider from "react-slick";
+import SmallProductCard from "./smallProductCard";
 
-export default function offerSlider() {
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+ faAngleRight,
+ faAngleLeft
+} from "@fortawesome/free-solid-svg-icons";
+
+
+export default function offerSlider({deal}) {
+  function SampleNextArrow(props) {
+    const { style, onClick } = props;
+    return (
+      <button
+        className={`${styles.button} `}
+        style={{...style}}
+        onClick={onClick}
+      >
+      <FontAwesomeIcon icon={faAngleRight} />
+      </button>
+    );
+  }
+
+  function SamplePrevArrow(props) {
+    const { style, onClick } = props;
+    return (
+      <button
+        className={`${styles.buttonLeft} `}
+        style={{...style}}
+        onClick={onClick}
+      >
+      <FontAwesomeIcon icon={faAngleLeft} />
+      </button>
+    );
+  }
+
+  const sliderSettings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    initialSlide: 0,
+    lazyLoad: true,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
+    swipeToSlide: true,
+    afterChange: function (index) {
+      console.log(
+        `Slider Changed to: ${index + 1}, background: #222; color: #bada55`
+      );
+    },
+    responsive: [
+      {
+        breakpoint: 590,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+    ],
+  };
+
+  const renderCards = () => {
+    let data = [];
+
+    for (let i = 0; i < 10; i++) {
+      data.push(
+        <SmallProductCard
+          image={`https://source.unsplash.com/collection/${i}`}
+          deal={deal}
+        />
+      );
+    }
+
+    return data;
+  };
   return (
     <div className="center">
       <div className={styles.wrapper}>
@@ -11,19 +89,7 @@ export default function offerSlider() {
           <div></div>
         </div>
 
-        <div className={styles.card}>
-          <div className={styles.cardBadge}>Deal of the Day</div>
-
-          <div className={styles.cardContents}>
-          <h3>
-            Samsung Series 4 T4350 80 Cm (32 Inch) HD Ready LED Smart TV
-            (UA32T4350AKXXL, Black)
-          </h3>
-          <div className={styles.cardContentsImages}>
-                <img src="https://images.samsung.com/is/image/samsung/ca-uhdtv-nu7100-un43nu7100fxzc-frontblack-99883063?$PD_GALLERY_L_JPG$" alt="tv1"/>
-          </div>
-          </div>
-        </div>
+        <Slider {...sliderSettings}>{renderCards()}</Slider>
       </div>
     </div>
   );

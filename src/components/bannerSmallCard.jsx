@@ -10,7 +10,7 @@ export default function bannerSmallCard() {
             <div className={styles.card}>
           <div>
             <img
-              src="https://lh3.googleusercontent.com/proxy/e6AXa3sdUgu-LvMcoAXDBxTJ6bd2bmCkCMCF2EtQUP_qG3Un2TF2NxcHp6gF78L_w7sRdepQYQ7sTNa7m57IBqET5TxHQkBK6HN7u2Ja8rVAGMUmYuKMoW4s3D7g0aZVd0aNFg"
+              src="https://i.imgur.com/Zw1vt4e.png"
               alt="tv"
             />
           </div>
