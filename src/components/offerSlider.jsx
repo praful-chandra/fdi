@@ -2,7 +2,7 @@ import React from "react";
 import styles from "../sass/modules/offerSlider.module.scss";
 import Slider from "react-slick";
 import SmallProductCard from "./smallProductCard";
-
+import {isMobile} from 'react-device-detect';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -49,8 +49,8 @@ export default function offerSlider({deal}) {
     slidesToScroll: 1,
     initialSlide: 0,
     lazyLoad: true,
-    nextArrow: <SampleNextArrow />,
-    prevArrow: <SamplePrevArrow />,
+    nextArrow: isMobile ? <> </> : <SampleNextArrow />,
+    prevArrow: isMobile ? <> </> :  <SamplePrevArrow />,
     swipeToSlide: true,
     afterChange: function (index) {
       console.log(

@@ -45,3 +45,22 @@
   }
 }
 
+@media only screen and (max-width: 650px) {
+  .bannerMain{
+    height: max-content;
+    padding: 3rem 0;
+  }
+  .content{
+    flex-direction: column;
+    &>div{
+      align-items: center;
+      text-align: center;
+
+      & img{
+        max-height: 40rem;
+        margin: 0 auto;
+        margin-top: 2rem;        
+      }
+    }
+  }
+}

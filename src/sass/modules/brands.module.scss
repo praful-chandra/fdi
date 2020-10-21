@@ -33,3 +33,12 @@
           max-width: 10rem;
       }
   }
+
+  @media only screen and (max-width: 650px) {
+    .logos{
+      justify-content: center;
+      &>img{
+        margin: 3rem;
+      }
+    }
+  }

@@ -61,12 +61,19 @@
         }
   
         &>div:last-child{
-          background-color: $primaryColor;
+          @include totalCenter();
+          &>div:first-child{
+            margin-right: 2rem;
+          }
+          .addCart{
+            
+            background-color: $primaryColor;
           color: $white;
           font-size: 2.11rem;
           padding: 1rem;
           border-radius: 100%;
           cursor: pointer;
+          }
         }
       }
   
@@ -89,4 +96,24 @@
       }
     }
   }
+  .mobileWishlist{
+    display: none;
+  }
   
+  @media only screen and (max-width: 650px) {
+    .card{
+      &Contents{
+        &Bottom{
+          margin-top: 2rem;
+        }
+        &WishList{
+          display: none;
+        }
+      }
+    }
+
+    .mobileWishlist{
+      display: block;
+      font-size: 3rem;
+    }
+  }

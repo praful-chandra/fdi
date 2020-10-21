@@ -34,3 +34,23 @@
     }
   }
 }
+
+@media only screen and (max-width: 650px) {
+  .card{
+    height: max-content;
+    border: none;
+    & ul{
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+    }
+   & li{
+     margin: 3rem 3rem;
+     font-size: 6rem;
+    &:not(:last-child) {
+      border-right:none;
+
+    }
+   }
+  }
+}

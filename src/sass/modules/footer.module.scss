@@ -151,3 +151,37 @@
       font-weight: 700;
     }
   }
+
+  @media only screen and (max-width: 650px) {
+    .newsletter{
+      &>div{
+        flex-direction: column;
+      }
+    }
+    .search{
+      margin: 2rem 0;
+      & input, & button{
+        font-size: 2rem;
+      }
+    }
+
+    .meat{
+      &>div{
+        flex-direction: column;
+        &>div:first-child{
+          width: 100%;
+          align-items: center;
+        }
+        &>div{
+          justify-content: center;
+        }
+      }
+    }
+
+    .call{
+      width: max-content;
+    }
+    .contactInfo{
+      text-align: center;
+    }
+  }
