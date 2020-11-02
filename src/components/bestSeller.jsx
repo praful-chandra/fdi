@@ -3,9 +3,61 @@ import React from "react";
 import styles from "../sass/modules/bestSeller.module.scss";
 
 import SmallProductCard from "./smallProductCard";
-
+import Slider from "react-slick";
+import {isMobile} from 'react-device-detect';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+ faAngleRight,
+ faAngleLeft
+} from "@fortawesome/free-solid-svg-icons";
 export default function bestSeller() {
+  const sliderSettings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    initialSlide: 0,
+    lazyLoad: true,
+    nextArrow: isMobile ? <> </> : <SampleNextArrow />,
+    prevArrow: isMobile ? <> </> :  <SamplePrevArrow />,
+    swipeToSlide: true,
+    afterChange: function (index) {
+     },
+    responsive: [
+      {
+        breakpoint: 590,
+        settings: {
+          slidesToShow: 2,
+        },
+      }
+    ],
+  };
+  function SampleNextArrow(props) {
+    const { style, onClick } = props;
+    return (
+      <button
+        className={`${styles.button} `}
+        style={{...style}}
+        onClick={onClick}
+      >
+      <FontAwesomeIcon icon={faAngleRight} />
+      </button>
+    );
+  }
 
+  function SamplePrevArrow(props) {
+    const { style, onClick } = props;
+    return (
+      <button
+        className={`${styles.buttonLeft} `}
+        style={{...style}}
+        onClick={onClick}
+      >
+      <FontAwesomeIcon icon={faAngleLeft} />
+      </button>
+    );
+  }
     const renderCards = () => {
         let data = [];
     
@@ -24,16 +76,15 @@ export default function bestSeller() {
   return (
     <div className={styles.wrapper}>
       <div className="center">
-        <div className={styles.head}>
-          <h5>Best Sellers</h5>
-          <div></div>
+      <div className={styles.head}>
+          <div>
+          <h5>Best Seller</h5>
+          <button>View All</button>
+          </div>
         </div>
 
-        <div className={styles.itemsWrapper}>
-                {
-                    renderCards()
-                }
-        </div>
+        <Slider {...sliderSettings}>{renderCards()}</Slider>
+
 
       </div>
     </div>

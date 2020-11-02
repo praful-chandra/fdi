@@ -1,6 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartPlus, faHeart } from "@fortawesome/free-solid-svg-icons";
+// import {  faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
+import {faHeart as emptyHeart} from "@fortawesome/free-regular-svg-icons";
 import priceFormatter from "../helpers/priceformatter";
 
 import styles from "../sass/modules/smallProductCard.module.scss";
@@ -9,7 +10,9 @@ export default function smallProductCard({ image, deal }) {
   return (
     <>
       <div className={styles.card}>
-        {deal && <div className={styles.cardBadge}>Deal of the Week</div>}
+        {deal && <div className={styles.cardBadge}>
+          <img src={require('../assets/deal_of_the_week.svg')} alt=""/>
+        </div>}
 
         <div className={styles.cardContents}>
           <h3>
@@ -29,18 +32,16 @@ export default function smallProductCard({ image, deal }) {
               <span>{priceFormatter(9999999999)}</span>
             </div>
             <div>
-              <div className={styles.mobileWishlist}>
-                <FontAwesomeIcon icon={faHeart} />
-              </div>
+
               <div className={styles.addCart}>
-                <FontAwesomeIcon icon={faCartPlus} />
+                <FontAwesomeIcon icon={emptyHeart} />
               </div>
             </div>
           </div>
-          <div className={styles.cardContentsWishList}>
+          {/* <div className={styles.cardContentsWishList}>
             <FontAwesomeIcon icon={faHeart} />
             <span>Wishlist</span>
-          </div>
+          </div> */}
         </div>
       </div>
     </>

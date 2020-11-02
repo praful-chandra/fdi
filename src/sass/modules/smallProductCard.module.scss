@@ -3,27 +3,24 @@
 
 
 .card {
-  background-color: $white;
-    width: 30rem;
-    padding: 2rem;
+  // background-color: $white;
+    width: 35rem;
     margin: 1rem 0;
+    position: relative;
+    padding:1rem 7rem;
+    transition: all 00.25s ease-in;
     &:hover{
     box-shadow: 0 0 20px rgb(223, 223, 223);
-    .cardContentsWishList{
-      visibility: visible;
-    }
+    transform: scale(0.95);
+    
     }
     &Badge {
-      clip-path: polygon(100% 0%, 90% 49%, 100% 100%, 0 100%, 0% 50%, 0 0);
-      background-color: $badgeRed;
-      color: $white;
-      font-size: 1.2rem;
-      width: fit-content;
-      padding: 1.5rem 2rem; 
-      padding-right: 3rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: -1px;
+     position: absolute;
+     top: 0;
+     left: 0;
+     &>img{
+       width: 6em;
+     }
     }
   
     &Contents {
@@ -67,10 +64,9 @@
           }
           .addCart{
             
-            background-color: $primaryColor;
-          color: $white;
-          font-size: 2.11rem;
-          padding: 1rem;
+            // background-color: $primaryColor;
+          color: #000;
+          font-size: 3rem;
           border-radius: 100%;
           cursor: pointer;
           }
@@ -106,9 +102,7 @@
         &Bottom{
           margin-top: 2rem;
         }
-        &WishList{
-          display: none;
-        }
+
       }
     }
 

@@ -42,7 +42,7 @@ export default function offerSlider({deal}) {
   }
 
   const sliderSettings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 4,
@@ -53,17 +53,14 @@ export default function offerSlider({deal}) {
     prevArrow: isMobile ? <> </> :  <SamplePrevArrow />,
     swipeToSlide: true,
     afterChange: function (index) {
-      console.log(
-        `Slider Changed to: ${index + 1}, background: #222; color: #bada55`
-      );
-    },
+     },
     responsive: [
       {
         breakpoint: 590,
         settings: {
           slidesToShow: 2,
         },
-      },
+      }
     ],
   };
 
@@ -85,8 +82,10 @@ export default function offerSlider({deal}) {
     <div className="center">
       <div className={styles.wrapper}>
         <div className={styles.head}>
+          <div>
           <h5>Deal of the week</h5>
-          <div></div>
+          <button>View All</button>
+          </div>
         </div>
 
         <Slider {...sliderSettings}>{renderCards()}</Slider>
