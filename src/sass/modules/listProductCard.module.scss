@@ -1,0 +1,74 @@
+//globals
+@import "../globals";
+
+.card {
+    &Wrapper {
+        width: 100%;
+        padding: 1rem;
+        margin: 1rem 0;
+        box-shadow: 0 0 10px $lightBackground;
+        display: flex;
+    }
+
+    &Image {
+        margin-right: 2rem;
+
+        >img {
+            width: 25rem;
+            height: 30rem;
+            object-fit: cover;
+
+        }
+    }
+
+    &Content {
+        flex-grow: 1;
+
+        .cardTitle{
+            font-size: 2.5rem;
+            @include horizontalCenterSpaceBetween();
+
+            &>h3 {
+                font-weight: 500;
+            }
+        }
+    }
+
+
+    &Rating{
+        margin: 1rem 0;
+        font-size: 1.5rem;
+        background-color: $primaryColor;
+        width: fit-content;
+        color: $white;
+        padding: 0.5rem;
+        font-weight: 700;
+        border-radius: 0.5rem;
+        &>span{
+            margin-right: 0.5rem;
+        }
+    }
+    &Features{
+        min-width: 50rem;
+        width: 40%;
+        margin: 1rem 0;
+        font-size: 1.5rem;
+        &>ul{
+            display: flex;
+            flex-wrap: wrap;
+            list-style: inside;
+            &>li{
+                color: $darkGrey;
+                font-weight: 600;
+                margin: 0.5rem 1rem;
+            }
+        }
+    }
+}
+
+.fidBadge{
+    width: 20rem;
+    // height: 5rem;
+    // border: 1px solid;
+}
+

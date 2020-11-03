@@ -39,7 +39,6 @@
   &Links {
     & > ul {
       @include horizontalCenterSpaceBetween();
-
       & > li {
         margin-left: 3rem;
         cursor: pointer;
@@ -110,6 +109,7 @@
         }
       }
       & > ul {
+        z-index: 10000;
         margin-top: 1rem;
         @include columnCenter();
         position: absolute;

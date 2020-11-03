@@ -20,7 +20,7 @@ ul{
 }
 
 .center{
-    max-width: 1500px;
+    max-width: 1800px;
     width: 97%;
     margin: 0 auto;
 }
@@ -30,3 +30,6 @@ a{
     text-decoration: none;
 }
 
+*::-webkit-scrollbar {
+    display: none;
+  }
