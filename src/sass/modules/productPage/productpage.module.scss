@@ -6,10 +6,10 @@
 .productPage {
   margin-top: 2rem !important;
   @include totalCenter();
-
+  align-items: flex-start;
   &>div {
     // border: 1px solid;
-    height: 77vh;
+    // height: 77vh;
     // overflow-y: scroll;
   }
 }

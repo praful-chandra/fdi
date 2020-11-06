@@ -30,6 +30,6 @@ a{
     text-decoration: none;
 }
 
-*::-webkit-scrollbar {
+*::-webkit-scrollbar , *::-moz-webkit-scrollbar{
     display: none;
   }

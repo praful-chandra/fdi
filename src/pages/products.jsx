@@ -11,6 +11,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import ListProductCard from "../components/listProductCard";
+import Brands from "../components/brands";
+import Footer from "../components/footer";
 
 export default function Products() {
   const renderCheckBox = (name, num) => {
@@ -28,29 +30,50 @@ export default function Products() {
     return data;
   };
 
-  const FilterBar = ()=> (<div className={styles.filterBar}>
-    <div className={styles.filterBarIcons}>
-      <FontAwesomeIcon icon={faTh} />
-      <FontAwesomeIcon icon={faThList} />
-    </div>
-    <div className={styles.filterBarDropDown}>
-      <select name="sorting">
-        <option value="default">Default Sorting</option>
-        <option value="Popular">Popular</option>
-        <option value="Price [low - high]">Price [low - high]</option>
-        <option value="Price [high - low]">Price [high - low]</option>
-      </select>
-    </div>
+  const FilterBar = () => (
+    <div className={styles.filterBar}>
+      <div className={styles.filterBarIcons}>
+        <FontAwesomeIcon icon={faTh} />
+        <FontAwesomeIcon icon={faThList} />
+      </div>
+      <div className={styles.filterBarDropDown}>
+        <select name="sorting">
+          <option value="default">Default Sorting</option>
+          <option value="Popular">Popular</option>
+          <option value="Price [low - high]">Price [low - high]</option>
+          <option value="Price [high - low]">Price [high - low]</option>
+        </select>
+      </div>
 
-    <div className={styles.filterBarPageSelector}>
-      <span>1 of 2 </span>
-      <FontAwesomeIcon icon={faArrowRight} />
+      <div className={styles.filterBarPageSelector}>
+        <span>1 of 2 </span>
+        <FontAwesomeIcon icon={faArrowRight} />
+      </div>
     </div>
-  </div>);
+  );
 
+  const renderProductCards = () => {
+    const data = [];
+
+    for (let index = 0; index < 10; index++) {
+      data.push(
+        <ListProductCard
+          image={`https://source.unsplash.com/collection/${
+            index * Math.floor(Math.random() * 100)
+          }`
+          
+        }
+        fdiR={ index % 2 === 0}
+        />
+      );
+    }
+
+    return data;
+  };
 
   return (
-    <div className={`center ,  ${styles.productPage}`}>
+ <div>
+      <div className={`center , ${styles.productPage}`}>
       <div className={styles.filters}>
         <div className={styles.head}>
           <h5>
@@ -105,13 +128,14 @@ export default function Products() {
         </div>
 
         {FilterBar()}
-      
-        <div className={styles.productsWrapper}>
-            <ListProductCard />
-        </div>
+
+        <div className={styles.productsWrapper}>{renderProductCards()}</div>
         {FilterBar()}
-        
+
       </div>
     </div>
+        <Brands />
+        <Footer />
+ </div>
   );
 }

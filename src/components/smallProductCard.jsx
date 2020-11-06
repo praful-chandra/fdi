@@ -1,23 +1,33 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import {  faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
-import {faHeart as emptyHeart} from "@fortawesome/free-regular-svg-icons";
+import { faHeart as emptyHeart } from "@fortawesome/free-regular-svg-icons";
 import priceFormatter from "../helpers/priceformatter";
 
 import styles from "../sass/modules/smallProductCard.module.scss";
 
 export default function smallProductCard({ image, deal }) {
+  const sliceString = (str) => {
+    return str.slice(0, 50);
+  };
   return (
     <>
-      <div className={styles.card}>
-        {deal && <div className={styles.cardBadge}>
-          <img src={require('../assets/deal_of_the_week.svg')} alt=""/>
-        </div>}
+      <div
+        className={styles.card}
+        title="Samsung Series 4 T4350 80 Cm (32 Inch) HD Ready LED Smart TV
+            (UA32T4350AKXXL, Black)"
+      >
+        {deal && (
+          <div className={styles.cardBadge}>
+            <img src={require("../assets/deal_of_the_week.svg")} alt="" />
+          </div>
+        )}
 
         <div className={styles.cardContents}>
           <h3>
-            Samsung Series 4 T4350 80 Cm (32 Inch) HD Ready LED Smart TV
-            (UA32T4350AKXXL, Black)
+            {sliceString(`Samsung Series 4 T4350 80 Cm (32 Inch) HD Ready LED Smart TV
+            (UA32T4350AKXXL, Black) `)}{" "}
+            ...
           </h3>
           <div className={styles.cardContentsImages}>
             <img
@@ -32,7 +42,6 @@ export default function smallProductCard({ image, deal }) {
               <span>{priceFormatter(9999999999)}</span>
             </div>
             <div>
-
               <div className={styles.addCart}>
                 <FontAwesomeIcon icon={emptyHeart} />
               </div>
