@@ -73,7 +73,7 @@
 
 .productContent {
     width: 43%;
-
+    padding-right: 1rem;
     &Title {
         font-weight: 600;
         font-size: 2.8rem;
@@ -233,9 +233,210 @@
                 }
             }
         }
+
+        &_alt{
+            &Colors{
+                display: flex;
+                margin-left: -1rem;
+                &>div{
+                    cursor: pointer;
+                    margin: 1rem;
+                    width: 3rem;
+                    height: 3rem;
+                    border-radius: 100%;
+                    box-shadow: 0 0 5px $mediumGrey;
+                }
+
+                &Selected{
+                    box-shadow : 0 0 5px $primaryColor !important;  
+                }
+            }
+
+            
+        }
+    }
+
+    &Highlight{
+        font-size: 1.5rem;
+        padding-right: 2rem;
+        &>ul{
+            list-style: circle;
+            margin-left: 1.5rem;
+            &>li{
+                margin: 1rem 0;
+                font-weight: 400;
+                color: $darkGrey;
+
+            }
+        }
+
+        &More{
+            color: $primaryColor;
+            font-size: 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
     }
 }
 
 .buyProduct {
     width: 17%;
+
+    &Wrapper{
+        // min-height: 70vh;
+        // padding-bottom: 3rem;
+        border-radius: 20px;
+        box-shadow: 0 0 15px transparentize($color: #000000, $amount: 0.9) ;
+    }
+
+    &Inactive{
+        background-color:#E8E8E8;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+    }
+    
+    &Head{
+        @include totalCenter();
+        justify-content: flex-start;
+        font-size: 2rem;
+        padding: 2rem;
+        
+        &>div{
+            display: flex;
+            flex-direction: column;
+            margin-left: 2rem;
+            &>span:first-child{
+                color: #000;
+                font-weight: 600;
+            }
+            &>span:last-child{
+                font-size: 1.7rem;
+                color: $darkGrey;
+                font-weight: 300;
+            }
+        }
+
+        &Price{
+            font-size: 1.7rem;
+            &>span:first-child{
+                font-weight: 500;
+                color: $primaryColor;
+                margin-right: 1rem;
+            }
+            &>span:last-child{
+                font-weight: 400;
+                color: $darkGrey;
+                text-decoration: line-through;
+            }
+        }
+    }
+
+    &AddOn{
+        padding: 2rem;
+        &Title{
+            color: #000;
+            font-size: 1.7rem;
+            font-weight: 600;
+
+           
+        }
+        &Item{
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
+            &>div{
+                margin-left: 2rem;
+                font-size: 1.5rem;
+                font-weight: 600;
+                &>div>span{
+                    color: $primaryColor;
+                    cursor: pointer;
+
+                }
+               
+            }
+        }
+    }
+
+    &Quantity{
+        padding: 2rem;
+        display: flex;
+        align-items: center;
+        &>span{
+            font-size: 1.7rem;
+            font-weight: 600;
+            color: #000;
+            margin-right: 1rem;
+        }
+        &>input{
+            width: 5rem;
+            height: 3rem;
+            // border: 1px solid$mediumGrey;
+            border: none;
+            padding: 0 1rem;
+            font-size: 1.4rem;
+            outline: none;
+            border-radius: 5px;
+            box-shadow: 0 0 2px $mediumGrey;
+        }
+    }
+
+    &Pin{
+        padding: 2rem;
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+        &>span{
+            font-size: 1.7rem;
+            font-weight: 600;
+            color: #000;
+            margin-right: 1rem;
+        }
+        &>input{
+            margin-top: 0.5rem;
+            width: 90%;
+            height: 3rem;
+            // border: 1px solid$mediumGrey;
+            border: none;
+            padding: 0 1rem;
+            font-size: 1.4rem;
+            outline: none;
+            border-radius: 5px;
+            box-shadow: 0 0 2px $mediumGrey;
+        }
+    }
+
+    &Action{
+        padding: 2rem;
+    }
+
+    &Button{
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        font-size: 2rem;
+        font-weight: 600;
+        width: 100%;
+        border: none;
+        outline: none;
+        padding: none;
+        box-shadow: 0 0 10px $mediumGrey;
+        padding: 1rem 2.5rem;
+        border-radius: 50px;
+        margin: 2rem 0;
+        &>span{
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        &Cart{
+            background-color: $white;
+            color: $primaryColor;
+        }
+        &Bag{
+            background-color: $primaryColor;
+            color: $white;
+        }
+    }
+
 }
