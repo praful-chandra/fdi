@@ -6,9 +6,9 @@ import priceFormatter from "../helpers/priceformatter";
 
 import styles from "../sass/modules/smallProductCard.module.scss";
 
-export default function smallProductCard({ image, deal }) {
+export default function smallProductCard({ image, deal, best }) {
   const sliceString = (str) => {
-    return str.slice(0, 50);
+    return str;
   };
   return (
     <>
@@ -23,11 +23,16 @@ export default function smallProductCard({ image, deal }) {
           </div>
         )}
 
+        {best && (
+          <div className={styles.cardBadge}>
+            <img src={require("../assets/best_seller.svg")} alt="" />
+          </div>
+        )}
+
         <div className={styles.cardContents}>
           <h3>
             {sliceString(`Samsung Series 4 T4350 80 Cm (32 Inch) HD Ready LED Smart TV
             (UA32T4350AKXXL, Black) `)}{" "}
-            ...
           </h3>
           <div className={styles.cardContentsImages}>
             <img

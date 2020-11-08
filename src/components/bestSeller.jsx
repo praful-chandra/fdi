@@ -65,6 +65,7 @@ export default function bestSeller() {
           data.push(
             <SmallProductCard
               image={`https://source.unsplash.com/collection/${i}`}
+              best={true}
             />
           );
         }

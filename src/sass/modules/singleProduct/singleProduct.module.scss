@@ -1,0 +1,241 @@
+//globals
+
+@import "../../globals";
+
+
+.wrapper {}
+
+.head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-top: 2rem;
+
+    &>div {
+        // border: 1px solid;
+    }
+}
+
+.productImage {
+    width: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 75vh;
+
+    &Grid {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-between;
+        height: 100%;
+
+        &>div {
+            width: 9rem;
+            height: 9rem;
+
+            &>img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: center;
+                cursor: pointer;
+            }
+        }
+    }
+
+    &Main {
+        flex-grow: 0.95;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 2rem;
+        position: relative;
+
+        & img {
+            max-width: 100%;
+            max-height: 100%;
+            cursor: pointer;
+        }
+
+        &Badge {
+            position: absolute;
+            top: -1rem;
+            left: 2rem;
+            width: 15rem;
+        }
+
+    }
+
+
+}
+
+.productContent {
+    width: 43%;
+
+    &Title {
+        font-weight: 600;
+        font-size: 2.8rem;
+    }
+
+    &SKU {
+        color: $darkGrey;
+        font-size: 1.5rem;
+
+        &>span {
+            font-weight: 700;
+
+            &:last-child {
+                margin-left: 1rem;
+            }
+        }
+    }
+
+    &Social {
+        margin: 1rem 0;
+        display: flex;
+        align-items: center;
+
+        &>div {
+            margin-right: 2rem;
+
+        }
+
+        &Rating {
+            background-color: $primaryColor;
+            color: $white;
+            font-weight: 600;
+            padding: 0.7rem 1rem;
+            width: fit-content;
+            border-radius: 1rem;
+            font-size: 1.7rem;
+
+        }
+
+        &Share {
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 1.7rem;
+
+        }
+
+        &Wishlist {
+            font-size: 2.5rem;
+            cursor: pointer;
+            color: #e01e37;
+        }
+    }
+
+    &Before {
+        color: $mediumGrey;
+        font-size: 1.7rem;
+
+        &Price {
+            text-decoration: line-through;
+            font-weight: 500;
+            margin-right: 1rem;
+        }
+
+        &Save {
+            font-weight: 700;
+        }
+    }
+
+    &Price {
+        display: flex;
+        align-items: center;
+
+        &>span:first-child {
+            font-weight: 700;
+            font-size: 3rem;
+        }
+
+        &EMI {
+            margin-left: 3rem;
+            font-size: 1.5rem;
+            color: $darkGrey;
+            font-weight: 400;
+
+            &>span {
+                color: $primaryColor;
+                margin-left: 1rem;
+                font-weight: 600;
+                cursor: pointer;
+            }
+        }
+    }
+
+    &Badge {
+        &>div {
+            display: flex;
+            align-items: center;
+
+            &>img {
+                width: 14rem;
+            }
+            &>span{
+                margin-left: 1rem;
+                font-size: 1.5rem;
+                font-weight: 600;
+                color: $darkGrey;
+            }
+        }
+
+        &Info{
+            color: $mediumGrey;
+            font-size: 1.3rem;
+        }
+
+    }
+
+    &Option{
+        margin-top: 2.5rem;
+        &Title{
+            font-size: 1.8rem;
+            color: $darkGrey;
+            font-weight: 600;
+            &>span{
+                color: #000;
+            }
+        }
+
+        &Grid{
+            margin-top: 1rem;
+            margin-left: -0.5rem;
+            width: 30rem;
+            display: flex;
+            flex-wrap: wrap;
+            &Tile{
+                cursor: pointer;
+                border: 1px solid $mediumGrey;
+                width: 13rem;
+                height: 6rem;
+                margin: 0.5rem;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content:center ;
+                padding-left: 1rem;
+                font-size: 1.3rem;
+                color: $darkGrey;
+                &Name{
+                    font-weight: 500;
+                }
+                &Price{
+                    font-weight: 600;
+                }
+
+                &Active{
+                    border-color: $primaryColor;
+                    background-color: transparentize($color: $primaryColor, $amount: 0.85);
+                    color: $secondaryColor;
+                }
+            }
+        }
+    }
+}
+
+.buyProduct {
+    width: 17%;
+}

@@ -6,7 +6,6 @@ import OfferSlider from "../components/offerSlider";
 // import PromoBanner from "../components/promoBanner";
 import BestSeller from "../components/bestSeller";
 import Brands from "../components/brands";
-import Footer from "../components/footer";
 
 
 
@@ -24,7 +23,6 @@ export default function index()
             {/* <PromoBanner />           */}
             <OfferSlider />
             <Brands />
-            <Footer />
         </>
     )
 }

@@ -45,7 +45,7 @@ export default function offerSlider({deal}) {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 5,
+    slidesToShow: 4,
     slidesToScroll: 1,
     initialSlide: 0,
     lazyLoad: true,

@@ -12,7 +12,6 @@ import {
 
 import ListProductCard from "../components/listProductCard";
 import Brands from "../components/brands";
-import Footer from "../components/footer";
 
 export default function Products() {
   const renderCheckBox = (name, num) => {
@@ -135,7 +134,6 @@ export default function Products() {
       </div>
     </div>
         <Brands />
-        <Footer />
  </div>
   );
 }
