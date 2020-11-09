@@ -2,28 +2,23 @@ import React from "react";
 import styles from "../sass/modules/offerSlider.module.scss";
 import Slider from "react-slick";
 import SmallProductCard from "./smallProductCard";
-import {isMobile} from 'react-device-detect';
+import { isMobile } from "react-device-detect";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
- faAngleRight,
- faAngleLeft
-} from "@fortawesome/free-solid-svg-icons";
+import { faAngleRight, faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 
-
-export default function offerSlider({deal}) {
+export default function offerSlider({ deal, title }) {
   function SampleNextArrow(props) {
     const { style, onClick } = props;
     return (
       <button
         className={`${styles.button} `}
-        style={{...style}}
+        style={{ ...style }}
         onClick={onClick}
       >
-      <FontAwesomeIcon icon={faAngleRight} />
+        <FontAwesomeIcon icon={faAngleRight} />
       </button>
     );
   }
@@ -33,10 +28,10 @@ export default function offerSlider({deal}) {
     return (
       <button
         className={`${styles.buttonLeft} `}
-        style={{...style}}
+        style={{ ...style }}
         onClick={onClick}
       >
-      <FontAwesomeIcon icon={faAngleLeft} />
+        <FontAwesomeIcon icon={faAngleLeft} />
       </button>
     );
   }
@@ -50,17 +45,16 @@ export default function offerSlider({deal}) {
     initialSlide: 0,
     lazyLoad: true,
     nextArrow: isMobile ? <> </> : <SampleNextArrow />,
-    prevArrow: isMobile ? <> </> :  <SamplePrevArrow />,
+    prevArrow: isMobile ? <> </> : <SamplePrevArrow />,
     swipeToSlide: true,
-    afterChange: function (index) {
-     },
+    afterChange: function (index) {},
     responsive: [
       {
         breakpoint: 590,
         settings: {
           slidesToShow: 2,
         },
-      }
+      },
     ],
   };
 
@@ -83,8 +77,8 @@ export default function offerSlider({deal}) {
       <div className={styles.wrapper}>
         <div className={styles.head}>
           <div>
-          <h5>Deal of the week</h5>
-          <button>View All</button>
+            <h5>{title}</h5>
+            <button>View All</button>
           </div>
         </div>
 

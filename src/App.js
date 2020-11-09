@@ -4,7 +4,7 @@ import Footer from "./components/footer";
 
 import Index from "./pages/index";
 import ProductPage from "./pages/products";
-import SingleProductPage from "./pages/singlePriduct";
+import SingleProductPage from "./pages/singleProduct";
 
 import {
   BrowserRouter as Router,
@@ -21,7 +21,7 @@ function App() {
         <Route path="/products" strict component={ProductPage} />
         <Route path="/" strict component={Index} />
       </Switch>
-      {/* <Footer /> */}
+      <Footer />
     </Router>
   );
 }

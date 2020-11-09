@@ -1,7 +1,5 @@
-import React from "react";
-import priceFormatter from "../helpers/priceformatter";
-
-import styles from "../sass/modules/singleProduct/singleProduct.module.scss";
+import React from 'react'
+import priceFormatter from "../../helpers/priceformatter";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faStar,
@@ -12,10 +10,11 @@ import {
   faShoppingBag
 } from "@fortawesome/free-solid-svg-icons";
 
-export default function SinglePriduct() {
-  return (
-    <div className={`center , ${styles.wrapper}`}>
-      <div className={styles.head}>
+import styles from "../../sass/modules/singleProduct/singleProductHead.module.scss"
+
+export default function SingleProductHead() {
+    return (
+        <div className={styles.head}>
         <div className={styles.productImage}>
           <div className={styles.productImageGrid}>
             <div>
@@ -39,7 +38,7 @@ export default function SinglePriduct() {
           </div>
           <div className={styles.productImageMain}>
             <img
-              src={require("../assets/fdi_recommended.png")}
+              src={require("../../assets/fdi_recommended.png")}
               alt=""
               className={styles.productImageMainBadge}
             />
@@ -92,7 +91,7 @@ export default function SinglePriduct() {
 
           <div className={styles.productContentBadge}>
             <div>
-              <img src={require("../assets/deal_of_the_week.svg")} alt="" />
+              <img src={require("../../assets/deal_of_the_week.svg")} alt="" />
               <span>Extra {priceFormatter(2000)} off</span>
             </div>
             <span className={styles.productContentBadgeInfo}>
@@ -239,6 +238,5 @@ export default function SinglePriduct() {
           </div>
         </div>
       </div>
-    </div>
-  );
+    )
 }

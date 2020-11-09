@@ -2,441 +2,240 @@
 
 @import "../../globals";
 
-
-.wrapper {}
-
 .head {
+    text-transform: uppercase;
+    margin-bottom: 3rem;
     display: flex;
     align-items: flex-start;
-    justify-content: space-between;
-    margin-top: 2rem;
-
-    &>div {
-        // border: 1px solid;
+    flex-direction: column;
+    width: 100%;
+    & h5 {
+      font-size: 3rem;
+      border-bottom: 6px solid $primaryColor;
+      width: max-content;
     }
-}
-
-.productImage {
-    width: 40%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 75vh;
-
-    &Grid {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: space-between;
-        height: 100%;
-
-        &>div {
-            width: 9rem;
-            height: 9rem;
-
-            &>img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                object-position: center;
-                cursor: pointer;
-            }
-        }
-    }
-
-    &Main {
-        flex-grow: 0.95;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 0 2rem;
-        position: relative;
-
-        & img {
-            max-width: 100%;
-            max-height: 100%;
-            cursor: pointer;
-        }
-
-        &Badge {
-            position: absolute;
-            top: -1rem;
-            left: 2rem;
-            width: 15rem;
-        }
-
-    }
-
-
-}
-
-.productContent {
-    width: 43%;
-    padding-right: 1rem;
-    &Title {
-        font-weight: 600;
-        font-size: 2.8rem;
-    }
-
-    &SKU {
-        color: $darkGrey;
-        font-size: 1.5rem;
-
-        &>span {
-            font-weight: 700;
-
-            &:last-child {
-                margin-left: 1rem;
-            }
-        }
-    }
-
-    &Social {
-        margin: 1rem 0;
-        display: flex;
-        align-items: center;
-
-        &>div {
-            margin-right: 2rem;
-
-        }
-
-        &Rating {
-            background-color: $primaryColor;
-            color: $white;
-            font-weight: 600;
-            padding: 0.7rem 1rem;
-            width: fit-content;
-            border-radius: 1rem;
-            font-size: 1.7rem;
-
-        }
-
-        &Share {
-            cursor: pointer;
-            font-weight: 500;
-            font-size: 1.7rem;
-
-        }
-
-        &Wishlist {
-            font-size: 2.5rem;
-            cursor: pointer;
-            color: #e01e37;
-        }
-    }
-
-    &Before {
-        color: $mediumGrey;
-        font-size: 1.7rem;
-
-        &Price {
-            text-decoration: line-through;
-            font-weight: 500;
-            margin-right: 1rem;
-        }
-
-        &Save {
-            font-weight: 700;
-        }
-    }
-
-    &Price {
-        display: flex;
-        align-items: center;
-
-        &>span:first-child {
-            font-weight: 700;
-            font-size: 3rem;
-        }
-
-        &EMI {
-            margin-left: 3rem;
-            font-size: 1.5rem;
-            color: $darkGrey;
-            font-weight: 400;
-
-            &>span {
-                color: $primaryColor;
-                margin-left: 1rem;
-                font-weight: 600;
-                cursor: pointer;
-            }
-        }
-    }
-
-    &Badge {
-        &>div {
-            display: flex;
-            align-items: center;
-
-            &>img {
-                width: 14rem;
-            }
-            &>span{
-                margin-left: 1rem;
-                font-size: 1.5rem;
-                font-weight: 600;
-                color: $darkGrey;
-            }
-        }
-
-        &Info{
-            color: $mediumGrey;
-            font-size: 1.3rem;
-        }
-
-    }
-
-    &Option{
-        margin-top: 2.5rem;
-        &Title{
-            font-size: 1.8rem;
-            color: $darkGrey;
-            font-weight: 600;
-            &>span{
-                color: #000;
-            }
-        }
-
-        &Grid{
-            margin-top: 1rem;
-            margin-left: -0.5rem;
-            width: 30rem;
-            display: flex;
-            flex-wrap: wrap;
-            &Tile{
-                cursor: pointer;
-                border: 1px solid $mediumGrey;
-                width: 13rem;
-                height: 6rem;
-                margin: 0.5rem;
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                justify-content:center ;
-                padding-left: 1rem;
-                font-size: 1.3rem;
-                color: $darkGrey;
-                &Name{
-                    font-weight: 500;
-                }
-                &Price{
-                    font-weight: 600;
-                }
-
-                &Active{
-                    border-color: $primaryColor;
-                    background-color: transparentize($color: $primaryColor, $amount: 0.85);
-                    color: $secondaryColor;
-                }
-            }
-        }
-
-        &_alt{
-            &Colors{
-                display: flex;
-                margin-left: -1rem;
-                &>div{
-                    cursor: pointer;
-                    margin: 1rem;
-                    width: 3rem;
-                    height: 3rem;
-                    border-radius: 100%;
-                    box-shadow: 0 0 5px $mediumGrey;
-                }
-
-                &Selected{
-                    box-shadow : 0 0 5px $primaryColor !important;  
-                }
-            }
-
-            
-        }
-    }
-
-    &Highlight{
-        font-size: 1.5rem;
-        padding-right: 2rem;
-        &>ul{
-            list-style: circle;
-            margin-left: 1.5rem;
-            &>li{
-                margin: 1rem 0;
-                font-weight: 400;
-                color: $darkGrey;
-
-            }
-        }
-
-        &More{
-            color: $primaryColor;
-            font-size: 1.5rem;
-            font-weight: 600;
-            cursor: pointer;
-        }
-    }
-}
-
-.buyProduct {
-    width: 17%;
-
-    &Wrapper{
-        // min-height: 70vh;
-        // padding-bottom: 3rem;
-        border-radius: 20px;
-        box-shadow: 0 0 15px transparentize($color: #000000, $amount: 0.9) ;
-    }
-
-    &Inactive{
-        background-color:#E8E8E8;
-        border-top-left-radius: 20px;
-        border-top-right-radius: 20px;
-    }
-    
-    &Head{
-        @include totalCenter();
-        justify-content: flex-start;
-        font-size: 2rem;
-        padding: 2rem;
-        
-        &>div{
-            display: flex;
-            flex-direction: column;
-            margin-left: 2rem;
-            &>span:first-child{
-                color: #000;
-                font-weight: 600;
-            }
-            &>span:last-child{
-                font-size: 1.7rem;
-                color: $darkGrey;
-                font-weight: 300;
-            }
-        }
-
-        &Price{
-            font-size: 1.7rem;
-            &>span:first-child{
-                font-weight: 500;
-                color: $primaryColor;
-                margin-right: 1rem;
-            }
-            &>span:last-child{
-                font-weight: 400;
-                color: $darkGrey;
-                text-decoration: line-through;
-            }
-        }
-    }
-
-    &AddOn{
-        padding: 2rem;
-        &Title{
-            color: #000;
-            font-size: 1.7rem;
-            font-weight: 600;
-
-           
-        }
-        &Item{
-            margin: 1rem 0;
-            display: flex;
-            align-items: center;
-            &>div{
-                margin-left: 2rem;
-                font-size: 1.5rem;
-                font-weight: 600;
-                &>div>span{
-                    color: $primaryColor;
-                    cursor: pointer;
-
-                }
-               
-            }
-        }
-    }
-
-    &Quantity{
-        padding: 2rem;
-        display: flex;
-        align-items: center;
-        &>span{
-            font-size: 1.7rem;
-            font-weight: 600;
-            color: #000;
-            margin-right: 1rem;
-        }
-        &>input{
-            width: 5rem;
-            height: 3rem;
-            // border: 1px solid$mediumGrey;
-            border: none;
-            padding: 0 1rem;
-            font-size: 1.4rem;
-            outline: none;
-            border-radius: 5px;
-            box-shadow: 0 0 2px $mediumGrey;
-        }
-    }
-
-    &Pin{
-        padding: 2rem;
-        display: flex;
-        align-items: flex-start;
-        flex-direction: column;
-        &>span{
-            font-size: 1.7rem;
-            font-weight: 600;
-            color: #000;
-            margin-right: 1rem;
-        }
-        &>input{
-            margin-top: 0.5rem;
-            width: 90%;
-            height: 3rem;
-            // border: 1px solid$mediumGrey;
-            border: none;
-            padding: 0 1rem;
-            font-size: 1.4rem;
-            outline: none;
-            border-radius: 5px;
-            box-shadow: 0 0 2px $mediumGrey;
-        }
-    }
-
-    &Action{
-        padding: 2rem;
-    }
-
-    &Button{
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        font-size: 2rem;
-        font-weight: 600;
-        width: 100%;
+    &>div:first-child{
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      & button{
         border: none;
         outline: none;
-        padding: none;
-        box-shadow: 0 0 10px $mediumGrey;
-        padding: 1rem 2.5rem;
-        border-radius: 50px;
-        margin: 2rem 0;
-        &>span{
-            flex-grow: 1;
-            text-align: center;
-        }
-
-        &Cart{
-            background-color: $white;
-            color: $primaryColor;
-        }
-        &Bag{
-            background-color: $primaryColor;
-            color: $white;
-        }
+        background-color: $primaryColor;
+        color: #fff;
+        padding: 0.5rem  1rem;
+        cursor: pointer;
+        text-transform: uppercase;
+      }
     }
+    // &>div:last-child {
+    //   flex-grow: 1;
+    //   height: 2px;
+    //   background-color: $darkGrey;
+    //   margin-bottom: 2px;
+    // }
+  }
+  
 
-}
+  .description{
+      margin-top: 5rem;
+
+      &>p{
+          font-size: 2rem;
+          color: $darkGrey;
+          font-weight: 400;
+          line-height: 30px;
+      }
+  }
+
+  .related{
+      margin-top: 5rem;
+
+  }
+
+  .reviews{
+      margin: 3rem 0;
+
+      &Head{
+          width: 100%;
+
+          &>div{
+            width: 40%;
+            margin-top: 2rem;
+        }
+
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+          &Left{
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            &>div:first-child{
+                &>div{
+                  display: flex;
+                  align-items: center;
+                  &>span{
+                      font-size: 6rem;
+                      font-weight: 900;
+                      margin-right: 3rem;
+                  }
+    
+                  &>div{
+                      font-size: 4rem;
+                      color: $primaryColor;
+                      &>*{
+                          margin-right: 1rem;
+                      }
+                  }
+    
+              }
+  
+              &>span{
+                  font-weight: 700;
+                  color: $darkGrey;
+                  font-size: 1.5rem;
+                  margin-top: 1rem;
+              }
+            }
+          }
+        
+       
+         
+
+          &Graph{
+            width: 100%;
+            
+              &Item{
+                display: flex;
+                align-items: center;
+                margin: 1rem 0;
+                width: 100%;
+                &Star{
+                    &>span{
+                        font-size: 2.5rem;
+                        font-weight: 500;
+                        color: $darkGrey;
+                    }
+
+                    &>svg{
+                       font-size: 2.5rem;
+                       color: $primaryColor;
+                       margin-left : 1rem;
+                    }
+                }
+
+                &Bar{
+                    width: 80%;
+                    background-color: $lightMediumGrey;
+                    height: 7px;
+                    margin: 0 1rem;
+                    border-radius: 100px;
+                    position: relative;
+
+                    &Progress{
+                        background-color: $primaryColor;
+                        height: 100%;
+                        border-radius: 100px;
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                    }
+                }
+
+                &Number{
+                    font-size: 2rem;
+                    font-weight: 500;
+                    color: $darkGrey;
+
+                }
+              }
+          }
+      }
+
+      &New{
+         display: flex;
+         flex-direction: column;
+          &Title{
+              font-size: 2.5rem;
+              font-weight: 600;
+              color: #000;
+          }
+
+          &Stars{
+              display: flex;
+              align-items: center;
+              color: $primaryColor;
+              font-size: 3.5rem;
+              margin-top: 2rem;
+              margin-left: -1rem;
+              &>li{
+                  margin: 0 1rem;
+              }
+          }
+
+          &Text{
+              width: 100%;
+              height: 20rem;
+              margin: 2rem 0;
+              padding: 1.5rem;
+              font-size: 1.7rem;
+          }
+
+          &>button{
+              background-color: $primaryColor;
+              color: $white;
+              font-size: 1.5rem;
+              font-weight: 600;
+              padding: 1rem 2rem;
+              outline: none;
+              border: none;
+              border-radius: 7px;
+              width: fit-content;
+              align-self: flex-end;
+              cursor: pointer;
+          }
+      }
+
+
+      &Body{
+          margin-top: 5rem;
+          &Item{
+              margin: 3rem 0;
+              &>hr{
+                  margin-bottom: 3rem;
+              }
+
+              &Stars{
+                  display: flex;
+                  align-items: center;
+                  &>div{
+                      color: $primaryColor;
+                      font-size: 2rem;
+                      &>*{
+                          margin-right: 1rem;
+                      }
+                  }
+
+                  &>span{
+                      color: #000;
+                      font-size: 2rem;
+                      font-weight: 600;
+                  }
+              }
+
+              &Date{
+                  font-size: 1.75rem;
+                  color: $darkGrey;
+                  font-weight: 700;
+                  margin: 1rem 0;
+              }
+              &>p{
+                  font-size: 1.9rem;
+                  color: #000;
+                  font-weight: 400;
+              }
+          }
+      }
+
+  }

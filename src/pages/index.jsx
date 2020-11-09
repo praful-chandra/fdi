@@ -18,10 +18,10 @@ export default function index()
             <BannerMain />
             <InfoCard />
             <BannerSmall />
-            <OfferSlider deal={true} />
-            <BestSeller />
+            <OfferSlider deal={true} title={"deal of the week"} />
+            <BestSeller title={"best Seller"} bestBadge={true}/>
             {/* <PromoBanner />           */}
-            <OfferSlider />
+            <OfferSlider title={"Televisions"} />
             <Brands />
         </>
     )

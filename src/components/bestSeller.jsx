@@ -10,7 +10,7 @@ import {
  faAngleRight,
  faAngleLeft
 } from "@fortawesome/free-solid-svg-icons";
-export default function bestSeller() {
+export default function bestSeller({title,bestBadge}) {
   const sliderSettings = {
     dots: false,
     infinite: true,
@@ -65,7 +65,7 @@ export default function bestSeller() {
           data.push(
             <SmallProductCard
               image={`https://source.unsplash.com/collection/${i}`}
-              best={true}
+              best={bestBadge || false}
             />
           );
         }
@@ -79,7 +79,7 @@ export default function bestSeller() {
       <div className="center">
       <div className={styles.head}>
           <div>
-          <h5>Best Seller</h5>
+  <h5>{title}</h5>
           <button>View All</button>
           </div>
         </div>
