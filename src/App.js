@@ -8,7 +8,7 @@ import "./sass/index.scss";
 import Home from "./pages/Home";
 import Login from "./pages/auth/Login";
 import Register from './pages/auth/Register';
-
+import RegisterComplete from "./pages/auth/RegisterComplete";
 
 
 function App() {
@@ -19,6 +19,7 @@ function App() {
       <Route exact path="/" component={Home}/>
       <Route exact path="/login" component={Login}/>
       <Route exact path="/register" component={Register}/>
+      <Route exact path="/register/complete" component={RegisterComplete}/>
 
     </Switch>
     </>
