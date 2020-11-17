@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "types",
+  "info": {
+    "name": "type"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "sub_category": {
+      "model": "sub-category"
+    },
+    "category": {
+      "model": "category"
+    }
+  }
+}

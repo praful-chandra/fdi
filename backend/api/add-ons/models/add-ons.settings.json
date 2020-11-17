@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "add_ons",
+  "info": {
+    "name": "add ons"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "price": {
+      "type": "float"
+    },
+    "product": {
+      "model": "products"
+    }
+  }
+}

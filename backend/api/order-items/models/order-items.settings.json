@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "order_items",
+  "info": {
+    "name": "order items"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "order": {
+      "model": "orders"
+    },
+    "product": {
+      "model": "products"
+    },
+    "final_price": {
+      "type": "float"
+    },
+    "quantity": {
+      "type": "biginteger"
+    }
+  }
+}

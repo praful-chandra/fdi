@@ -1,0 +1,133 @@
+//globals
+@import "../globals";
+
+.card {
+    &Wrapper {
+        width: 100%;
+        padding: 1rem;
+        margin: 1rem 0;
+        box-shadow: 0 0 10px $lightBackground;
+        display: flex;
+    }
+
+    &Image {
+        margin-right: 2rem;
+
+        >img {
+            width: 25rem;
+            min-height: 30rem;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+    }
+
+    &Content {
+        flex-grow: 1;
+        position: relative;
+        .cardTitle{
+            font-size: 2.5rem;
+            @include horizontalCenterSpaceBetween();
+
+            &>h3 {
+                font-weight: 500;
+                max-width: 60%;
+            }
+        }
+    }
+
+
+    &Rating{
+        margin: 1rem 0;
+        font-size: 1.5rem;
+        background-color: $primaryColor;
+        width: fit-content;
+        color: $white;
+        padding: 0.5rem;
+        font-weight: 700;
+        border-radius: 0.5rem;
+        &>span{
+            margin-right: 0.5rem;
+        }
+    }
+    &Features{
+        min-width: 50rem;
+        width: 40%;
+        margin: 1rem 0;
+        font-size: 1.5rem;
+        &>ul{
+            display: flex;
+            flex-wrap: wrap;
+            list-style: inside;
+            &>li{
+                color: $darkGrey;
+                font-weight: 600;
+                margin: 0.5rem 1rem;
+            }
+        }
+    }
+}
+
+.fidBadge{
+    width: 15rem;
+
+    & img{
+        max-width: 100%;
+    }
+    // height: 5rem;
+    // border: 1px solid;
+}
+
+.emi{
+    font-size: 1.6rem;
+    color: $darkGrey;
+    margin-left: 1rem;
+    font-weight: 600;
+
+    &>span{
+        &:first-child{
+            color: $primaryColor;
+            font-size: 2rem;
+        }
+        margin-right: 1rem;
+        color: #000;
+    }
+}
+
+.priceBox{
+    position: absolute;
+    right: 2rem;
+    bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+
+    
+
+    &SellPrice{
+        display: flex;
+        justify-content: flex-end;
+        color: #000;
+        font-size: 2.5rem;
+        font-weight: 700;
+    }
+
+    &CostPrice{
+        display: flex;
+        align-items: center;
+        &Save{
+            background-color: $primaryColor;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            color: $white;
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            font-weight: 600;
+        }
+
+        &Was{
+            color: $darkGrey;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+    }
+}

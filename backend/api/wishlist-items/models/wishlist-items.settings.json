@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "wishlist_items",
+  "info": {
+    "name": "wishlist items"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "wishlist": {
+      "model": "wishlist"
+    },
+    "product": {
+      "model": "products"
+    }
+  }
+}

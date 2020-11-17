@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "cart_items",
+  "info": {
+    "name": "cart items"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "cart": {
+      "model": "cart"
+    },
+    "product": {
+      "model": "products"
+    },
+    "quantity": {
+      "type": "biginteger"
+    },
+    "price": {
+      "type": "float"
+    }
+  }
+}

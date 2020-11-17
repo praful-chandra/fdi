@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "options",
+  "info": {
+    "name": "options"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "cost_price": {
+      "type": "float"
+    },
+    "sell_price": {
+      "type": "float"
+    },
+    "product": {
+      "model": "products"
+    }
+  }
+}

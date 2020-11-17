@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/deal-of-the-weeks",
+      "handler": "deal-of-the-week.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/deal-of-the-weeks/count",
+      "handler": "deal-of-the-week.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/deal-of-the-weeks/:id",
+      "handler": "deal-of-the-week.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/deal-of-the-weeks",
+      "handler": "deal-of-the-week.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/deal-of-the-weeks/:id",
+      "handler": "deal-of-the-week.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/deal-of-the-weeks/:id",
+      "handler": "deal-of-the-week.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
