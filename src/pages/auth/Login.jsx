@@ -5,11 +5,21 @@ import { auth, googleAuthProvider } from "../../firebase";
 import { Link } from "react-router-dom";
 import styles from "../../sass/modules/auth/register.module.scss";
 import { useToasts } from "react-toast-notifications";
-import {Button} from "antd";
-import {GoogleCircleFilled} from "@ant-design/icons";
-import { signInUser ,userLoading,userLoadingDone} from "../../redux/actions/userActions";
+import { Button } from "antd";
+import { GoogleCircleFilled } from "@ant-design/icons";
+import {
+  signInUser,
+  userLoading,
+  userLoadingDone,
+} from "../../redux/actions/userActions";
 
-const Login = function ({ signInUser,userLoading,userLoadingDone, history, user }) {
+const Login = function ({
+  signInUser,
+  userLoading,
+  userLoadingDone,
+  history,
+  user,
+}) {
   useEffect(() => {
     if (user.user) {
       history.push("/");
@@ -23,7 +33,7 @@ const Login = function ({ signInUser,userLoading,userLoadingDone, history, user 
     e.preventDefault();
 
     try {
-        userLoading();
+      userLoading();
       const result = await auth.signInWithEmailAndPassword(email, password);
 
       const userObj = {
@@ -42,23 +52,26 @@ const Login = function ({ signInUser,userLoading,userLoadingDone, history, user 
     }
   };
 
-  const handleGoogleLogin = () =>{
+  const handleGoogleLogin = () => {
     userLoading();
-      auth.signInWithPopup(googleAuthProvider).then(async result =>{
-          const userObj = {
-            token: await result.user.getIdTokenResult().token,
-            user: {
-              name: await result.user.displayName,
-              email: await result.user.email,
-            },
-          };
-          signInUser(userObj);
-          history.push("/");
-      }).catch(err=>{
+    auth
+      .signInWithPopup(googleAuthProvider)
+      .then(async (result) => {
+        const userObj = {
+          token: await result.user.getIdTokenResult().token,
+          user: {
+            name: await result.user.displayName,
+            email: await result.user.email,
+          },
+        };
+        signInUser(userObj);
+        history.push("/");
+      })
+      .catch((err) => {
         addToast(err.message, { appearance: "error", autoDismiss: true });
         userLoadingDone();
-      })
-  }
+      });
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -86,18 +99,30 @@ const Login = function ({ signInUser,userLoading,userLoadingDone, history, user 
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <h6>forgot password?</h6>
+          <Link to="/resetpassword">
+            forgot password?
+          </Link>
 
-          <Button className={styles.formButton} loading={user.userLoading} onClick={handleSubmit} disabled={!email || !password}>
-             Login
+          <Button
+            className={styles.formButton}
+            loading={user.userLoading}
+            onClick={handleSubmit}
+            disabled={!email || !password}
+          >
+            Login
           </Button>
-            <br/>
+          <br />
 
-          <Button icon={<GoogleCircleFilled />} onClick={handleGoogleLogin}>
-              
-              login with google
+          <Button
+            danger
+            type="primary"
+            icon={<GoogleCircleFilled />}
+            shape="round"
+            onClick={handleGoogleLogin}
+          >
+            Login with google
           </Button>
-          <br/>
+          <br />
           <p>
             New here?{" "}
             <Link to="/register">
@@ -114,4 +139,8 @@ const mapStateToProps = (state) => ({
   user: state.user,
 });
 
-export default connect(mapStateToProps, { signInUser,userLoading,userLoadingDone })(Login);
+export default connect(mapStateToProps, {
+  signInUser,
+  userLoading,
+  userLoadingDone,
+})(Login);
