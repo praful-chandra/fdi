@@ -1,0 +1,6 @@
+export const userActionTypes = {
+    LOGGED_IN_USER : "LOGGED_IN_USER",
+    LOGOUT : "LOGOUT",
+    USER_LOADING : "USER_LOADING",
+    USER_LOADING_DONE : "USER_LOADING_DONE"
+}

@@ -7,6 +7,7 @@ import styles from "../../sass/modules/auth/register.module.scss";
 function RegisterComplete({history}) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [name, setName] = useState("");
     const { addToast } = useToasts();
 
     useEffect(()=>{
@@ -22,12 +23,13 @@ function RegisterComplete({history}) {
             window.localStorage.removeItem('emailForRegistration');
             let user = auth.currentUser;
             await user.updatePassword(password);
+            await user.updateProfile({displayName : name})
             const idTokenResult = await user.getIdTokenResult();
 
             //TODO update REDUX store
 
-            console.log(idTokenResult);
-            // history.push('/');
+          
+            history.push('/');
         }
       }
       catch (err){
@@ -48,6 +50,14 @@ function RegisterComplete({history}) {
               required
               value={email}
               disabled
+            />
+            <input
+              type="text"
+              className="form-control"
+              placeholder="name"
+              required
+              value={name}
+              onChange={(e)=>setName(e.target.value)}
             />
             <input
               type="password"

@@ -1,5 +1,6 @@
-import React from "react";
-
+/* eslint-disable react/prop-types */
+import React,{useEffect} from "react";
+import {connect} from "react-redux";
 import {Route, Switch} from "react-router-dom";
 
 import Header from "./components/Header";
@@ -10,8 +11,33 @@ import Login from "./pages/auth/Login";
 import Register from './pages/auth/Register';
 import RegisterComplete from "./pages/auth/RegisterComplete";
 
+import {auth} from "./firebase";
 
-function App() {
+import {signInUser} from "./redux/actions/userActions";
+
+
+function App({signInUser}) {
+
+  useEffect(()=>{
+    const unsubscribe = auth.onAuthStateChanged(async user =>{
+
+      if(user){
+        const userobj = {
+          user : {
+            email : user.email,
+            name : user.displayName
+          },
+          token : await (await user.getIdTokenResult()).token
+        }
+  
+        signInUser(userobj);
+      }
+
+    })
+    
+    return ()=> unsubscribe();
+  },[])
+
   return (
     <>
     <Header />
@@ -26,4 +52,8 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = state =>({
+  user : state.user
+})
+
+export default connect(mapStateToProps,{signInUser})(App);

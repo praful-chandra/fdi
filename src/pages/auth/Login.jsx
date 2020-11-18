@@ -1,13 +1,117 @@
-import React from 'react';
+/* eslint-disable react/prop-types */
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { auth, googleAuthProvider } from "../../firebase";
+import { Link } from "react-router-dom";
+import styles from "../../sass/modules/auth/register.module.scss";
+import { useToasts } from "react-toast-notifications";
+import {Button} from "antd";
+import {GoogleCircleFilled} from "@ant-design/icons";
+import { signInUser ,userLoading,userLoadingDone} from "../../redux/actions/userActions";
 
-import {Link} from "react-router-dom";
+const Login = function ({ signInUser,userLoading,userLoadingDone, history, user }) {
+  useEffect(() => {
+    if (user.user) {
+      history.push("/");
+    }
+  }, [user]);
 
-export default function Login() {
-    return (
-        <div>
-            Login
+  const [email, setEmail] = useState("chandra.s.praful@gmail.com");
+  const [password, setPassword] = useState("password");
+  const { addToast } = useToasts();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-            <Link to="/register" >Register </Link>
+    try {
+        userLoading();
+      const result = await auth.signInWithEmailAndPassword(email, password);
+
+      const userObj = {
+        token: await result.user.getIdTokenResult().token,
+        user: {
+          name: await result.user.displayName,
+          email: await result.user.email,
+        },
+      };
+
+      signInUser(userObj);
+      history.push("/");
+    } catch (err) {
+      addToast(err.message, { appearance: "error", autoDismiss: true });
+      userLoadingDone();
+    }
+  };
+
+  const handleGoogleLogin = () =>{
+    userLoading();
+      auth.signInWithPopup(googleAuthProvider).then(async result =>{
+          const userObj = {
+            token: await result.user.getIdTokenResult().token,
+            user: {
+              name: await result.user.displayName,
+              email: await result.user.email,
+            },
+          };
+          signInUser(userObj);
+          history.push("/");
+      }).catch(err=>{
+        addToast(err.message, { appearance: "error", autoDismiss: true });
+        userLoadingDone();
+      })
+  }
+
+  return (
+    <div className={styles.wrapper}>
+      <form onSubmit={handleSubmit}>
+        <div className={styles.form}>
+          <h1>Welcome back </h1>
+          <input
+            type="email"
+            name="email"
+            className="form-control"
+            autoFocus
+            placeholder="E-mail"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <br />
+          <input
+            type="password"
+            name="password"
+            className="form-control"
+            placeholder="Password"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+
+          <h6>forgot password?</h6>
+
+          <Button className={styles.formButton} loading={user.userLoading} onClick={handleSubmit} disabled={!email || !password}>
+             Login
+          </Button>
+            <br/>
+
+          <Button icon={<GoogleCircleFilled />} onClick={handleGoogleLogin}>
+              
+              login with google
+          </Button>
+          <br/>
+          <p>
+            New here?{" "}
+            <Link to="/register">
+              <span>Signup</span>
+            </Link>
+          </p>
         </div>
-    )
-}
+      </form>
+    </div>
+  );
+};
+
+const mapStateToProps = (state) => ({
+  user: state.user,
+});
+
+export default connect(mapStateToProps, { signInUser,userLoading,userLoadingDone })(Login);

@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+
 import {auth} from "../../firebase";
 import { useToasts } from 'react-toast-notifications';
 
-import styles from "../../sass/modules/auth/register.module.scss";
+import styles from "../../sass/modules/auth/register.module.scss"; 
 
 function Register() {
   const [email, setEmail] = useState("");
@@ -43,9 +45,9 @@ function Register() {
               setEmail(e.target.value);
             }}
           />
-          <button type="submit">Sign up</button>
+          <button className={styles.formButton} type="submit">Sign up</button>
           <p>
-            Already have an account? <span>signup</span>{" "}
+            Already have an account? <Link to="/login"><span>Login</span></Link>
           </p>
         </div>
       </form>

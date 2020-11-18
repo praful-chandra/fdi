@@ -1,4 +1,6 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { UserOutlined } from "@ant-design/icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,11 +11,15 @@ import {
   faHeart,
   faShoppingCart,
 } from "@fortawesome/free-solid-svg-icons";
-import styles from "../sass/modules/navbar.module.scss";
+import {Menu,Dropdown} from "antd";
+import {DownOutlined, LogoutOutlined} from "@ant-design/icons";
 
+import styles from "../sass/modules/navbar.module.scss";
 import Logo from "../logo.svg";
 
-function Header() {
+import {signoutUser} from "../redux/actions/userActions";
+
+function Header({ user,signoutUser }) {
   const categoryList = [
     {
       name: "categoryHead",
@@ -82,6 +88,16 @@ function Header() {
       ],
     },
   ];
+
+  const menu = (
+    <Menu>
+      <Menu.Item icon={<LogoutOutlined />} onClick={signoutUser}>
+        <a href="#">
+          Log out
+        </a>
+      </Menu.Item>
+    </Menu>
+  )
   return (
     <>
       <nav className={styles.desktop}>
@@ -102,12 +118,29 @@ function Header() {
                     <span>Orders</span>
                   </Link>
                 </li>
-                <li>
-                  <Link to="/login">
-                    <UserOutlined />
-                    <span>account</span>
-                  </Link>
-                </li>
+                {!user.user && (
+                  <li>
+                    <Link to="/login">
+                      <UserOutlined />
+                      <span>login</span>
+                    </Link>
+                  </li>
+                )}
+                {user.user && user.token && (
+                  <>
+                    <li>
+                      <Link to="#">
+                        <UserOutlined />
+                       
+                          <Dropdown overlay={menu} placement="bottomCenter" arrow>
+                            <span>{user.user.name} <DownOutlined /> </span>
+                          </Dropdown>
+                       
+                      </Link>
+                    </li>
+                   
+                  </>
+                )}
               </ul>
             </li>
           </ul>
@@ -115,11 +148,13 @@ function Header() {
 
         <div className={styles.middleBar}>
           <div className="center">
-            <img
-              className={styles.middleBarLogo}
-              src={Logo}
-              alt="fairdeal International"
-            />
+            <Link to="/">
+              <img
+                className={styles.middleBarLogo}
+                src={Logo}
+                alt="fairdeal International"
+              />
+            </Link>
             <div className={styles.search}>
               <form action="#">
                 <input
@@ -149,11 +184,17 @@ function Header() {
         </div>
 
         <div className={styles.categoryBar}>
-          <div className="center"></div>
+          <div className="center">
+
+          </div>
         </div>
       </nav>
     </>
   );
 }
 
-export default Header;
+const mapStateToProps = (state) => ({
+  user: state.user,
+});
+
+export default connect(mapStateToProps, {signoutUser})(Header);

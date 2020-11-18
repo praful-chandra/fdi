@@ -8,14 +8,21 @@ import {BrowserRouter} from "react-router-dom";
 import {ToastProvider} from "react-toast-notifications";
 import "antd/dist/antd.css";
 
+
+import {Provider} from 'react-redux';
+
+import {store} from "./redux/store";  
+
 ReactDOM.render(
+  <Provider store={store}>
   <React.StrictMode>
     <BrowserRouter>
     <ToastProvider>
     <App />
     </ToastProvider>
     </BrowserRouter>
-  </React.StrictMode>,
+  </React.StrictMode>
+  </Provider>,
   document.getElementById('root')
 );
 
