@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
+import {useSelector} from "react-redux";
 import { Link } from "react-router-dom";
 
 import {auth} from "../../firebase";
@@ -6,9 +7,18 @@ import { useToasts } from 'react-toast-notifications';
 
 import styles from "../../sass/modules/auth/register.module.scss"; 
 
-function Register() {
+
+function Register({history}) {
   const [email, setEmail] = useState("");
   const { addToast } = useToasts();
+
+  const user = useSelector(state=>state).user;
+
+  useEffect(()=>{
+    if(user.token){
+        history.push("/")
+    }
+  },[user])
 
   const handleSubmit = async (e) => {
     e.preventDefault();

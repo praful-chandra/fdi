@@ -12,7 +12,7 @@ import {
   faShoppingCart,
 } from "@fortawesome/free-solid-svg-icons";
 import {Menu,Dropdown} from "antd";
-import {DownOutlined, LogoutOutlined} from "@ant-design/icons";
+import {DownOutlined, LogoutOutlined,HomeFilled} from "@ant-design/icons";
 
 import styles from "../sass/modules/navbar.module.scss";
 import Logo from "../logo.svg";
@@ -91,6 +91,11 @@ function Header({ user,signoutUser }) {
 
   const menu = (
     <Menu>
+      <Menu.Item icon={<HomeFilled />}>
+        <a href="#">
+          Dashboard
+        </a>
+      </Menu.Item>
       <Menu.Item icon={<LogoutOutlined />} onClick={signoutUser}>
         <a href="#">
           Log out
@@ -112,12 +117,7 @@ function Header({ user,signoutUser }) {
                     <span>Store Locator</span>
                   </Link>
                 </li>
-                <li>
-                  <Link to="/login">
-                    <FontAwesomeIcon icon={faTruck} />
-                    <span>Orders</span>
-                  </Link>
-                </li>
+                
                 {!user.user && (
                   <li>
                     <Link to="/login">
@@ -128,6 +128,12 @@ function Header({ user,signoutUser }) {
                 )}
                 {user.user && user.token && (
                   <>
+                  <li>
+                  <Link to="/login">
+                    <FontAwesomeIcon icon={faTruck} />
+                    <span>Orders</span>
+                  </Link>
+                </li>
                     <li>
                       <Link to="#">
                         <UserOutlined />

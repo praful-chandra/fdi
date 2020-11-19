@@ -7,6 +7,9 @@ import styles from "../../sass/modules/auth/register.module.scss";
 import { useToasts } from "react-toast-notifications";
 import { Button } from "antd";
 import { GoogleCircleFilled } from "@ant-design/icons";
+
+import {createOrUpdateUser} from "../../functions/auth.function";
+
 import {
   signInUser,
   userLoading,
@@ -29,19 +32,20 @@ const Login = function ({
   const [email, setEmail] = useState("chandra.s.praful@gmail.com");
   const [password, setPassword] = useState("password");
   const { addToast } = useToasts();
+
+  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       userLoading();
       const result = await auth.signInWithEmailAndPassword(email, password);
-
+      const token = await result.user.getIdTokenResult();
+      const mongoResult = await createOrUpdateUser(token.token);
       const userObj = {
-        token: await result.user.getIdTokenResult().token,
-        user: {
-          name: await result.user.displayName,
-          email: await result.user.email,
-        },
+        token: token.token,
+        user: mongoResult.data,
       };
 
       signInUser(userObj);
@@ -57,12 +61,11 @@ const Login = function ({
     auth
       .signInWithPopup(googleAuthProvider)
       .then(async (result) => {
+        const token = await result.user.getIdTokenResult();
+        const mongoResult = await createOrUpdateUser(token.token);
         const userObj = {
-          token: await result.user.getIdTokenResult().token,
-          user: {
-            name: await result.user.displayName,
-            email: await result.user.email,
-          },
+          token: token.token,
+          user: mongoResult.data,
         };
         signInUser(userObj);
         history.push("/");
@@ -99,9 +102,7 @@ const Login = function ({
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <Link to="/resetpassword">
-            forgot password?
-          </Link>
+          <Link to="/resetpassword">forgot password?</Link>
 
           <Button
             className={styles.formButton}

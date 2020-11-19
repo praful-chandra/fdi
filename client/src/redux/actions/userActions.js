@@ -13,7 +13,9 @@ export const userLoadingDone = () => (dispatch) => {
   });
 };
 
-export const signInUser = (userobj) => (dispatch) => {
+export const signInUser = (userobj) => async (dispatch) => {
+
+ 
   dispatch({
     type: userActionTypes.LOGGED_IN_USER,
     payload: userobj,
