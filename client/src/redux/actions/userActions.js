@@ -1,5 +1,6 @@
 import { userActionTypes } from "../types";
 import firebase from "firebase";
+import axios  from 'axios';
 
 export const userLoading = () => (dispatch) => {
   dispatch({
@@ -23,6 +24,7 @@ export const signInUser = (userobj) => async (dispatch) => {
 
 export const signoutUser = () => (dispatch) => {
   firebase.auth().signOut();
+  axios.defaults.headers.common['authtoken'] = null;
   dispatch({
     type: userActionTypes.LOGOUT,
   });

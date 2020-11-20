@@ -12,15 +12,20 @@ function AdminPrivateRoute({ children, ...rest }) {
 
   const { addToast } = useToasts();
 
-  useEffect(() => {  
+  useEffect(() => {
     if (user && user.token) {
       currentAdmin(user.token)
         .then((res) => {
           setOk(true);
         })
         .catch((err) => {
-          addToast(err.response.data.error || err.message, { appearance: "warning", autoDismiss: true });
+          addToast(err.response.data.error || err.message, {
+            appearance: "warning",
+            autoDismiss: true,
+          });
         });
+    } else {
+      setOk(false);
     }
   }, [user]);
 

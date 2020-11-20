@@ -22,74 +22,7 @@ import {roleBasedRedirect} from "../../functions/auth.function";
 
 function Header({ user,signoutUser }) {
   let history = useHistory();
-  const categoryList = [
-    {
-      name: "categoryHead",
-      sub: [
-        "SubCategory",
-        "SubCategory",
-        "SubCategory",
-        "SubCategory",
-        "SubCategory",
-        "SubCategory",
-      ],
-    },
-    {
-      name: "categoryHead",
-      sub: [
-        "SubCategory",
-        "SubCategory",
-        "SubCategory",
-        "SubCategory",
-        "SubCategory",
-        "SubCategory",
-      ],
-    },
-    {
-      name: "categoryHead",
-      sub: [
-        "SubCategory",
-        "SubCategory",
-        "SubCategory",
-        "SubCategory",
-        "SubCategory",
-        "SubCategory",
-      ],
-    },
-    {
-      name: "categoryHead",
-      sub: [
-        "SubCategory",
-        "SubCategory",
-        "SubCategory",
-        "SubCategory",
-        "SubCategory",
-        "SubCategory",
-      ],
-    },
-    {
-      name: "categoryHead",
-      sub: [
-        "SubCategory",
-        "SubCategory",
-        "SubCategory",
-        "SubCategory",
-        "SubCategory",
-        "SubCategory",
-      ],
-    },
-    {
-      name: "categoryHead",
-      sub: [
-        "SubCategory",
-        "SubCategory",
-        "SubCategory",
-        "SubCategory",
-        "SubCategory",
-        "SubCategory",
-      ],
-    },
-  ];
+ 
 
   const menu = (
     <Menu>

@@ -1,38 +1,33 @@
-import axios from 'axios';
+import axios from "axios";
 
 export const createOrUpdateUser = async (token) => {
+  axios.defaults.headers.common["authtoken"] = token;
 
-    return await axios.post(
-      "/auth/create-or-update-user",
-      {},
-      {
-        headers: { authtoken: token },
-      }
-    );
-  };
+  return await axios.post("/auth/create-or-update-user", {});
+};
 
-export const currentUser = async (token)=>{
 
-  return await axios.post("/auth/current-user",{},{
-    headers:{
-      authtoken : token
-    }
-  })
-}
 
-export const currentAdmin = async (token)=>{
+export const currentUser = async (token) => {
+  axios.defaults.headers.common["authtoken"] = token;
 
-  return await axios.post("/auth/current-admin",{},{
-    headers:{
-      authtoken : token
-    }
-  })
-}
+  return await axios.post("/auth/current-user", {});
+};
 
-export const roleBasedRedirect = async (user,history) =>{
-  if(user.role === 'Admin'){
-    history.push('/admin/dashboard')
-  }else{
-    history.push('/user/dashboard');
+
+
+export const currentAdmin = async (token) => {
+  axios.defaults.headers.common["authtoken"] = token;
+
+  return await axios.post("/auth/current-admin", {});
+};
+
+
+
+export const roleBasedRedirect = async (user, history) => {
+  if (user.role === "Admin") {
+    history.push("/admin/dashboard");
+  } else {
+    history.push("/user/dashboard");
   }
-}
+};
