@@ -19,13 +19,13 @@ axios.defaults.baseURL = process.env.REACT_APP_API;
 
 ReactDOM.render(
   <Provider store={store}>
-  <React.StrictMode>
+  {/* <React.StrictMode> */}
     <BrowserRouter>
     <ToastProvider>
     <App />
     </ToastProvider>
     </BrowserRouter>
-  </React.StrictMode>
+  {/* </React.StrictMode> */}
   </Provider>,
   document.getElementById('root')
 );

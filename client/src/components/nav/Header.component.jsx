@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory} from "react-router-dom";
 import { UserOutlined } from "@ant-design/icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -14,12 +14,14 @@ import {
 import {Menu,Dropdown} from "antd";
 import {DownOutlined, LogoutOutlined,HomeFilled} from "@ant-design/icons";
 
-import styles from "../sass/modules/navbar.module.scss";
-import Logo from "../logo.svg";
+import styles from "../../sass/modules/navbar.module.scss";
+import Logo from "../../logo.svg";
 
-import {signoutUser} from "../redux/actions/userActions";
+import {signoutUser} from "../../redux/actions/userActions";
+import {roleBasedRedirect} from "../../functions/auth.function";
 
 function Header({ user,signoutUser }) {
+  let history = useHistory();
   const categoryList = [
     {
       name: "categoryHead",
@@ -91,7 +93,7 @@ function Header({ user,signoutUser }) {
 
   const menu = (
     <Menu>
-      <Menu.Item icon={<HomeFilled />}>
+      <Menu.Item icon={<HomeFilled />} onClick={()=>roleBasedRedirect(user.user,history)} >
         <a href="#">
           Dashboard
         </a>

@@ -34,7 +34,7 @@ mongoose.connect(
 
 //middleWares
 
-app.use(morgan());
+app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(cors());
 

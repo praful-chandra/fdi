@@ -8,7 +8,7 @@ import { useToasts } from "react-toast-notifications";
 import { Button } from "antd";
 import { GoogleCircleFilled } from "@ant-design/icons";
 
-import {createOrUpdateUser} from "../../functions/auth.function";
+import {createOrUpdateUser,roleBasedRedirect} from "../../functions/auth.function";
 
 import {
   signInUser,
@@ -49,7 +49,9 @@ const Login = function ({
       };
 
       signInUser(userObj);
-      history.push("/");
+
+      roleBasedRedirect(mongoResult.data,history);
+
     } catch (err) {
       addToast(err.message, { appearance: "error", autoDismiss: true });
       userLoadingDone();
@@ -68,7 +70,8 @@ const Login = function ({
           user: mongoResult.data,
         };
         signInUser(userObj);
-        history.push("/");
+        roleBasedRedirect(mongoResult.data,history);
+
       })
       .catch((err) => {
         addToast(err.message, { appearance: "error", autoDismiss: true });

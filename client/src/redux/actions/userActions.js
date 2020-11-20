@@ -1,5 +1,4 @@
 import { userActionTypes } from "../types";
-
 import firebase from "firebase";
 
 export const userLoading = () => (dispatch) => {

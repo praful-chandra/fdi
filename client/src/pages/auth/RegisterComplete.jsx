@@ -38,6 +38,7 @@ function RegisterComplete({ history,signInUser }) {
         let user = auth.currentUser;
         await user.updatePassword(password);
         await user.updateProfile({ displayName: name });
+        
         const token = await user.getIdTokenResult();
       
         const mongoResult = await createOrUpdateUser(token.token);
@@ -47,7 +48,8 @@ function RegisterComplete({ history,signInUser }) {
         };
   
         signInUser(userObj);
-        history.push("/");
+        roleBasedRedirect(mongoResult.data,history);
+
 
       }
     } catch (err) {
