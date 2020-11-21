@@ -5,6 +5,31 @@
 .wrapper{
     // border: 1px solid;
     width: 95%;
+
+    &>h2{  
+        color: $primaryColor;
+        text-align: center;
+        font-size: 4rem;
+        font-weight: 700;
+        text-transform: uppercase;
+    }   
+
+    &>span{
+        position: fixed;
+        right: 2rem;
+        bottom: 2rem;
+    }
+}
+
+.addBtn{
+    background-color: $primaryColor !important;
+    color: $white !important;
+    
+    &:hover{
+        color: $primaryColor !important ;
+        background-color: $white !important;
+    }
+   
 }
 
 .createCategory{
@@ -23,3 +48,5 @@
 .categoryAction{
     cursor: pointer;
 }
+
+

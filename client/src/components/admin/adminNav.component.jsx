@@ -1,15 +1,21 @@
-import React from 'react'
+import React from "react";
 import styles from "../../sass/modules/userDashboard/userDash.module.scss";
 
 function adminNavComponent({ user, selected, setSelected }) {
-    const navItems = ["home","Categories", "sub categories", "products","coupons", "change password"];
+  const navItems = [
+    "home",
+    "Categories",
+    "sub categories",
+    "products",
+    "coupons",
+    "change password",
+  ];
   return (
     <div className={styles.navWrap}>
       <div className={styles.profileInfo}>
         <img src={user.picture} alt="name" />
         <h3>{user.name}</h3>
-        <p>{user.email}</p>
-        <p>{user.phoneNumber}</p>
+        <p>{user.role}</p>
       </div>
 
       <ul className={styles.nav}>
@@ -19,7 +25,7 @@ function adminNavComponent({ user, selected, setSelected }) {
             onClick={() => {
               setSelected(i);
             }}
-            className={i === selected ? styles.navActive : ''}
+            className={i === selected ? styles.navActive : ""}
           >
             {n}
           </li>
@@ -29,4 +35,4 @@ function adminNavComponent({ user, selected, setSelected }) {
   );
 }
 
-export default adminNavComponent
+export default adminNavComponent;

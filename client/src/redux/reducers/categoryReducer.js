@@ -5,7 +5,7 @@ const INITIAL_STATE = {
     categoryLoading : false
 }
 
-import {addNewCategory,deleteCategory} from "../helpers/category.helpers";
+import {addNewCategory,deleteCategory,updateCategory} from "../helpers/category.helpers";
 
 export default (state = INITIAL_STATE , action)=>{
     switch(action.type){
@@ -30,6 +30,11 @@ export default (state = INITIAL_STATE , action)=>{
         case categoryActionTypes.LIST_ALL_CATEGORY : return {
             ...state,
             categories : action.payload,
+            categoryLoading : false
+        }
+        case categoryActionTypes.UPDATE_CATEGORY : return {
+            ...state,
+            categories : updateCategory(state.categories,action.payload),
             categoryLoading : false
         }
         default : return state

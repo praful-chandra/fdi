@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { Link, useHistory} from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { UserOutlined } from "@ant-design/icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -11,33 +11,34 @@ import {
   faHeart,
   faShoppingCart,
 } from "@fortawesome/free-solid-svg-icons";
-import {Menu,Dropdown} from "antd";
-import {DownOutlined, LogoutOutlined,HomeFilled} from "@ant-design/icons";
+import { Menu, Dropdown } from "antd";
+import { DownOutlined, LogoutOutlined, HomeFilled } from "@ant-design/icons";
 
 import styles from "../../sass/modules/navbar.module.scss";
 import Logo from "../../logo.svg";
 
-import {signoutUser} from "../../redux/actions/userActions";
-import {roleBasedRedirect} from "../../functions/auth.function";
+import { signoutUser } from "../../redux/actions/userActions";
+import { roleBasedRedirect } from "../../functions/auth.function";
 
-function Header({ user,signoutUser }) {
+function Header({ user, signoutUser, category }) {
   let history = useHistory();
- 
+
+  let demoSub = [1, 2, 3, 4, 5, 6];
 
   const menu = (
     <Menu>
-      <Menu.Item icon={<HomeFilled />} onClick={()=>roleBasedRedirect(user.user,history)} >
-        <a href="#">
-          Dashboard
-        </a>
+      <Menu.Item
+        icon={<HomeFilled />}
+        onClick={() => roleBasedRedirect(user.user, history)}
+      >
+        <a href="#">Dashboard</a>
       </Menu.Item>
       <Menu.Item icon={<LogoutOutlined />} onClick={signoutUser}>
-        <a href="#">
-          Log out
-        </a>
+        <a href="#">Log out</a>
       </Menu.Item>
     </Menu>
-  )
+  );
+
   return (
     <>
       <nav className={styles.desktop}>
@@ -52,7 +53,7 @@ function Header({ user,signoutUser }) {
                     <span>Store Locator</span>
                   </Link>
                 </li>
-                
+
                 {!user.user && (
                   <li>
                     <Link to="/login">
@@ -63,23 +64,23 @@ function Header({ user,signoutUser }) {
                 )}
                 {user.user && user.token && (
                   <>
-                  <li>
-                  <Link to="/login">
-                    <FontAwesomeIcon icon={faTruck} />
-                    <span>Orders</span>
-                  </Link>
-                </li>
+                    <li>
+                      <Link to="/login">
+                        <FontAwesomeIcon icon={faTruck} />
+                        <span>Orders</span>
+                      </Link>
+                    </li>
                     <li>
                       <Link to="#">
                         <UserOutlined />
-                       
-                          <Dropdown overlay={menu} placement="bottomCenter" arrow>
-                            <span>{user.user.name} <DownOutlined /> </span>
-                          </Dropdown>
-                       
+
+                        <Dropdown overlay={menu} placement="bottomCenter" arrow>
+                          <span>
+                            {user.user.name} <DownOutlined />{" "}
+                          </span>
+                        </Dropdown>
                       </Link>
                     </li>
-                   
                   </>
                 )}
               </ul>
@@ -126,7 +127,36 @@ function Header({ user,signoutUser }) {
 
         <div className={styles.categoryBar}>
           <div className="center">
-
+            <ul className={styles.categoryBarLinks}>
+              {category.categories.map((cl) => {
+                return (
+                  <li key={cl._id}>
+                    <Dropdown
+                      overlay={
+                        <Menu>
+                          {demoSub.map((d) => (
+                            <Menu.Item>
+                              <a
+                                className={styles.categoryBarLinksLink}
+                                href="#"
+                              >
+                                Dashboard
+                              </a>
+                            </Menu.Item>
+                          ))}
+                        </Menu>
+                      }
+                      placement="bottomCenter"
+                      arrow
+                    >
+                      <span>
+                        {cl.name} <DownOutlined />{" "}
+                      </span>
+                    </Dropdown>
+                  </li>
+                );
+              })}
+            </ul>
           </div>
         </div>
       </nav>
@@ -136,6 +166,7 @@ function Header({ user,signoutUser }) {
 
 const mapStateToProps = (state) => ({
   user: state.user,
+  category: state.category,
 });
 
-export default connect(mapStateToProps, {signoutUser})(Header);
+export default connect(mapStateToProps, { signoutUser })(Header);

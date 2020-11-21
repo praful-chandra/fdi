@@ -1,10 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, connect } from "react-redux";
 import { useToasts } from "react-toast-notifications";
 import { EditFilled, DeleteFilled } from "@ant-design/icons";
+import { Button } from "antd";
+import { AppstoreAddOutlined } from "@ant-design/icons";
 
 import styles from "../../../sass/modules/adminDashboard/category.module.scss";
 import CreateCategoryComponent from "./createCategory.component";
+import EditCategoryComponent from "./editCategory.component";
+import PopupComponent from "../../showPopup.component";
 
 import {
   listAllCategories,
@@ -12,13 +16,16 @@ import {
 } from "../../../redux/actions/categoryActions";
 
 function Index({ listAllCategories, deleteCategory }) {
+  const [create, setCreate] = useState(false);
+  const [edit, setEdit] = useState(false);
+
   const { addToast } = useToasts();
   const {
     category: { categories },
   } = useSelector((state) => state);
 
   useEffect(() => {
-    listAllCategories();
+    if (categories.length === 0) listAllCategories();
   }, []);
 
   const handleRemove = (cat) => {
@@ -49,8 +56,32 @@ function Index({ listAllCategories, deleteCategory }) {
 
   return (
     <div className={styles.wrapper}>
-      <CreateCategoryComponent />
+      <span>
+        <Button
+          type="default"
+          className={styles.addBtn}
+          shape="circle"
+          size="large"
+          icon={<AppstoreAddOutlined />}
+          onClick={() => setCreate(true)}
+        />
+      </span>
 
+      {create && (
+        <PopupComponent
+          child={<CreateCategoryComponent />}
+          close={() => setCreate(false)}
+        />
+      )}
+
+      {edit && (
+        <PopupComponent
+          child={<EditCategoryComponent category={edit} />}
+          close={() => setEdit(false)}
+        />
+      )}
+
+      <h2>Categories</h2>
       <div className={styles.categoryList}>
         <table className="table">
           <thead className="thead-light">
@@ -67,7 +98,10 @@ function Index({ listAllCategories, deleteCategory }) {
                 <tr key={d._id}>
                   <th scope="row">{i + 1}</th>
                   <td>{d.name}</td>
-                  <td className={`${styles.categoryAction}`}>
+                  <td
+                    className={`${styles.categoryAction}`}
+                    onClick={() => setEdit(d)}
+                  >
                     <EditFilled />
                   </td>
                   <td

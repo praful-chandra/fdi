@@ -5,7 +5,7 @@ import formStyles from "../../../sass/modules/auth/register.module.scss";
 import { Button } from "antd";
 import { useToasts } from "react-toast-notifications";
 
-import { addNewCategory } from "../../../redux/actions/categoryActions";
+import { addNewCategory } from "../../../redux/actions/categoryActions"; 
 
 function CreateCategoryComponent({ addNewCategory, category }) {
   const [name, setName] = useState("");
