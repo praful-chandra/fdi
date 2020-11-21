@@ -7,14 +7,16 @@ import LoadingToRedirect from "./LoadingToRedirect.route";
 import { currentAdmin } from "../../functions/auth.function";
 
 function AdminPrivateRoute({ children, ...rest }) {
-  const { user } = useSelector((state) => state);
+  const {
+    user: { token },
+  } = useSelector((state) => state);
   const [ok, setOk] = useState(false);
 
   const { addToast } = useToasts();
 
   useEffect(() => {
-    if (user && user.token) {
-      currentAdmin(user.token)
+    if (token) {
+      currentAdmin(token)
         .then((res) => {
           setOk(true);
         })
@@ -24,12 +26,13 @@ function AdminPrivateRoute({ children, ...rest }) {
             autoDismiss: true,
           });
         });
+      setOk(false);
     } else {
       setOk(false);
     }
-  }, [user]);
+  }, [token]);
 
-  return ok ? <Route {...rest} /> : <LoadingToRedirect />;
+  return ok && token ? <Route {...rest} /> : <LoadingToRedirect />;
 }
 
 export default AdminPrivateRoute;

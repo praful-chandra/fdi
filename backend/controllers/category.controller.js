@@ -21,7 +21,7 @@ exports.create = async (req, res) => {
     }
 
     const newCategory = await new Category({ name, slug }).save();
-    res.json(newCategory);
+    res.json({name : newCategory.name , _id : newCategory._id , slug : newCategory.slug});
   } catch (err) {
     res.status(400).json({ error: "Create category failed !" });
   }
@@ -36,11 +36,15 @@ exports.read = async (req, res) => {
     res.status(500).json({ error: "Server error occured !" });
   }
 };
-exports.update = async(req, res) => {
-    const { slug } = req.params;
-    const {name} = req.body;
+exports.update = async (req, res) => {
+  const { slug } = req.params;
+  const { name } = req.body;
   try {
-    const updatedCategory =  await Category.findOneAndUpdate({slug},{name , slug : slugify(name)},{new : true});
+    const updatedCategory = await Category.findOneAndUpdate(
+      { slug },
+      { name, slug: slugify(name) },
+      { new: true }
+    );
     res.json(updatedCategory);
   } catch (err) {
     res.status(500).json({ error: "Update category failed!" });
@@ -51,7 +55,7 @@ exports.remove = async (req, res) => {
   const { slug } = req.params;
   try {
     const deleted = await Category.findOneAndDelete({ slug });
-    res.json(deleted)
+    res.json(deleted);
   } catch (err) {
     res.status(500).json({ error: "delete category failed!" });
   }

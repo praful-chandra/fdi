@@ -4,6 +4,7 @@
 .dashWrap {
     width: 100%;
     display: flex;
+    align-items: flex-start;
 }
 
 .navWrap {
@@ -69,4 +70,5 @@
 .content {
     width: 80%;
     @include totalCenter();
+    padding-top: 3rem;
 }

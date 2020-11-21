@@ -3,17 +3,19 @@ import {useSelector} from "react-redux";
 import ResetPasswordComponent from "../../components/user/passwordReset.component";
 import AdminNavComponent from "../../components/admin/adminNav.component";
 import HomeComponent from "../../components/admin/home.component";
+import CategoryComponent from "../../components/admin/category";
 
 import styles from "../../sass/modules/userDashboard/userDash.module.scss";
 
 
 function Dashboard() {
-    const [selected, setSelected] = useState(0);
+    const [selected, setSelected] = useState(1);
     const {user} = useSelector(state =>state);
 
     const renderContent = () =>{
         switch(selected){
             case 0 : return  <HomeComponent />;
+            case 1 : return  <CategoryComponent />;
             case 5 : return  <ResetPasswordComponent />;
             default : return <> </>
         }

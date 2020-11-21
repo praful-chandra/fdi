@@ -1,0 +1,25 @@
+//imports
+@import "../../index.scss";
+
+
+.wrapper{
+    // border: 1px solid;
+    width: 95%;
+}
+
+.createCategory{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.categoryList{
+    font-size: 2rem;
+    & thead th{
+        font-size: 2rem;
+    }
+}
+
+.categoryAction{
+    cursor: pointer;
+}
