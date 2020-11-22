@@ -18,12 +18,20 @@ import { auth } from "./firebase";
 
 import { currentUser } from "./functions/auth.function";
 import { signInUser } from "./redux/actions/userActions";
+import { listAllCategories } from "./redux/actions/categoryActions";
+import { listAllSubCategories } from "./redux/actions/subCategoryActions";
 
 //PrivateRoutes
 import UserPrivateRoute from "./components/routes/UserPrivate.route";
 import AdminPrivateRoute from "./components/routes/AdminPrivate.route";
 
-function App({ signInUser }) {
+function App({
+  signInUser,
+  categories,
+  subCategories,
+  listAllCategories,
+  listAllSubCategories,
+}) {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
@@ -38,10 +46,13 @@ function App({ signInUser }) {
       }
     });
 
+
+    //Fetch init data
+    if (categories.length === 0) listAllCategories();
+    if (subCategories.length === 0) listAllSubCategories();
+
     return () => unsubscribe();
   }, []);
-
-
 
   return (
     <>
@@ -53,7 +64,11 @@ function App({ signInUser }) {
         <Route exact path="/register/complete" component={RegisterComplete} />
         <Route exact path="/resetpassword" component={ResetPassword} />
         <UserPrivateRoute exact path="/user/dashboard" component={Dashboard} />
-        <AdminPrivateRoute exact path="/admin/dashboard" component={AdminDash} />
+        <AdminPrivateRoute
+          exact
+          path="/admin/dashboard"
+          component={AdminDash}
+        />
       </Switch>
     </>
   );
@@ -61,6 +76,12 @@ function App({ signInUser }) {
 
 const mapStateToProps = (state) => ({
   user: state.user,
+  categories: state.category.categories,
+  subCategories: state.subCategory.subCategories,
 });
 
-export default connect(mapStateToProps, { signInUser })(App);
+export default connect(mapStateToProps, {
+  signInUser,
+  listAllCategories,
+  listAllSubCategories,
+})(App);

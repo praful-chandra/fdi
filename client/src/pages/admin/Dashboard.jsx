@@ -4,18 +4,20 @@ import ResetPasswordComponent from "../../components/user/passwordReset.componen
 import AdminNavComponent from "../../components/admin/adminNav.component";
 import HomeComponent from "../../components/admin/home.component";
 import CategoryComponent from "../../components/admin/category";
+import SubCategoryComponent from "../../components/admin/subCategory";
 
 import styles from "../../sass/modules/userDashboard/userDash.module.scss";
 
 
 function Dashboard() {
-    const [selected, setSelected] = useState(1);
+    const [selected, setSelected] = useState(2);
     const {user} = useSelector(state =>state);
 
     const renderContent = () =>{
         switch(selected){
             case 0 : return  <HomeComponent />;
             case 1 : return  <CategoryComponent />;
+            case 2 : return  <SubCategoryComponent />;
             case 5 : return  <ResetPasswordComponent />;
             default : return <> </>
         }

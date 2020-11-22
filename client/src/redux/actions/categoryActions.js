@@ -60,7 +60,6 @@ export const deleteCategory = (slug) => async (dispatch) => {
 };
 
 export const updateCateory = (newCategory) => async (dispatch) => {
-  console.log(newCategory);
   dispatch(categoryLoading);
   try {
     const result = await axios.patch(`/category/${newCategory.slug}`, {
@@ -72,7 +71,6 @@ export const updateCateory = (newCategory) => async (dispatch) => {
       payload: result.data,
     });
     return { success: result.data.name };
-  
   } catch (err) {
     return { error: err.response.data.error || "Update Failed" };
   } finally {

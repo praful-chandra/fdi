@@ -135,7 +135,7 @@ function Header({ user, signoutUser, category }) {
                       overlay={
                         <Menu>
                           {demoSub.map((d) => (
-                            <Menu.Item>
+                            <Menu.Item key={`navbar category ${d._id}`}>
                               <a
                                 className={styles.categoryBarLinksLink}
                                 href="#"

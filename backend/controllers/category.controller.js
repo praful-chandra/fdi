@@ -21,7 +21,11 @@ exports.create = async (req, res) => {
     }
 
     const newCategory = await new Category({ name, slug }).save();
-    res.json({name : newCategory.name , _id : newCategory._id , slug : newCategory.slug});
+    res.json({
+      name: newCategory.name,
+      _id: newCategory._id,
+      slug: newCategory.slug,
+    });
   } catch (err) {
     res.status(400).json({ error: "Create category failed !" });
   }
