@@ -8,7 +8,7 @@ const { Option } = Select;
 
 import {addNewSubCategory} from "../../../redux/actions/subCategoryActions";
 
-function CreateSubCategoryComponent({addNewSubCategory, category }) {
+function CreateSubCategoryComponent({addNewSubCategory, category ,subCategory }) {
   const [name, setName] = useState("");
   const [parent, setParent] = useState("");
 
@@ -63,7 +63,7 @@ function CreateSubCategoryComponent({addNewSubCategory, category }) {
           <br />
           <Button
             className={formStyles.formButton}
-            // loading={category.categoryLoading}
+            loading={subCategory.subCategoryLoading}
             onClick={handleSubmit}
             disabled={!name || !parent}
           >
@@ -78,6 +78,7 @@ function CreateSubCategoryComponent({addNewSubCategory, category }) {
 
 const mapStateToProps = (state) => ({
   category: state.category,
+  subCategory : state.subCategory
 });
 
 export default connect(mapStateToProps,{addNewSubCategory})(CreateSubCategoryComponent);

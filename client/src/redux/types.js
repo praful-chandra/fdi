@@ -23,3 +23,12 @@ export const subCategoryActionTypes = {
         LIST_ALL_SUBCATEGORY  : "LIST_ALL_SUBCATEGORY",
         REMOVE_SUBCATEGORY  : "REMOVE_SUBCATEGORY"
 }
+
+export const tagActionTypes = {
+    TAG_LOADING : "TAG_LOADING",
+    TAG_LOADING_DONE : "TAG_LOADING_DONE",
+    CREATE_TAG : "CREATE_TAG",
+    DELETE_TAG : "DELETE_TAG",
+    UPDATE_TAG : "UPDATE_TAG",
+    LIST_TAGS :  "LIST_TAGS"
+}

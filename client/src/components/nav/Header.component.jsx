@@ -20,10 +20,8 @@ import Logo from "../../logo.svg";
 import { signoutUser } from "../../redux/actions/userActions";
 import { roleBasedRedirect } from "../../functions/auth.function";
 
-function Header({ user, signoutUser, category }) {
+function Header({ user, signoutUser, category, subCategories }) {
   let history = useHistory();
-
-  let demoSub = [1, 2, 3, 4, 5, 6];
 
   const menu = (
     <Menu>
@@ -134,16 +132,19 @@ function Header({ user, signoutUser, category }) {
                     <Dropdown
                       overlay={
                         <Menu>
-                          {demoSub.map((d) => (
-                            <Menu.Item key={`navbar category ${d._id}`}>
-                              <a
-                                className={styles.categoryBarLinksLink}
-                                href="#"
-                              >
-                                Dashboard
-                              </a>
-                            </Menu.Item>
-                          ))}
+                          {subCategories.map(
+                            (sub) =>
+                              sub.parent._id === cl._id && (
+                                <Menu.Item key={`navbar category ${sub._id}`}>
+                                  <a
+                                    className={styles.categoryBarLinksLink}
+                                    href="#"
+                                  >
+                                    {sub.name}
+                                  </a>
+                                </Menu.Item>
+                              )
+                          )}
                         </Menu>
                       }
                       placement="bottomCenter"
@@ -167,6 +168,7 @@ function Header({ user, signoutUser, category }) {
 const mapStateToProps = (state) => ({
   user: state.user,
   category: state.category,
+  subCategories: state.subCategory.subCategories,
 });
 
 export default connect(mapStateToProps, { signoutUser })(Header);

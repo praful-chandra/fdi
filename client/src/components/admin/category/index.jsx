@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, connect } from "react-redux";
 import { useToasts } from "react-toast-notifications";
-import { EditFilled, DeleteFilled } from "@ant-design/icons";
-import { Button } from "antd";
-import { AppstoreAddOutlined } from "@ant-design/icons";
+import { Button, Popconfirm } from "antd";
+import { AppstoreAddOutlined, EditFilled, DeleteFilled } from "@ant-design/icons";
 
 import styles from "../../../sass/modules/adminDashboard/category.module.scss";
 import CreateCategoryComponent from "./createCategory.component";
@@ -29,29 +28,26 @@ function Index({ listAllCategories, deleteCategory }) {
   }, []);
 
   const handleRemove = (cat) => {
-    const flag = confirm(`Do you want to delete ${cat.name}`);
-    if (flag) {
-      deleteCategory(cat.slug)
-        .then((res) => {
-          if (res.success) {
-            addToast(`${res.success.name} successfully deleted`, {
-              appearance: "success",
-              autoDismiss: true,
-            });
-          } else {
-            addToast(`Deletion error`, {
-              appearance: "error",
-              autoDismiss: true,
-            });
-          }
-        })
-        .catch((err) => {
+    deleteCategory(cat.slug)
+      .then((res) => {
+        if (res.success) {
+          addToast(`${res.success.name} successfully deleted`, {
+            appearance: "success",
+            autoDismiss: true,
+          });
+        } else {
           addToast(`Deletion error`, {
             appearance: "error",
             autoDismiss: true,
           });
+        }
+      })
+      .catch((err) => {
+        addToast(`Deletion error`, {
+          appearance: "error",
+          autoDismiss: true,
         });
-    }
+      });
   };
 
   return (
@@ -105,10 +101,17 @@ function Index({ listAllCategories, deleteCategory }) {
                     <EditFilled />
                   </td>
                   <td
-                    onClick={() => handleRemove(d)}
                     className={` text-danger , ${styles.categoryAction}`}
                   >
+                    <Popconfirm
+                      title="Are you sure to delete this ?"
+                      onConfirm={()=>handleRemove(d)}
+                      okText="Yes"
+                      cancelText="No"
+                    >
                     <DeleteFilled />
+                    </Popconfirm>
+                    
                   </td>
                 </tr>
               );
