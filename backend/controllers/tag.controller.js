@@ -13,10 +13,16 @@ exports.list = async (req, res) => {
 exports.add = async (req, res) => {
   try {
     const { name } = req.body;
+    const slug = await slugify(name);
+
+    if(await Tag.findOne({slug})){
+      return res.status(409).json({ error: `${name} Tag already exists !` });
+
+    }
 
     const newTag = await new Tag({
       name,
-      slug: await slugify(name),
+      slug
     }).save();
 
     res.json(newTag);
@@ -42,7 +48,7 @@ exports.update = async (req, res) => {
   }
   try {
     const { slug } = req.params;
-    const updatedTag = await Tag.findByIdAndUpdate(
+    const updatedTag = await Tag.findOneAndUpdate(
       { slug },
       {
         name,

@@ -7,13 +7,18 @@ import { AppstoreAddOutlined } from "@ant-design/icons";
 import styles from "../../../sass/modules/adminDashboard/category.module.scss";
 
 import CreateTagComponent from "./createTagComponent";
+import EditTagComponent from "./editTagComponent";
 import PopupComponent from "../../showPopup.component";
 
-function index() {
+import {listAllTags} from "../../../redux/actions/tagActions";
+
+function index( {listAllTags}) {
     const [create, setCreate] = useState(false);
     const [edit, setEdit] = useState(false);
-  
+
     const { addToast } = useToasts();
+
+    const {tag : {tags}} = useSelector(state => state);
 
     return (
         <div className={styles.wrapper}>
@@ -34,14 +39,14 @@ function index() {
             close={() => setCreate(false)}
           />
         )}
-          {/* 
+          
         {edit && (
           <PopupComponent
-            child={<EditSubCategoryComponent subCategory={edit} />}
+            child={<EditTagComponent tag={edit} />}
             close={() => setEdit(false)}
           />
         )}
-   */}
+  
         <h2>Tags</h2>
         <div className={styles.categoryList}>
           <table className="table">
@@ -54,12 +59,11 @@ function index() {
               </tr>
             </thead>
             <tbody>
-              {/* {subCategories.map((d, i) => {
+              {tags.map((d, i) => {
                 return (
                   <tr key={d._id}>
                     <th scope="row">{i + 1}</th>
                     <td>{d.name}</td>
-                    <td>{d.parent.name}</td>
                     <td
                       className={`${styles.categoryAction}`}
                       onClick={() => setEdit(d)}
@@ -74,7 +78,7 @@ function index() {
                     </td>
                   </tr>
                 );
-              })} */}
+              })}
             </tbody>
           </table>
         </div>
@@ -82,4 +86,4 @@ function index() {
     )
 }
 
-export default index
+export default connect(null, {listAllTags})(index);

@@ -37,7 +37,7 @@ export const addNewTag = (name) => async (dispatch) => {
 
     return { success: newTag.data.name };
   } catch (err) {
-    return { error: err.response.data || "Error creating Tag" };
+    return { error: err.response.data.error || "Error creating Tag" };
   } finally {
     dispatch(tagLoadingDone);
   }
@@ -73,7 +73,7 @@ export const updateTag = ({ name, slug }) => async (dispatch) => {
 
     return { success: updatedTag.data.name };
   } catch (err) {
-    return { error: err.response.data || "Error updating Tag" };
+    return { error: err.response.data.error || "Error updating Tag" };
   } finally {
     dispatch(tagLoadingDone);
   }

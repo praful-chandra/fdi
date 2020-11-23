@@ -20,6 +20,7 @@ import { currentUser } from "./functions/auth.function";
 import { signInUser } from "./redux/actions/userActions";
 import { listAllCategories } from "./redux/actions/categoryActions";
 import { listAllSubCategories } from "./redux/actions/subCategoryActions";
+import {listAllTags} from "./redux/actions/tagActions";
 
 //PrivateRoutes
 import UserPrivateRoute from "./components/routes/UserPrivate.route";
@@ -29,8 +30,10 @@ function App({
   signInUser,
   categories,
   subCategories,
+  tags,
   listAllCategories,
   listAllSubCategories,
+  listAllTags
 }) {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
@@ -50,7 +53,7 @@ function App({
     //Fetch init data
     if (categories.length === 0) listAllCategories();
     if (subCategories.length === 0) listAllSubCategories();
-
+    if (tags.length === 0) listAllTags();
     return () => unsubscribe();
   }, []);
 
@@ -78,10 +81,12 @@ const mapStateToProps = (state) => ({
   user: state.user,
   categories: state.category.categories,
   subCategories: state.subCategory.subCategories,
+  tags : state.tag.tags
 });
 
 export default connect(mapStateToProps, {
   signInUser,
   listAllCategories,
   listAllSubCategories,
+  listAllTags
 })(App);
