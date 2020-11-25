@@ -21,7 +21,7 @@ exports.add = async (req, res) => {
     subCategory,
     tags,
     options,
-    addOn
+    addOn,
   } = req.body;
   try {
     const slug = slugify(name);
@@ -41,13 +41,12 @@ exports.add = async (req, res) => {
       subCategory,
       tags,
       options,
-      addOn
+      addOn,
     });
 
     await newProduct.save();
     res.json(newProduct);
   } catch (err) {
-
     res.status(500).json({ error: "Product creation failed" });
   }
 };
