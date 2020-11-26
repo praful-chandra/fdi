@@ -12,7 +12,7 @@ import styles from "../../sass/modules/userDashboard/userDash.module.scss";
 
 
 function Dashboard() {
-    const [selected, setSelected] = useState(3);
+    const [selected, setSelected] = useState(4);
     const {user} = useSelector(state =>state);
 
     const renderContent = () =>{

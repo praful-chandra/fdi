@@ -1,0 +1,92 @@
+//global
+@import "../../index.scss";
+
+.wrapper{
+    width: 100%;
+    margin-top: 4rem;  
+}
+
+.topBar{
+    width: 100%;
+    padding: 1rem 3rem;
+    
+    &>div{
+        background-color: $primaryColor;
+        border-radius: 100px;
+        width: fit-content;
+        font-size: 2rem;
+        color: $white;
+        cursor: pointer;
+        padding: 1rem 1.6rem;
+    }
+}
+
+.content{
+    @include columnCenter();
+    & form{
+        margin-top: 3rem;
+        width: 80%;
+        font-size: 2rem;
+        & input{
+            font-size: 2rem;
+            &::placeholder{
+            font-size: 2rem;
+
+            }
+        }
+        
+    }
+}
+
+.image{
+    width: 80%;
+    height: 50rem;
+    background-color: $darkGrey;
+}
+
+.flexHorizontal{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    &>div{
+        flex: 0.45;
+    }
+}
+
+.listWithAction{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1rem 0;
+    &>input{
+        width: 95%;
+    }
+    &>div:last-child{
+        font-size: 2rem;
+        color: red;
+        cursor: pointer;
+    }
+
+}
+
+.formTags{
+    border: 1px solid $mediumGrey;
+    padding: 1rem;
+    
+    &Input{
+        margin-bottom: 2rem;
+    }
+}
+
+.option{
+    width: 94%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &Input{
+        width: 45%;
+    }
+    &Color{
+        width: 50%;
+    }
+}

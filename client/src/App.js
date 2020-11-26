@@ -13,6 +13,7 @@ import RegisterComplete from "./pages/auth/RegisterComplete";
 import ResetPassword from "./pages/auth/ResetPassword";
 import Dashboard from "./pages/user/Dashboard";
 import AdminDash from "./pages/admin/Dashboard";
+import CreateProduct from "./pages/admin/CreateProduct";
 
 import { auth } from "./firebase";
 
@@ -71,6 +72,11 @@ function App({
           exact
           path="/admin/dashboard"
           component={AdminDash}
+        />
+        <AdminPrivateRoute
+          exact
+          path="/admin/newproduct"
+          component={CreateProduct}
         />
       </Switch>
     </>
