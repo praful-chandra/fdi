@@ -24,7 +24,16 @@ const ProductSchema = new mongoose.Schema({
     text: true,
   },
 
-  images: Array,
+  images: [{
+    thumb : {
+      type : Buffer,
+      required : true
+    },
+    full:{
+        type : Buffer,
+        required : true
+    }
+  }],
   category: {
     type: ObjectId,
     required: true,
@@ -43,12 +52,24 @@ const ProductSchema = new mongoose.Schema({
   ],
   options: [
     {
-      title: String,
+      title: {
+        type: String,
+        required: true,
+      },
       color: [
         {
-          name: String,
-          price: Number,
-          hex: String,
+          name: {
+            type: String,
+            required: true,
+          },
+          price: {
+            type: Number,
+            required: true,
+          },
+          hex: {
+            type: String,
+            required: true,
+          },
           quantity: { type: Number, default: 0 },
         },
       ],
@@ -63,4 +84,17 @@ const ProductSchema = new mongoose.Schema({
   ],
 });
 
+ProductSchema.methods.toJSON = function () {
+  const product = this.toObject();
+
+  product.images = product.images.map((data,i) => ({
+    thumb :  `/api/serveImage/product/${product._id}/${i}/thumb`,
+    full :  `/api/serveImage/product/${product._id}/${i}/full`,
+  }));
+
+
+  return product;
+};
+
 module.exports = mongoose.model("Product", ProductSchema);
+ 

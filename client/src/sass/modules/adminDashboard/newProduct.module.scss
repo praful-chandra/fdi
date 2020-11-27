@@ -38,10 +38,31 @@
     }
 }
 
-.image{
-    width: 80%;
-    height: 50rem;
-    background-color: $darkGrey;
+
+.imageWrapper{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 5rem;
+}
+
+.imageItem{
+    width: 15rem;
+    height:15rem;
+    object-fit: cover;
+    object-position: center;
+    margin: 1rem;
+    cursor: pointer;
+}
+
+.imageAdd{
+   @include totalCenter();
+}
+
+.imageAdd > label{
+    font-size: 10rem !important;
+    color: $primaryColor;
+    cursor: pointer;
 }
 
 .flexHorizontal{
@@ -89,4 +110,8 @@
     &Color{
         width: 50%;
     }
+}
+
+.optionColorBlock{
+    margin-bottom: 2rem;
 }

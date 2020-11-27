@@ -32,10 +32,11 @@ mongoose.connect(
   }
 );
 
+
 //middleWares
 
 app.use(morgan('dev'));
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '25mb'}));
 app.use(cors());
 
 //routes
