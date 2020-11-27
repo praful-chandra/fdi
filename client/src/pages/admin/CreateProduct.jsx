@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, connect } from "react-redux";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+// import React, { useState, useEffect } from "react";
+// import { useSelector, connect } from "react-redux";
+// import ReactQuill from "react-quill";
+// import "react-quill/dist/quill.snow.css";
 import { SketchPicker } from 'react-color';
-
+import {useToasts} from "react-toast-notifications";
 import {
   HomeFilled,
   MinusCircleOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
 import { Form, Input, Select, Button, Tag } from "antd";
-import { listAllCategories } from "../../redux/actions/categoryActions";
-import { listAllSubCategories } from "../../redux/actions/subCategoryActions";
-import { listAllTags } from "../../redux/actions/tagActions";
+// import { listAllCategories } from "../../redux/actions/categoryActions";
+// import { listAllSubCategories } from "../../redux/actions/subCategoryActions";
+// import { listAllTags } from "../../redux/actions/tagActions";
 
 import styles from "../../sass/modules/adminDashboard/newProduct.module.scss";
 
@@ -20,13 +20,13 @@ import {addProduct} from "../../functions/product.function";
 
 const { CheckableTag } = Tag;
 
-const topBar = () => (
-  <div className={styles.topBar}>
-    <div>
-      <HomeFilled />
-    </div>
-  </div>
-);
+// const topBar = () => (
+//   <div className={styles.topBar}>
+//     <div>
+//       <HomeFilled />
+//     </div>
+//   </div>
+// );
 
 const initialState = {
   name: "",
@@ -46,71 +46,72 @@ function CreateProduct({
   listAllTags,
 }) {
   const [newProduct, setNewProduct] = useState(initialState);
+  const {addToast} = useToasts();
+  
+  // const {
+  //   category: { categories },
+  //   subCategory: { subCategories },
+  //   tag: { tags },
+  // } = useSelector((state) => state);
 
-  const {
-    category: { categories },
-    subCategory: { subCategories },
-    tag: { tags },
-  } = useSelector((state) => state);
+  // const handleChange = (e)=>{
+  //     const value = e.target.value;
+  //     const name = e.target.name;
+  //     setNewProduct(oldProduct =>({
+  //         ...oldProduct,
+  //         [name] : value
+  //     }))
+  // }
 
-  const handleChange = (e)=>{
-      const value = e.target.value;
-      const name = e.target.name;
-      setNewProduct(oldProduct =>({
-          ...oldProduct,
-          [name] : value
-      }))
-  }
+  // const handleDescription = value =>{
+  //     setNewProduct(oldProduct =>({
+  //         ...oldProduct,
+  //         description : value
+  //     }))
+  // }
 
-  const handleDescription = value =>{
-      setNewProduct(oldProduct =>({
-          ...oldProduct,
-          description : value
-      }))
-  }
+  // const addNewHighlight = () => {
+  //   setNewProduct((oldState) => ({
+  //     ...oldState,
+  //     highlights: [...oldState.highlights, ""],
+  //   }));
+  // };
 
-  const addNewHighlight = () => {
-    setNewProduct((oldState) => ({
-      ...oldState,
-      highlights: [...oldState.highlights, ""],
-    }));
-  };
+  // const handleHighlightChange = (e, index) => {
+  //   setNewProduct((oldState) => {
+  //     let newHighlight = oldState.highlights.map((h, i) =>
+  //       i === index ? e.target.value : h
+  //     );
+  //     return {
+  //       ...oldState,
+  //       highlights: newHighlight,
+  //     };
+  //   });
+  // };
 
-  const handleHighlightChange = (e, index) => {
-    setNewProduct((oldState) => {
-      let newHighlight = oldState.highlights.map((h, i) =>
-        i === index ? e.target.value : h
-      );
-      return {
-        ...oldState,
-        highlights: newHighlight,
-      };
-    });
-  };
+  // const handleRemoveHighlight = (index) => {
+  //   setNewProduct((oldState) => {
+  //     let newHighlight = oldState.highlights.filter((h, i) => i !== index);
+  //     return {
+  //       ...oldState,
+  //       highlights: newHighlight,
+  //     };
+  //   });
+  // };
 
-  const handleRemoveHighlight = (index) => {
-    setNewProduct((oldState) => {
-      let newHighlight = oldState.highlights.filter((h, i) => i !== index);
-      return {
-        ...oldState,
-        highlights: newHighlight,
-      };
-    });
-  };
-
-  const handleCategoryChange = (id) => {
-    setNewProduct((oldProduct) => ({
-      ...oldProduct,
-      category: id,
-      subCategory: null,
-    }));
-  };
-  const handleSubCategoryChange = (id) => {
-    setNewProduct((oldProduct) => ({
-      ...oldProduct,
-      subCategory: id,
-    }));
-  };
+  // const handleCategoryChange = (id) => {
+  //   setNewProduct((oldProduct) => ({
+  //     ...oldProduct,
+  //     category: id,
+  //     subCategory: null,
+  //   }));
+  // };
+  // const handleSubCategoryChange = (id) => {
+  //   setNewProduct((oldProduct) => ({
+  //     ...oldProduct,
+  //     subCategory: id,
+  //   }));
+  // };
 
   const handleTagToggle = (id) => {
     const includes = newProduct.tags.includes(id);
@@ -189,8 +190,10 @@ function CreateProduct({
   const handleSubmit = async () =>{
       try{
           const result = await addProduct(newProduct);
+          addToast(`${result.data.name} Created`,{appearance : 'success' , autoDismiss : true});
+          setNewProduct(initialState);
       }catch (err){
-          
+        addToast(err.response.data.error,{appearance : 'error' , autoDismiss : true});
       }
   }
 
@@ -214,7 +217,7 @@ function CreateProduct({
         <div className={styles.image}></div>
 
         <Form size="large">
-          <Form.Item required label="Name">
+          {/* <Form.Item required label="Name">
             <Input value={newProduct.name} name="name" onChange={handleChange} />
           </Form.Item>
 
@@ -225,9 +228,9 @@ function CreateProduct({
             <Form.Item required label="sku">
               <Input value={newProduct.sku} name="sku" onChange={handleChange} />
             </Form.Item>
-          </div>
+          </div> */}
 
-          <Form.Item label="Highlights">
+          {/* <Form.Item label="Highlights">
             {newProduct.highlights.map((h, i) => (
               <div className={styles.listWithAction}>
                 <Input
@@ -244,13 +247,13 @@ function CreateProduct({
             <Button icon={<PlusOutlined />} block onClick={addNewHighlight}>
               add
             </Button>
-          </Form.Item>
-
+          </Form.Item> */}
+{/* 
           <Form.Item label="Description" required>
             <ReactQuill theme="snow" value={newProduct.description} name="description" onChange={handleDescription} />
-          </Form.Item>
+          </Form.Item> */}
 
-          <div className={styles.flexHorizontal}>
+          {/* <div className={styles.flexHorizontal}>
             <Form.Item label="Category" required>
               <Select
                 onChange={handleCategoryChange}
@@ -279,7 +282,7 @@ function CreateProduct({
                 )}
               </Select>
             </Form.Item>
-          </div>
+          </div> */}
 
           <Form.Item label="Tags">
             <div className={styles.formTags}>
