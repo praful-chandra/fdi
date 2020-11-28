@@ -1,5 +1,6 @@
-const { default: slugify } = require("slugify");
+const slugify = require("slugify");
 const Product = require("../models/product.model");
+const sharp = require("sharp");
 
 exports.list = async (req, res) => {
   try {
@@ -15,11 +16,47 @@ exports.list = async (req, res) => {
   }
 };
 
-exports.add = async (req, res) => {
-  // console.log({...req.body , images : []});
+const resizeImage = (image, size) =>
+  new Promise(async (resolve) => {
+    const result = await sharp(image.buffer)
+      .resize({ width: size, height: size })
+      .png()
+      .toBuffer();
 
-  const {
-    images,
+    resolve(result);
+  });
+
+exports.add = async (req, res) => {
+  let images = [];
+
+  for (let i in req.files) {
+    let obj = {
+      thumb: await resizeImage(req.files[i], 500),
+      full: await resizeImage(req.files[i], 1080),
+    };
+
+    images.push(obj);
+  }
+
+  let newBody = {
+    name: "",
+    model: "",
+    sku: "",
+    highlights: "",
+    description: "",
+    category: "",
+    subCategory: "",  
+    tags: "",
+    options: "",
+    addOn: "",
+  };
+
+  for(const[key,value] of Object.entries(req.body)){
+    newBody[key] = JSON.parse(value);
+  }  
+
+
+  let {
     name,
     model,
     sku,
@@ -30,7 +67,7 @@ exports.add = async (req, res) => {
     tags,
     options,
     addOn,
-  } = req.body;
+  } = newBody;
 
   try {
     const slug = slugify(name);
@@ -38,6 +75,7 @@ exports.add = async (req, res) => {
     if (oldProduct) {
       return res.status(409).json({ error: "Product already exists !" });
     }
+
 
     const newProduct = await new Product({
       name,
@@ -51,7 +89,6 @@ exports.add = async (req, res) => {
       subCategory,
       tags,
       options,
-      addOn,
     }).save();
 
     res.json(newProduct);

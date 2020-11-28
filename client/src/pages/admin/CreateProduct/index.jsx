@@ -72,17 +72,26 @@ function index({ listAllCategories, listAllSubCategories, listAllTags }) {
     });
 
   const handleSubmit = async () => {
-    const imagesBuffer = [];
+    
+    const formData = new FormData();
 
-    for (let image in newProduct.images) {
-      const thumb = await resizeImage(newProduct.images[image], 500);
-      const full = await resizeImage(newProduct.images[image], 1080);
-
-      imagesBuffer.push({ thumb, full });
+    for(const[key,value] of Object.entries(newProduct)){
+      formData.append(key,JSON.stringify(value));
     }
 
+    newProduct.images.forEach(image =>{
+      formData.append('images[]',image);
+    })
+
+    //!DEBUG PURPOSE
+  //   for(var pair of formData.entries()) {
+  //     console.log(pair[0]+ ', '+ pair[1]); 
+  //  }
+
+
+
     try {
-      const result = await addProduct({ ...newProduct, images: imagesBuffer });
+      const result = await addProduct(formData);
       addToast(`${result.data.name} Created`, {
         appearance: "success",
         autoDismiss: true,
