@@ -75,7 +75,7 @@ const ProductSchema = new mongoose.Schema({
       ],
     },
   ],
-  addOn: [
+  addOns: [
     {
       title: String,
       price: Number,

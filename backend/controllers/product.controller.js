@@ -48,7 +48,7 @@ exports.add = async (req, res) => {
     subCategory: "",  
     tags: "",
     options: "",
-    addOn: "",
+    addOns: "",
   };
 
   for(const[key,value] of Object.entries(req.body)){
@@ -66,7 +66,7 @@ exports.add = async (req, res) => {
     subCategory,
     tags,
     options,
-    addOn,
+    addOns,
   } = newBody;
 
   try {
@@ -89,6 +89,7 @@ exports.add = async (req, res) => {
       subCategory,
       tags,
       options,
+      addOns
     }).save();
 
     res.json(newProduct);

@@ -23,13 +23,15 @@ function images({ newProduct, setNewProduct }) {
       setNewProduct(oldProduct =>({
           ...oldProduct,
           images : oldProduct.images.filter((im,ind)=> index !== ind)
-      }))
+      }));
+      setPreviewImages((oldImgs) =>{
+          return oldImgs.filter((oi,i)=>i !== index);
+      })
   }
-
   return (
     <div className={styles.imageWrapper}>
       {newProduct.images.map((image, index) => {
-          return    <img src={previewImages[index]} className={styles.imageItem} onDoubleClick={()=>handleRemoveItem(index)}  />
+          return    <img src={previewImages[index]} key={`Image add ${index}`} className={styles.imageItem} onDoubleClick={()=>handleRemoveItem(index)}  />
           
       })}
 

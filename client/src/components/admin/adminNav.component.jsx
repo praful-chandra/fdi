@@ -7,6 +7,7 @@ function adminNavComponent({ user, selected, setSelected }) {
     "Categories",
     "sub categories",
     "Tags",
+    "Brands",
     "products",
     "coupons",
     "change password",

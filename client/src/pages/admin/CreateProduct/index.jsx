@@ -17,6 +17,7 @@ import Description from "./description";
 import CategorySubcategory from "./category-subcategory";
 import Tags from "./tags";
 import Options from "./options";
+import Addons from "./addOns";
 
 const initialState = {
   images: [],
@@ -29,6 +30,7 @@ const initialState = {
   subCategory: null,
   tags: [],
   options: [],
+  addOns: [],
 };
 
 import Resizer from "react-image-file-resizer";
@@ -72,23 +74,20 @@ function index({ listAllCategories, listAllSubCategories, listAllTags }) {
     });
 
   const handleSubmit = async () => {
-    
     const formData = new FormData();
 
-    for(const[key,value] of Object.entries(newProduct)){
-      formData.append(key,JSON.stringify(value));
+    for (const [key, value] of Object.entries(newProduct)) {
+      formData.append(key, JSON.stringify(value));
     }
 
-    newProduct.images.forEach(image =>{
-      formData.append('images[]',image);
-    })
+    newProduct.images.forEach((image) => {
+      formData.append("images[]", image);
+    });
 
     //!DEBUG PURPOSE
-  //   for(var pair of formData.entries()) {
-  //     console.log(pair[0]+ ', '+ pair[1]); 
-  //  }
-
-
+    //   for(var pair of formData.entries()) {
+    //     console.log(pair[0]+ ', '+ pair[1]);
+    //  }
 
     try {
       const result = await addProduct(formData);
@@ -108,9 +107,6 @@ function index({ listAllCategories, listAllSubCategories, listAllTags }) {
 
   return (
     <div className={`center , ${styles.wrapper}`}>
-
-    <img src="localhost:8000/api/serveImage/product/5fc0e5a9815353069cc538bd/0/full" alt=""/>
-
       <TopBar />
       <div className={styles.content}>
         <Form size="large">
@@ -130,6 +126,7 @@ function index({ listAllCategories, listAllSubCategories, listAllTags }) {
             tags={tags}
           />
           <Options newProduct={newProduct} setNewProduct={setNewProduct} />
+          <Addons newProduct={newProduct} setNewProduct={setNewProduct} />
           <Form.Item>
             <Button type="primary" htmlType="submit" onClick={handleSubmit}>
               Save

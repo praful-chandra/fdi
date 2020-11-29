@@ -16,7 +16,7 @@ function options({ newProduct, setNewProduct }) {
   };
 
   const handelDeleteOption = (index) => {
-    setNewProduct((oldProduct) => ({
+    setNewProduct((oldProduct) => ({ 
       ...oldProduct,
       options: oldProduct.options.filter((o, i) => i !== index),
     }));
@@ -95,7 +95,7 @@ function options({ newProduct, setNewProduct }) {
     <Form.Item label="Options">
       {newProduct.options.map((option, index) => {
         return (
-          <div className={styles.listWithAction}>
+          <div className={styles.listWithAction} key={`ooptioins ${index}`}>
             <div className={styles.option}>
               <div className={styles.optionInput}>
                 <Input
@@ -108,7 +108,7 @@ function options({ newProduct, setNewProduct }) {
                 <div className={styles.optionColor}>
                   <p>Color</p>
                   {option.color.map((col, ind) => (
-                    <div className={styles.optionColorBlock}>
+                    <div className={styles.optionColorBlock} key={`Option color ${ind}`} >
                       <Input
                         placeholder="Color Name"
                         value={col.name}

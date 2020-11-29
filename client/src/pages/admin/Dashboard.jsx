@@ -7,6 +7,7 @@ import CategoryComponent from "../../components/admin/category";
 import SubCategoryComponent from "../../components/admin/subCategory"
 import TagComponent from "../../components/admin/tag";
 import ProductComponent from "../../components/admin/product";
+import BrandComponent from "../../components/admin/brand";
 
 import styles from "../../sass/modules/userDashboard/userDash.module.scss";
 
@@ -21,7 +22,8 @@ function Dashboard() {
             case 1 : return  <CategoryComponent />;
             case 2 : return  <SubCategoryComponent />;
             case 3 : return  <TagComponent />;
-            case 4 : return  <ProductComponent />;
+            case 4 : return  <BrandComponent />;
+            case 5 : return  <ProductComponent />;
             case 6 : return  <ResetPasswordComponent />;
             default : return <> </>
         }

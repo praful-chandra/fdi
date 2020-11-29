@@ -9,13 +9,13 @@ const upload = multer({
       fileSize: 1048576
        * 2,
     },
-    fileFilter(req, file, next) {
-      if (!file.originalname.match(/\.(jpg|png|jpeg)$/)) {
-        return next(new Error("only .jpg,jpeg,png files are accepted"));
-      }
+    // fileFilter(req, file, next) {
+    //   if (!file.originalname.match(/\.(jpg|png|jpeg)$/)) {
+    //     return next(new Error("only .jpg,jpeg,png files are accepted"));
+    //   }
   
-      next(undefined, true);
-    },
+    //   next(undefined, true);
+    // },
   });
 
 //importing Middlewares
