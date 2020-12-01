@@ -7,6 +7,7 @@ import styles from "../../../sass/modules/adminDashboard/newProduct.module.scss"
 import { listAllCategories } from "../../../redux/actions/categoryActions";
 import { listAllSubCategories } from "../../../redux/actions/subCategoryActions";
 import { listAllTags } from "../../../redux/actions/tagActions";
+import { listBrands} from "../../../redux/actions/BrandActions";
 import { addProduct } from "../../../functions/product.function";
 
 import TopBar from "./topBar";
@@ -14,7 +15,7 @@ import Images from "./images";
 import NameModelSku from "./nameModelSku";
 import Highlights from "./highlights";
 import Description from "./description";
-import CategorySubcategory from "./category-subcategory";
+import CategorySubcategoryBrand from "./category-subcategory-brand";
 import Tags from "./tags";
 import Options from "./options";
 import Addons from "./addOns";
@@ -26,6 +27,7 @@ const initialState = {
   sku: "",
   highlights: [],
   description: "",
+  brand : '',
   category: null,
   subCategory: null,
   tags: [],
@@ -33,9 +35,8 @@ const initialState = {
   addOns: [],
 };
 
-import Resizer from "react-image-file-resizer";
 
-function index({ listAllCategories, listAllSubCategories, listAllTags }) {
+function index({ listAllCategories, listAllSubCategories, listAllTags,listBrands}) {
   const [newProduct, setNewProduct] = useState(initialState);
   const { addToast } = useToasts();
 
@@ -43,6 +44,7 @@ function index({ listAllCategories, listAllSubCategories, listAllTags }) {
     category: { categories },
     subCategory: { subCategories },
     tag: { tags },
+    brand : {brands}
   } = useSelector((state) => state);
 
   useEffect(() => {
@@ -55,23 +57,12 @@ function index({ listAllCategories, listAllSubCategories, listAllTags }) {
     if (tags.length === 0) {
       listAllTags();
     }
+    if (brands.length === 0) {
+      listBrands();
+    }
   }, []);
 
-  const resizeImage = (image, size) =>
-    new Promise((resolve) => {
-      Resizer.imageFileResizer(
-        image,
-        size,
-        size,
-        "PNG",
-        100,
-        0,
-        (uri) => {
-          resolve(uri);
-        },
-        "base64"
-      );
-    });
+
 
   const handleSubmit = async () => {
     const formData = new FormData();
@@ -114,11 +105,12 @@ function index({ listAllCategories, listAllSubCategories, listAllTags }) {
           <NameModelSku newProduct={newProduct} setNewProduct={setNewProduct} />
           <Highlights newProduct={newProduct} setNewProduct={setNewProduct} />
           <Description newProduct={newProduct} setNewProduct={setNewProduct} />
-          <CategorySubcategory
+          <CategorySubcategoryBrand
             newProduct={newProduct}
             setNewProduct={setNewProduct}
             categories={categories}
             subCategories={subCategories}
+            brands={brands}
           />
           <Tags
             newProduct={newProduct}
@@ -142,4 +134,5 @@ export default connect(null, {
   listAllCategories,
   listAllSubCategories,
   listAllTags,
+  listBrands
 })(index);

@@ -35,32 +35,36 @@ export const addBrand = (brand) => async (dispatch) => {
   try {
     const result = await axios.post("/brand", brand);
 
+    if(result.data.error){
+      throw new Error(result.data.error);
+    }
+
     dispatch({
       type: brandTypes.CREATE_BRAND,
       payload: result.data,
     });
 
-    return { success: result.data };
+    return { success: result.data.name };
   } catch (err) {
     return {
-      error: (err.response && err.response.data) || "Some error occured",
+      error: (err.response && err.response.data || err.message)  || "Some error occured",
     };
   } finally {
     dispatch(brandLoadingDone);
   }
 };
 
-export const updateBrand = (brand) => async (dispatch) => {
+export const updateBrand = (slug,brand) => async (dispatch) => {
   dispatch(brandLoading);
   try {
-    const result = await axios.patch(`/brand/${brand.slug}`, brand);
+    const result = await axios.patch(`/brand/${slug}`, brand);
 
     dispatch({
       type: brandTypes.UPDATE_BRAND,
       payload: result.data,
     });
 
-    return { success: result.data };
+    return { success: result.data.name };
   } catch (err) {
     return {
       error: (err.response && err.response.data) || "Some error occured",
@@ -80,7 +84,7 @@ export const removeBrand = (slug) => async (dispatch) => {
       payload: result.data._id,
     });
 
-    return { success: result.data };
+    return { success: result.data.name };
   } catch (err) {
     return {
       error: (err.response && err.response.data) || "Some error occured",

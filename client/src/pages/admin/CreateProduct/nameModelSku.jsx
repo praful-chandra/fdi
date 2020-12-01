@@ -25,6 +25,7 @@ function nameModelSku({newProduct , setNewProduct}) {
             <Form.Item required label="sku">
               <Input value={newProduct.sku} name="sku" onChange={handleChange} />
             </Form.Item>
+     
           </div>
         </>
     )

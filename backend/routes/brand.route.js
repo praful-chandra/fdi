@@ -12,8 +12,11 @@ const upload = multer({
 const { authCheck, adminCheck } = require("../middlewares/auth.middleware");
 
 //Controllers
-const {create,list}  = require("../controllers/brand.controller");
+const {create,list,update,remove}  = require("../controllers/brand.controller");
 
+router.get('/',list);
 router.post('/',authCheck,adminCheck,upload.single('logo'),create);
+router.patch('/:slug',authCheck,adminCheck,upload.single('logo'),update);
+router.delete('/:slug',authCheck,adminCheck,remove);
 
 module.exports = router;

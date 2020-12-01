@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, connect } from "react-redux";
 import { useToasts } from "react-toast-notifications";
 import { EditFilled, DeleteFilled } from "@ant-design/icons";
-import { Button } from "antd";
+import { Button,Popconfirm } from "antd";
 import { AppstoreAddOutlined } from "@ant-design/icons";
 
 import styles from "../../../sass/modules/adminDashboard/category.module.scss";
@@ -29,8 +29,6 @@ function Index({ deleteSubCategory ,listAllSubCategories  }) {
   }, []);
 
   const handleRemove = (cat) => {
-    const flag = confirm(`Do you want to delete ${cat.name}`);
-    if (flag) {
       deleteSubCategory(cat.slug).then((response) => {
         if (response.success) {
           addToast(`${response.success} Successfully deleted`, {
@@ -38,13 +36,12 @@ function Index({ deleteSubCategory ,listAllSubCategories  }) {
             autoDismiss: true,
           });
         } else {
-          addToast(`${result.error}`, {
+          addToast(`${response.error}`, {
             appearance: "error",
             autoDismiss: true,
           });
         }
       });
-    }
   };
 
   return (
@@ -92,7 +89,7 @@ function Index({ deleteSubCategory ,listAllSubCategories  }) {
                 <tr key={d._id}>
                   <th scope="row">{i + 1}</th>
                   <td>{d.name}</td>
-                  <td>{d.parent.name}</td>
+                  <td>{d.parent && d.parent.name}</td>
                   <td
                     className={`${styles.categoryAction}`}
                     onClick={() => setEdit(d)}
@@ -100,10 +97,16 @@ function Index({ deleteSubCategory ,listAllSubCategories  }) {
                     <EditFilled />
                   </td>
                   <td
-                    onClick={() => handleRemove(d)}
                     className={` text-danger , ${styles.categoryAction}`}
                   >
+                    <Popconfirm
+                      title="Are you sure to delete this ?"
+                      onConfirm={()=>handleRemove(d)}
+                      okText="Yes"
+                      cancelText="No"
+                    >
                     <DeleteFilled />
+                    </Popconfirm>
                   </td>
                 </tr>
               );

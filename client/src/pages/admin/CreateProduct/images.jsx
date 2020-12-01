@@ -12,11 +12,13 @@ function images({ newProduct, setNewProduct }) {
   const handleAddNewImage = (e) => {
       const file = e.target.files[0];
       
-    setNewProduct((oldProduct) => ({
-      ...oldProduct,
-      images: [...oldProduct.images, file],
-    }));
-    setPreviewImages(oi=>[...oi, URL.createObjectURL(file)])
+    if(file){
+      setNewProduct((oldProduct) => ({
+        ...oldProduct,
+        images: [...oldProduct.images, file],
+      }));
+      setPreviewImages(oi=>[...oi, URL.createObjectURL(file)])
+    }
   };
 
   const handleRemoveItem = index =>{

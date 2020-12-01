@@ -14,4 +14,4 @@ router.delete("/:slug",authCheck,adminCheck,remove);
 router.patch("/:slug",authCheck,adminCheck,update);
 
 
-module.exports = router;
+module.exports = router; 

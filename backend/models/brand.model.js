@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const BrandSchema = new mongoose.Schema(
   {
-    title: {
+    name: {
       type: String,
       required: true,
     },

@@ -22,6 +22,18 @@ exports.list = async (req, res) => {
   }
 };
 
+exports.remove = async (req, res) => {
+  try {
+    const { slug } = req.params;
+
+    const removedBrand = await Brand.findOneAndDelete({ slug });
+
+    res.json(removedBrand);
+  } catch (err) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 exports.create = async (req, res) => {
   try {
     const { name } = req.body;
@@ -30,8 +42,10 @@ exports.create = async (req, res) => {
 
     const slug = slugify(name);
 
-    if (await Brand.findOne({ slug }))
-      res.status(200).json({ error: "Brand name already exist" });
+    const oldBrand = await Brand.findOne({ slug });
+
+    if (oldBrand)
+      return res.status(200).json({ error: "Brand name already exist" });
 
     const logo = await resizeImage(req.file, 300);
 
@@ -43,6 +57,35 @@ exports.create = async (req, res) => {
 
     res.json(newBrand);
   } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+exports.update = async (req, res) => {
+  try {
+    const { slug } = req.params;
+    const { name } = req.body;
+
+    if (!name) res.status(200).json({ error: "Name is required" });
+
+    const logo = req.file ? await resizeImage(req.file, 300) : false;
+
+    const updatedBrand = await Brand.findOne({ slug });
+
+    if (!updatedBrand)
+      return res.status(304).json({ error: "Brand not found" });
+
+    updatedBrand.name = name;
+    updatedBrand.slug = slugify(name);
+
+    if (logo) updatedBrand.logo = logo;
+
+    await updatedBrand.save();
+
+    res.json(updatedBrand);
+  } catch (err) {
+    console.log(err);
     res.status(500).json({ error: "Internal server error" });
   }
 };

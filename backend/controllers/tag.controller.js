@@ -34,7 +34,7 @@ exports.add = async (req, res) => {
 exports.remove = async (req, res) => {
   try {
     const { slug } = req.params;
-    const deletedTag = await Tag.findByIdAndDelete({ slug });
+    const deletedTag = await Tag.findOneAndDelete({ slug });
     res.json(deletedTag);
   } catch (err) {
     res.status(500).json({ error: "Remove Tag failed" });

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, connect } from "react-redux";
 import { useToasts } from "react-toast-notifications";
 import { EditFilled, DeleteFilled } from "@ant-design/icons";
-import { Button } from "antd";
+import { Button,Popconfirm } from "antd";
 import { AppstoreAddOutlined } from "@ant-design/icons";
 import styles from "../../../sass/modules/adminDashboard/category.module.scss";
 
@@ -10,15 +10,32 @@ import CreateTagComponent from "./createTagComponent";
 import EditTagComponent from "./editTagComponent";
 import PopupComponent from "../../showPopup.component";
 
-import {listAllTags} from "../../../redux/actions/tagActions";
+import {listAllTags , deleteTag} from "../../../redux/actions/tagActions";
 
-function index( {listAllTags}) {
+function index( {listAllTags , deleteTag}) {
     const [create, setCreate] = useState(false);
     const [edit, setEdit] = useState(false);
 
     const { addToast } = useToasts();
 
     const {tag : {tags}} = useSelector(state => state);
+
+    const handleRemove = (cat) => {
+      console.log(cat);
+      deleteTag(cat.slug).then((response) => {
+        if (response.success) {
+          addToast(`${response.success} Successfully deleted`, {
+            appearance: "success",
+            autoDismiss: true,
+          });
+        } else {
+          addToast(`${response.error}`, {
+            appearance: "error",
+            autoDismiss: true,
+          });
+        }
+      });
+  };
 
     return (
         <div className={styles.wrapper}>
@@ -45,7 +62,7 @@ function index( {listAllTags}) {
             child={<EditTagComponent tag={edit} />}
             close={() => setEdit(false)}
           />
-        )}
+        )} 
   
         <h2>Tags</h2>
         <div className={styles.categoryList}>
@@ -71,10 +88,16 @@ function index( {listAllTags}) {
                       <EditFilled />
                     </td>
                     <td
-                      onClick={() => handleRemove(d)}
                       className={` text-danger , ${styles.categoryAction}`}
                     >
-                      <DeleteFilled />
+                       <Popconfirm
+                      title="Are you sure to delete this ?"
+                      onConfirm={()=>handleRemove(d)}
+                      okText="Yes"
+                      cancelText="No"
+                    >
+                    <DeleteFilled />
+                    </Popconfirm>
                     </td>
                   </tr>
                 );
@@ -86,4 +109,4 @@ function index( {listAllTags}) {
     )
 }
 
-export default connect(null, {listAllTags})(index);
+export default connect(null, {listAllTags,deleteTag})(index);

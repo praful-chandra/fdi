@@ -44,6 +44,11 @@ const ProductSchema = new mongoose.Schema({
     required: true,
     ref: "subCategory",
   },
+  brand : {
+    type : ObjectId,
+    required : true,
+    ref: "Brand"
+  },
   tags: [
     {
       type: ObjectId,

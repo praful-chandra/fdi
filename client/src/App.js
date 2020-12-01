@@ -21,7 +21,8 @@ import { currentUser } from "./functions/auth.function";
 import { signInUser } from "./redux/actions/userActions";
 import { listAllCategories } from "./redux/actions/categoryActions";
 import { listAllSubCategories } from "./redux/actions/subCategoryActions";
-import {listAllTags} from "./redux/actions/tagActions";
+import { listAllTags} from "./redux/actions/tagActions";
+import { listBrands} from "./redux/actions/BrandActions";
 
 //PrivateRoutes
 import UserPrivateRoute from "./components/routes/UserPrivate.route";
@@ -32,9 +33,11 @@ function App({
   categories,
   subCategories,
   tags,
+  brands,
   listAllCategories,
   listAllSubCategories,
-  listAllTags
+  listAllTags,
+  listBrands
 }) {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
@@ -55,6 +58,10 @@ function App({
     if (categories.length === 0) listAllCategories();
     if (subCategories.length === 0) listAllSubCategories();
     if (tags.length === 0) listAllTags();
+    if(brands.length === 0) listBrands();
+
+    
+    //cleanup
     return () => unsubscribe();
   }, []);
 
@@ -87,12 +94,14 @@ const mapStateToProps = (state) => ({
   user: state.user,
   categories: state.category.categories,
   subCategories: state.subCategory.subCategories,
-  tags : state.tag.tags
+  tags : state.tag.tags,
+  brands : state.brand.brands
 });
 
 export default connect(mapStateToProps, {
   signInUser,
   listAllCategories,
   listAllSubCategories,
-  listAllTags
+  listAllTags,
+  listBrands
 })(App);

@@ -50,7 +50,7 @@ export const deleteTag = (slug) => async (dispatch) => {
 
     dispatch({
       type: tagActionTypes.DELETE_TAG,
-      payload: deletedTag.data,
+      payload: deletedTag.data._id,
     });
 
     return { success: deletedTag.data.name };

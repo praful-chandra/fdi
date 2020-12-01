@@ -40,8 +40,24 @@
 
 .categoryList{
     font-size: 2rem;
+    width: 100%;
+    & table{
+        text-align: center;
+       & th , & td{
+        vertical-align: middle;
+       }
+
+       
+    }
     & thead th{
         font-size: 2rem;
+    }
+
+    & tbody{
+       
+        & tr:nth-child(even){
+           background-color: rgb(222, 240, 248);
+        }
     }
 }
 
@@ -50,3 +66,14 @@
 }
 
 
+.image{
+    width: 15rem;
+    height: 15rem;
+    object-fit: cover;
+    object-position: center;
+}
+
+.toUpload{
+    background-color: $primaryLight;
+    
+}

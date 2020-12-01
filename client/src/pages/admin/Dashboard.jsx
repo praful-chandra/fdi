@@ -12,10 +12,14 @@ import BrandComponent from "../../components/admin/brand";
 import styles from "../../sass/modules/userDashboard/userDash.module.scss";
 
 
-function Dashboard() {
-    const [selected, setSelected] = useState(4);
-    const {user} = useSelector(state =>state);
+function Dashboard(props) {
 
+    let page = props.location.search.split('=')[1];
+    page = parseInt(page);
+
+    const [selected, setSelected] = useState(page || 0);
+    const {user} = useSelector(state =>state);
+    
     const renderContent = () =>{
         switch(selected){
             case 0 : return  <HomeComponent />;
@@ -24,8 +28,8 @@ function Dashboard() {
             case 3 : return  <TagComponent />;
             case 4 : return  <BrandComponent />;
             case 5 : return  <ProductComponent />;
-            case 6 : return  <ResetPasswordComponent />;
-            default : return <> </>
+            case 7 : return  <ResetPasswordComponent />;
+            default : return <HomeComponent />;
         }
     }
 
