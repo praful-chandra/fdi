@@ -1,79 +1,113 @@
 //imports
 @import "../../index.scss";
 
+.wrapper {
+  // border: 1px solid;
+  width: 95%;
 
-.wrapper{
-    // border: 1px solid;
-    width: 95%;
+  & > h2 {
+    color: $primaryColor;
+    text-align: center;
+    font-size: 4rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
 
-    &>h2{  
-        color: $primaryColor;
-        text-align: center;
-        font-size: 4rem;
-        font-weight: 700;
-        text-transform: uppercase;
-    }   
+  & > span {
+    position: fixed;
+    right: 2rem;
+    bottom: 2rem;
+  }
+}
 
-    &>span{
-        position: fixed;
-        right: 2rem;
-        bottom: 2rem;
+.addBtn {
+  background-color: $primaryColor !important;
+  color: $white !important;
+
+  &:hover {
+    color: $primaryColor !important ;
+    background-color: $white !important;
+  }
+}
+
+.createCategory {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.categoryList {
+  font-size: 2rem;
+  width: 100%;
+  & table {
+    text-align: center;
+    & th,
+    & td {
+      vertical-align: middle;
     }
-}
-
-.addBtn{
-    background-color: $primaryColor !important;
-    color: $white !important;
-    
-    &:hover{
-        color: $primaryColor !important ;
-        background-color: $white !important;
-    }
-   
-}
-
-.createCategory{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.categoryList{
+  }
+  & thead th {
     font-size: 2rem;
+  }
+
+  & tbody {
+    & tr:nth-child(even) {
+      background-color: rgb(222, 240, 248);
+    }
+  }
+}
+
+.categoryAction {
+  cursor: pointer;
+}
+
+.image {
+  width: 15rem;
+  object-fit: cover;
+  object-position: center;
+}
+
+.toUpload {
+  background-color: $primaryLight;
+}
+
+.productCard {
+  width: 35rem;
+  border-radius: 10px;
+  box-shadow: 0 0 15px $mediumGrey;
+  padding-bottom: 3rem;
+  & img {
     width: 100%;
-    & table{
-        text-align: center;
-       & th , & td{
-        vertical-align: middle;
-       }
-
-       
-    }
-    & thead th{
-        font-size: 2rem;
-    }
-
-    & tbody{
-       
-        & tr:nth-child(even){
-           background-color: rgb(222, 240, 248);
-        }
-    }
-}
-
-.categoryAction{
-    cursor: pointer;
-}
-
-
-.image{
-    width: 15rem;
-    height: 15rem;
+    max-height: 25rem;
+    border-radius: 10px 10px 0 0;
     object-fit: cover;
     object-position: center;
-}
+  }
 
-.toUpload{
-    background-color: $primaryLight;
-    
+  & p{
+      margin: 2rem 0;
+      font-size: 2rem;
+      font-weight: 500;
+      padding: 1rem;
+  }
+
+  &>div{
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+
+      &>span{
+          cursor: pointer;
+          font-size: 3rem;
+          &:first-child{
+              color: $primaryColor;
+          }
+          &:nth-child(2){
+              color: $darkGrey;
+          }
+          &:last-child{
+              color: red;
+          }
+      }
+  }
 }

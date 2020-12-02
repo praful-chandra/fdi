@@ -61,7 +61,7 @@ function EditBrandComponent({ oldBrand , updateBrand, brand }) {
             type="text"
             name="name"
             className="form-control"
-            placeholder="Category name"
+            placeholder="Brand name"
             required
             value={name}
             onChange={(e) => setName(e.target.value)}

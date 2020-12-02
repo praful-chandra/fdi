@@ -57,14 +57,13 @@ function CreateBrandComponent({ addBrand, brand }) {
             type="text"
             name="name"
             className="form-control"
-            placeholder="Category name"
+            placeholder="Brand name"
             required
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
 
-          <label htmlFor="logo-in">
-                
+          <label htmlFor="logo-in" style={{border : `1px solid`, minHeight  : `5rem`}}>
                 <img src={image.preview} className={`${styles.image} ${styles.toUpload}`}/>
               <input type="file" name="logo" id="logo-in" hidden onChange={handleLogo}/>
           </label>

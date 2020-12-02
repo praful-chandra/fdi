@@ -5,9 +5,11 @@ const sharp = require("sharp");
 const resizeImage = (image, size) =>
   new Promise(async (resolve) => {
     const result = await sharp(image.buffer)
-      .resize({ width: size, height: size })
       .png()
       .toBuffer();
+
+      if(size) result.resize({ width: size, height: size })
+
 
     resolve(result);
   });
@@ -47,7 +49,7 @@ exports.create = async (req, res) => {
     if (oldBrand)
       return res.status(200).json({ error: "Brand name already exist" });
 
-    const logo = await resizeImage(req.file, 300);
+    const logo = await resizeImage(req.file);
 
     const newBrand = await new Brand({
       name,

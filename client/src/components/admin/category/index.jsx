@@ -7,7 +7,7 @@ import { AppstoreAddOutlined, EditFilled, DeleteFilled } from "@ant-design/icons
 import styles from "../../../sass/modules/adminDashboard/category.module.scss";
 import CreateCategoryComponent from "./createCategory.component";
 import EditCategoryComponent from "./editCategory.component";
-import PopupComponent from "../../showPopup.component";
+import PopupComponent from "../../showPopup.component"; 
 
 import {
   listAllCategories,
