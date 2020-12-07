@@ -22,9 +22,12 @@ const upload = multer({
 const { authCheck, adminCheck } = require("../middlewares/auth.middleware");
 
 //importing controllers
-const {add,list} = require("../controllers/product.controller");
+const {add, list, get, update , remove } = require("../controllers/product.controller");
 
 router.get("/",list);
+router.get('/:slug',get);
 router.post("/",authCheck,adminCheck,upload.array('images[]',20),add);
+router.patch("/:slug",authCheck,adminCheck,upload.array('images[]',20),update);  
+router.delete("/:slug",authCheck,adminCheck,remove);  
 
-module.exports = router;
+module.exports = router; 

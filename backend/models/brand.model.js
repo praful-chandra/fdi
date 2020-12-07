@@ -24,10 +24,11 @@ const BrandSchema = new mongoose.Schema(
 
 BrandSchema.methods.toJSON = function () {
   const brand = this.toObject();
-
   brand.logo = `/api/serveimage/brand/${brand._id}`;
 
   return brand;
 };
+
+
 
 module.exports = mongoose.model("Brand", BrandSchema);

@@ -14,7 +14,8 @@ import ResetPassword from "./pages/auth/ResetPassword";
 import Dashboard from "./pages/user/Dashboard";
 import AdminDash from "./pages/admin/Dashboard";
 import CreateProduct from "./pages/admin/CreateProduct/index";
-
+import EditProduct from "./pages/admin/editProduct/index";
+  
 import { auth } from "./firebase";
 
 import { currentUser } from "./functions/auth.function";
@@ -84,6 +85,11 @@ function App({
           exact
           path="/admin/newproduct"
           component={CreateProduct}
+        />
+         <AdminPrivateRoute
+          exact
+          path="/admin/editProduct/:slug"
+          component={EditProduct}
         />
       </Switch>
     </>

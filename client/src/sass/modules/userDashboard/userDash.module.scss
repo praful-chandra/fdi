@@ -9,8 +9,12 @@
 
 .navWrap {
     padding-top: 3rem;
-
+    background-color: $lightGrey;   
+    min-height: 100vh;
+    height: max-content;
     width: 25%;
+    position: sticky;
+    top: 0;
     //    border-right: 1px solid $darkGrey;
 }
 
@@ -44,7 +48,6 @@
 
 .nav {
     width: 100%;
-
     &Active {
         background-color: $primaryColor;
         color: $white !important;

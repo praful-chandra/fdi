@@ -65,6 +65,16 @@ function index({ listAllCategories, listAllSubCategories, listAllTags,listBrands
 
 
   const handleSubmit = async () => {
+    setNewProduct((oldProd) => ({
+      ...oldProd,
+      highlights: oldProd.highlights.filter((h) => h !== ""),
+      options: oldProd.options.filter((o) => o.title !== ""),
+      options: oldProd.options.map((o) => {
+        o.color = o.color.filter((c) => c.name !== "" && c.hex !== "");
+        return o;
+      }),
+      addOns : oldProd.options.filter(add=> add.title !== "")
+    }));
     const formData = new FormData();
 
     for (const [key, value] of Object.entries(newProduct)) {

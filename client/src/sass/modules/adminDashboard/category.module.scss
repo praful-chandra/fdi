@@ -71,43 +71,24 @@
   background-color: $primaryLight;
 }
 
-.productCard {
-  width: 35rem;
-  border-radius: 10px;
-  box-shadow: 0 0 15px $mediumGrey;
-  padding-bottom: 3rem;
-  & img {
-    width: 100%;
-    max-height: 25rem;
-    border-radius: 10px 10px 0 0;
-    object-fit: cover;
-    object-position: center;
-  }
 
-  & p{
-      margin: 2rem 0;
-      font-size: 2rem;
-      font-weight: 500;
-      padding: 1rem;
-  }
+.productsWrapper{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
 
-  &>div{
-      display: flex;
-      align-items: center;
-      justify-content: space-evenly;
+.pagination{
+  @include totalCenter();
+  margin: 4rem 0;   
+}
 
-      &>span{
-          cursor: pointer;
-          font-size: 3rem;
-          &:first-child{
-              color: $primaryColor;
-          }
-          &:nth-child(2){
-              color: $darkGrey;
-          }
-          &:last-child{
-              color: red;
-          }
-      }
+@media only screen and (max-width : 800px){
+  .productsWrapper{
+    justify-content: center;
+    &>div{
+      margin:2rem;
+    }
   }
 }
