@@ -99,12 +99,25 @@ exports.add = async (req, res) => {
 
     res.json(newProduct);
   } catch (err) {
-    // console.log(err);
+    console.log(err);
     res.status(500).json({ error: "Product creation failed" });
   }
 };
 
-exports.update = async (req, res) => {
+exports.devAdd = async (req, res) => {
+  try {
+    
+    const newProduct = await new Product({...req.body,slug:slugify(req.body.name)}).save();
+
+    res.json(newProduct);
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: err});
+  }
+};
+
+exports.update = async (req, res ,err ) => {
   try {
     const { slug } = req.params;
 

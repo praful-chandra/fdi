@@ -75,6 +75,8 @@ function Index(props) {
     updateProduct(product.slug , formData).then(response => {
       alert("successfully Updated");
       props.history.push(`/admin/dashboard`)
+    }).catch(err =>{
+      console.log(err.response.data);
     });
     
   };
