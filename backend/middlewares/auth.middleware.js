@@ -1,11 +1,9 @@
 const admin = require("../firebase");
 const User = require("../models/user.model");
 
-exports.authCheck = async (req, res, next) => {
-  const token = req.headers.authtoken;
-
-  
+exports.authCheck = async (req, res, next) => {  
   try{
+    const token = req.headers.authtoken;
     if(!token) throw Error("token required");
 
     const firebaseUser = await admin.auth().verifyIdToken(token);

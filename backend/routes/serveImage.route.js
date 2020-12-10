@@ -13,7 +13,7 @@ router.get("/product/:id/:index/:type",async(req,res)=>{
          const img = Buffer.from(imageBuffer,'base64');
         
          res.writeHead(200, {
-            'Content-Type': 'image/png',
+            'Content-Type': 'image/jpg',
             'Content-Length': img.length
           });
           res.end(img); 

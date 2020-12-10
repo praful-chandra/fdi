@@ -93,7 +93,7 @@ function options({ product, setProduct }) {
   };
   return (
     <Form.Item label="Options">
-      {product.options.map((option, index) => {
+      {product.options && product.options.map((option, index) => {
         return (
           <div className={styles.listWithAction} key={`ooptioins ${index}`}>
             <div className={styles.option}>

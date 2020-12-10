@@ -5,7 +5,7 @@ import { useToasts } from "react-toast-notifications";
 
 import styles from "../../../sass/modules/adminDashboard/newProduct.module.scss";
 
-import { getProduct , updateProduct } from "../../../functions/product.function";
+import { getProduct, updateProduct } from "../../../functions/product.function";
 
 import TopBar from "./topBar";
 import Images from "./images";
@@ -21,6 +21,8 @@ function Index(props) {
   const slug = props.match.params.slug;
   const [product, setProduct] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  const { addToast } = useToasts();
 
   const {
     category: { categories },
@@ -45,42 +47,42 @@ function Index(props) {
     // removing blank inputs
     setProduct((oldProd) => ({
       ...oldProd,
-      images : oldProd.images.filter(i => !i.thumb),
+      images: oldProd.images.filter(i => !i.thumb),
       highlights: oldProd.highlights.filter((h) => h !== ""),
       options: oldProd.options.filter((o) => o.title !== ""),
       options: oldProd.options.map((o) => {
         o.color = o.color.filter((c) => c.name !== "" && c.hex !== "");
         return o;
       }),
-      addOns : oldProd.options.filter(add=> add.title !== "")
+      addOns: oldProd.options.filter(add => add.title !== "")
     }));
 
     const formData = new FormData();
 
     for (const [key, value] of Object.entries(product)) {
-      if(key !== 'images')
-      formData.append(key, JSON.stringify(value));
+      if (key !== 'images')
+        formData.append(key, JSON.stringify(value));
     }
 
     product.images.forEach((image) => {
-      if(!image.thumb){
+      if (!image.thumb) {
         formData.append("images[]", image);
       }
     });
 
-     //!DEBUG PURPOSE
+    //!DEBUG PURPOSE
     //   for(var pair of formData.entries()) {
     //     console.log(pair[0]+ ', '+ pair[1]);
     //  }
-    updateProduct(product.slug , formData).then(response => {
+    updateProduct(product.slug, formData).then(response => {
       alert("successfully Updated");
       props.history.push(`/admin/dashboard`)
-    }).catch(err =>{
-      console.log(err.response.data);
+    }).catch(err => {
+      addToast("Some error occured !", { appearance: "error", autoDismiss: true })
     });
-    
+
   };
-  
+
   if (loading) return <h1>Loading</h1>;
   else if (!product) return <h1>404</h1>;
   else

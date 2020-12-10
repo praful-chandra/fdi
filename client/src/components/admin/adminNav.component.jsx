@@ -9,6 +9,7 @@ function adminNavComponent({ user, selected, setSelected }) {
     "Tags",
     "Brands",
     "products",
+    "Deal Of The Week",
     "coupons",
     "change password",
   ];

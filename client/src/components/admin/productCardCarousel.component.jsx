@@ -53,14 +53,14 @@ function productCardCarouselComponent({ images }) {
     {...settings}
     >
       {images.map((im, i) => (
-        <img
+          <img
           key={`productimagescaresol ${i}`}
           src={`${process.env.REACT_APP_API_ROOT_URI}${im.thumb}`}
           alt="tv1"
         />
       ))}
     </Carousel>
-  );
+  );    
 }
 
 export default productCardCarouselComponent;

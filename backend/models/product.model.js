@@ -25,13 +25,13 @@ const ProductSchema = new mongoose.Schema({
   },
 
   images: [{
-    thumb : {
-      type : Buffer,
-      required : true
+    thumb: {
+      type: Buffer,
+      required: true
     },
-    full:{
-        type : Buffer,
-        required : true
+    full: {
+      type: Buffer,
+      required: true
     }
   }],
   category: {
@@ -44,40 +44,15 @@ const ProductSchema = new mongoose.Schema({
     required: true,
     ref: "subCategory",
   },
-  brand : {
-    type : ObjectId,
-    required : true,
+  brand: {
+    type: ObjectId,
+    required: true,
     ref: "Brand"
   },
   tags: [
     {
       type: ObjectId,
       ref: "Tag",
-    },
-  ],
-  options: [
-    {
-      title: {
-        type: String,
-        required: true,
-      },
-      color: [
-        {
-          name: {
-            type: String,
-            required: true,
-          },
-          price: {
-            type: Number,
-            required: true,
-          },
-          hex: {
-            type: String,
-            required: true,
-          },
-          quantity: { type: Number, default: 0 },
-        },
-      ],
     },
   ],
   addOns: [
@@ -87,19 +62,32 @@ const ProductSchema = new mongoose.Schema({
       details: String,
     },
   ],
+  options :[{
+    type : ObjectId,
+    ref:'ProductVariance'
+  }],
+  maxPrice: {
+    type: Number,
+    required: true
+  },
+  minPrice: {
+    type: Number,
+    required: true
+  }
 });
 
 ProductSchema.methods.toJSON = function () {
   const product = this.toObject();
 
-  product.images = product.images.map((data,i) => ({
-    thumb :  `/api/serveImage/product/${product._id}/${i}/thumb`,
-    full :  `/api/serveImage/product/${product._id}/${i}/full`,
+  product.images = product.images.map((data, i) => ({
+    thumb: `/api/serveImage/product/${product._id}/${i}/thumb`,
+    full: `/api/serveImage/product/${product._id}/${i}/full`,
   }));
 
 
   return product;
+
+
 };
 
 module.exports = mongoose.model("Product", ProductSchema);
- 

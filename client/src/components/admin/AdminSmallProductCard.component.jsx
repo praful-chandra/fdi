@@ -1,11 +1,12 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { EditFilled, DeleteFilled } from "@ant-design/icons";
+import { Button, Popconfirm } from "antd";
 import priceFormatter from "../../functions/priceFormatter";
 import ProductCardCarousel from "./productCardCarousel.component";
 import styles from "../../sass/modules/smallProductCard.module.scss";
 
-function AdminSmallProductCard({ product, remove}) {
+function AdminSmallProductCard({ product, remove }) {
   return (
     <>
       <div
@@ -19,16 +20,23 @@ function AdminSmallProductCard({ product, remove}) {
           </div>
           <div className={styles.cardContentsBottom}>
             <div>
-              <span>{priceFormatter(Math.round(Math.random() * 155014))}</span>
             </div>
             <div>
               <div className={styles.addCart} style={{ color: "grey" }}>
-               <Link to={`/admin/editProduct/${product.slug}`}>
-               <EditFilled />
-               </Link>
+                <Link to={`/admin/editProduct/${product.slug}`}>
+                  <EditFilled />
+                </Link>
               </div>
               <div className={styles.addCart} style={{ color: "red" }}>
-                <DeleteFilled onClick={()=>remove(product.slug)} />
+                <Popconfirm
+                  title="Are you sure to delete this ?"
+                  onConfirm={() => remove(product.slug)}
+                  okText="Yes"
+                  cancelText="No"
+                >
+                  <DeleteFilled />
+                </Popconfirm>
+
               </div>
             </div>
           </div>
