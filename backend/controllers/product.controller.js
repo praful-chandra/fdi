@@ -1,9 +1,11 @@
 const slugify = require("slugify");
 const Product = require("../models/product.model");
+const SubCat = require("../models/subCategory.model");
 const ProductVariance = require("../models/productVariance.model");
 const ProductVarianceColor = require("../models/productVarianceColor.model");
 const Deal = require("../models/dealOfTheWeek.model");
 const sharp = require("sharp");
+var uniqid = require('uniqid');
 
 const resizeImage = (image, size) =>
   new Promise(async (resolve) => {
@@ -18,12 +20,41 @@ const resizeImage = (image, size) =>
     resolve(result);
   });
 
+const skuify = (subCat) => {
+  return uniqid.time(`${subCat.slice(0, 3)}-`);
+}
+
 exports.list = async (req, res) => {
   try {
     let { limit, skip, search } = req.query;
     skip = limit * skip;
+    let searchQuery = {};
+    if (search) {
+      search = JSON.parse(search);
+      Object.keys(search).map((_, i) => {
+        const name = Object.keys(search)[i];
+        const value = search[Object.keys(search)[i]]
+        if (value) {
+          if (name === 'name') {
+            searchQuery = {
+              ...searchQuery,
+              [name]: {
+                "$regex": value,
+                "$options": "i"
+              }
+            }
+          } else {
+            searchQuery = {
+              ...searchQuery,
+              [name]: value
+            }
+          }
+        }
+      })
 
-    let products = await Product.find()
+    }
+    console.log(searchQuery);
+    let products = await Product.find(searchQuery)
       .limit(parseInt(limit))
       .skip(parseInt(skip))
       .populate(["tags", "category", "subCategory"])
@@ -56,7 +87,6 @@ exports.add = async (req, res) => {
   let newBody = {
     name: "",
     model: "",
-    sku: "",
     highlights: "",
     description: "",
     category: "",
@@ -74,7 +104,6 @@ exports.add = async (req, res) => {
   let {
     name,
     model,
-    sku,
     highlights,
     description,
     category,
@@ -97,7 +126,6 @@ exports.add = async (req, res) => {
       images,
       slug,
       model,
-      sku,
       highlights,
       description,
       category,
@@ -113,10 +141,13 @@ exports.add = async (req, res) => {
     let variances = [];
     let colors = [];
 
+    const subCatName = (await SubCat.findById(newProduct.subCategory)).name;
+
     options.map(async opt => {
       const newVariance = new ProductVariance({
         product: newProduct._id,
-        title: opt.title
+        title: opt.title,
+        slug: slugify(`${newProduct.name}-${opt.title}`)
       });
       variances.push(newVariance._id);
       colors = [];
@@ -127,6 +158,8 @@ exports.add = async (req, res) => {
         const newColor = new ProductVarianceColor({
           product: newProduct._id,
           variance: newVariance._id,
+          sku: skuify(subCatName),
+          slug: slugify(`${newProduct.name}-${opt.title}-${col.name}`),
           ...col
         });
         colors.push(newColor._id);
@@ -183,7 +216,6 @@ exports.update = async (req, res) => {
     let newBody = {
       name: "",
       model: "",
-      sku: "",
       highlights: "",
       description: "",
       category: "",
@@ -212,7 +244,8 @@ exports.update = async (req, res) => {
 
     newBody.images = images;
     newBody.slug = slugify(newBody.name);
-    
+
+    const subCatName = (await SubCat.findById(newBody.subCategory)).name;
 
 
     const updatedProduct = await Product.findOneAndUpdate({ slug }, newBody, {
@@ -223,15 +256,16 @@ exports.update = async (req, res) => {
     await ProductVarianceColor.deleteMany({ product: updatedProduct._id })
 
     let maxPrice = 0;
-    let minPrice = 0;
+    let minPrice = Infinity;
     let variances = [];
     let colors = [];
 
 
-     options.map(async opt => {
+    options.map(async opt => {
       const newVariance = new ProductVariance({
         product: updatedProduct._id,
-        title: opt.title
+        title: opt.title,
+        slug: slugify(`${updatedProduct.name}-${opt.title}`)
       });
       variances.push(newVariance._id);
       colors = [];
@@ -240,11 +274,14 @@ exports.update = async (req, res) => {
         if (col.price > maxPrice) maxPrice = col.price;
         if (col.price < minPrice) minPrice = col.price;
         const newColor = new ProductVarianceColor({
-          product: updatedProduct._id,
           variance: newVariance._id,
+          product: updatedProduct._id,
+          sku: skuify(subCatName),
+          slug: slugify(`${updatedProduct.name}-${opt.title}-${col.name}`),
           ...col
         });
         colors.push(newColor._id);
+        newColor.variance = newVariance._id;
         await newColor.save();
       })
 
@@ -270,9 +307,9 @@ exports.get = async (req, res) => {
 
   try {
     let product = await Product.findOne({ slug })
-      .populate(["tags", "category", "subCategory","options"])
+      .populate(["tags", "category", "subCategory", "options"])
       .populate("brand", ["name", "_id", "slug"])
-      .populate({path : "options" , populate :{path : 'color'}});
+      .populate({ path: "options", populate: { path: 'color' } });
 
     product.brand._doc.logo = `/api/serveimage/brand/${product.brand._doc._id}`;
 
@@ -296,3 +333,4 @@ exports.remove = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+

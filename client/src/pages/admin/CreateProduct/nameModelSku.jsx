@@ -18,15 +18,11 @@ function nameModelSku({newProduct , setNewProduct}) {
             <Input value={newProduct.name} name="name" onChange={handleChange} />
           </Form.Item>
 
-          <div className={styles.flexHorizontal}>
             <Form.Item required label="model">
               <Input value={newProduct.model} name="model" onChange={handleChange} />
             </Form.Item>
-            <Form.Item required label="sku">
-              <Input value={newProduct.sku} name="sku" onChange={handleChange} />
-            </Form.Item>
+           
      
-          </div>
         </>
     )
 }

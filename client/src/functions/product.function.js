@@ -22,8 +22,7 @@ export const updateProduct = async (slug,product) =>{
 
 export const listProduct = async (limit, skip, search) => {
   try {
-    const res = await axios.get("/product", { params: { limit, skip } });
-    console.log(res.data);
+    const res = await axios.get("/product", { params: { limit, skip ,search } });
     return { success: res.data };
   } catch (err) {
     return { error: "Some error occured" };

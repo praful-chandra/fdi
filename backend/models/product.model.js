@@ -16,7 +16,6 @@ const ProductSchema = new mongoose.Schema({
     required: true,
   },
   model: { type: String, required: true },
-  sku: { type: String, required: true },
   highlights: Array,
   description: {
     type: String,

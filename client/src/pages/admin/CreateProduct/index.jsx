@@ -24,7 +24,6 @@ const initialState = {
   images: [],
   name: "",
   model: "",
-  sku: "",
   highlights: [],
   description: "",
   brand : '',

@@ -72,8 +72,23 @@ exports.read = async (req, res) => {
       const deleted = await Subcategory.findOneAndDelete({ slug });
       res.json(deleted);
     } catch (err) {
-      console.log(err);
-
+      // console.log(err);
       res.status(500).json({ error: "delete sub category failed!" });
     }
   };
+
+  exports.getByCategory = async(req,res)=>{
+    try{
+      const {category} = req.query;
+      let serchQuery = {}
+      if(category) serchQuery['parent'] = category
+
+      console.log(serchQuery);
+      const subs = await Subcategory.find({...serchQuery});
+      res.json(subs);
+
+    }catch (err) {
+      console.log(err);
+      res.status(500).json({ error: "Internal server Error" });
+    }
+  }

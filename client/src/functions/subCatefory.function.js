@@ -9,3 +9,13 @@ export const getSubCategory = async slug =>{
         return {error : "Error occured while fetching data"}
     }
 }
+
+export const getSubCategoryByCategory = async category =>{
+    try{
+        const subCategory = await axios.get(`/subcategory/byCategory?category=${category || ''}`);
+        return subCategory.data;
+    }
+    catch(err){
+        return {error : "Error occured while fetching data"}
+    }
+}

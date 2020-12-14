@@ -12,10 +12,12 @@ const {
     read,
     remove,
     list,
+    getByCategory
   } = require("../controllers/subcategory.controller");
   
   //routes
   router.get("/", list);
+  router.get("/bycategory",getByCategory);
   router.get("/:slug", read);
   router.post("/", authCheck, adminCheck, create);
   router.patch("/:slug", authCheck, adminCheck, update);

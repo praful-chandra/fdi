@@ -1,0 +1,74 @@
+//imports
+@import "../../index.scss";
+
+.indexWrapper{
+    width: 100%;
+}
+
+.wrapper{
+    width: 100%;
+    @include totalCenter();
+    padding: 2rem;
+
+}
+
+.form{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    &>*{
+        margin: 2rem;
+    }
+}
+
+.heading{
+    color: $primaryColor;
+    font-size: 3rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.dealsListWrapper{
+    display: flex;
+    flex-wrap: wrap;
+    &>div{
+        margin: 2rem;
+        padding: 1rem;
+    }
+}
+
+
+.selectColor{
+    background-color: #fff;
+    min-width: 70vw;
+    min-height: 70vh;
+    padding: 2rem;
+    &Head{
+        text-align: center;
+        font-size: 2rem;
+        color: $primaryColor;
+    }
+
+    &Body{
+        margin-top: 2rem;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+    }
+
+    &Image{
+        width: 30%;
+    }
+    &Data{
+        width: 65%;
+    }
+    &Option{   
+        &>p{
+            font-weight: 500;
+            font-size: 2rem;
+        }
+    }
+}

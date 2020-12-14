@@ -3,15 +3,18 @@ const mongoose =  require('mongoose');
 const DealOfTheDaySchema = new mongoose.Schema({
     product :{
         type : mongoose.Types.ObjectId,
-        ref:'Product',
+        ref:'ProductVarianceColor',
         unique : true,
         index : true
     },
     discountPrice :{
         type : Number,
-        required : true
+        required : true,
+        default : 0
     }
+    
 },{
+    
     timestamps : true
 })
 

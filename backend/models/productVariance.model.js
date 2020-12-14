@@ -6,6 +6,13 @@ const ProductvarianceSchema = new mongoose.Schema({
         type : mongoose.Types.ObjectId,
         ref: 'Product'
     },
+    slug:{
+      type : String,
+      required : true,
+    lowercase: true,
+    unique : true,
+      index : true
+    },
     title: {
       type: String,
       required: true,
