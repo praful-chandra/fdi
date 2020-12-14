@@ -10,6 +10,8 @@ function adminNavComponent({ user, selected, setSelected }) {
     "Brands",
     "products",
     "Deal Of The Week",
+    "Best sellers",
+    "FDI Recommended",
     "coupons",
     "change password",
   ];

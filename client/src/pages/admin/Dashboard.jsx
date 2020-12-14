@@ -9,6 +9,8 @@ import TagComponent from "../../components/admin/tag";
 import ProductComponent from "../../components/admin/product";
 import BrandComponent from "../../components/admin/brand";
 import DealOfTheWeekComponent from "../../components/admin/dealoftheweek";
+import BestSellerComponent from "../../components/admin/bestSellers";
+import FDIRecommendedComponent from "../../components/admin/fdiRecommended";
 
 import styles from "../../sass/modules/userDashboard/userDash.module.scss";
 
@@ -18,7 +20,7 @@ function Dashboard(props) {
     let page = props.location.search.split('=')[1];
     page = parseInt(page);
 
-    const [selected, setSelected] = useState(page || 6);
+    const [selected, setSelected] = useState(page || 8);
     const { user } = useSelector(state => state);
 
     const renderContent = () => {
@@ -30,7 +32,9 @@ function Dashboard(props) {
             case 4: return <BrandComponent />;
             case 5: return <ProductComponent />;
             case 6: return <DealOfTheWeekComponent />;
-            case 8: return <ResetPasswordComponent />;
+            case 7: return <BestSellerComponent />;
+            case 8: return <FDIRecommendedComponent />;
+            case 10: return <ResetPasswordComponent />;
             default: return <HomeComponent />;
         }
     }
