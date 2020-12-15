@@ -54,3 +54,13 @@ export const deleteProduct = async(slug) =>{
   }
 
 }
+
+export const getFromColor = async (slug) =>{
+  try {
+    const res = await axios.get(`/product/fromcolor/${slug}`);
+    if(!res.error)
+    return res.data;
+  } catch (err) {
+    return { error: "Some error occured" };
+  }
+}

@@ -6,9 +6,10 @@ const router = express.Router();
 const { authCheck, adminCheck } = require("../middlewares/auth.middleware");
 
 //Controllers
-const {add,list,get} = require("../controllers/fdiRecommended.controller");
+const {add,list,get,status} = require("../controllers/fdiRecommended.controller");
 
 router.get("/",list);
+router.get("/status/:product",status);
 router.get("/:product",get);
 router.post("/:product",authCheck,adminCheck,add);
 

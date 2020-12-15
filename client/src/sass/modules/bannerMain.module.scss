@@ -25,6 +25,7 @@
       & img{
             height: 100%;
             max-width: 100%;
+            object-fit: contain;
         }
     }
 
@@ -41,7 +42,7 @@
       color: rgb(63, 63, 63);
       max-width: 70%;
       margin-bottom: 2rem;
-  
+      text-align: left;
   }
 }
 

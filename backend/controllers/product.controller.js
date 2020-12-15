@@ -334,3 +334,24 @@ exports.remove = async (req, res) => {
   }
 };
 
+exports.getfromcolor = async (req, res) => {
+  const { slug } = req.params;
+
+  try {
+    let selectedProduct = await ProductVarianceColor.findOne({ slug })
+                                .populate('variance')
+                                .populate({path : "variance" , populate : {path : "color"}});
+                                
+    let product = await Product.findById(selectedProduct.product)
+                        .populate(["tags", "category", "subCategory", "options"])
+                        .populate("brand", ["name", "_id", "slug"])
+                        .populate({ path: "options", populate: { path: 'color' } });;
+
+     product.brand._doc.logo = `/api/serveimage/brand/${product.brand._doc._id}`;
+
+    res.json({ product, selectedProduct });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}

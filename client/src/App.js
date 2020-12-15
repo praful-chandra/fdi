@@ -15,6 +15,8 @@ import Dashboard from "./pages/user/Dashboard";
 import AdminDash from "./pages/admin/Dashboard";
 import CreateProduct from "./pages/admin/CreateProduct/index";
 import EditProduct from "./pages/admin/editProduct/index";
+
+import SingleProductPage from "./pages/singleProduct.page";
   
 import { auth } from "./firebase";
 
@@ -66,11 +68,12 @@ function App({
     return () => unsubscribe();
   }, []);
 
-  return (
+  return (   
     <>
       <Header />
       <Switch>
         <Route exact path="/" component={Home} />
+        <Route exact path="/product/:slug" component={SingleProductPage} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/register/complete" component={RegisterComplete} />

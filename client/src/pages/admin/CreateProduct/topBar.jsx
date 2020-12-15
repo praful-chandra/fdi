@@ -9,7 +9,7 @@ function topBar() {
   return (
     <div className={styles.topBar}>
       <div>
-       <Link to="/admin/dashboard" >
+       <Link to="/admin/dashboard?id=5" >
        <HomeFilled style={{color :'#fff'}} />  
        </Link>
       </div>

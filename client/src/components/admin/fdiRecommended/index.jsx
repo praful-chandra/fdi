@@ -55,7 +55,7 @@ const handleDelete = async product =>{
                            </td>
                            <td>
                                {
-                                  ` ${b.product.product.name} ${b.product.variance.title})(${b.product.name})`
+                                  ` ${b.product.product.name} (${b.product.variance.title})(${b.product.name})`
                                }
                            </td>
                            <td>

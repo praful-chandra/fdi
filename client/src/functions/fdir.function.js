@@ -1,6 +1,6 @@
 import axios from "axios";
-   
-export const getFdiR= async product => {
+
+export const getFdiR = async product => {
     try {
         const fdir = await axios.get(`/fdir/${product}`);
         return fdir.data;
@@ -27,3 +27,15 @@ export const addFdiR = async product => {
     }
 }
 
+export const statusFdiR = async product => {
+    try {
+        const fdir = await axios.get(`/fdir/${product}`);
+        if (fdir.data)
+            return true;
+        else {
+            return false;
+        }
+    } catch (err) {
+        return { error: "Some error had occured" }
+    }
+}

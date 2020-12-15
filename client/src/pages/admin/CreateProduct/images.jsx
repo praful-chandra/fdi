@@ -1,12 +1,18 @@
-import React,{useState} from "react";
+import React,{useState,useEffect} from "react";
 
 import { PlusSquareFilled } from "@ant-design/icons";
 
 import styles from "../../../sass/modules/adminDashboard/newProduct.module.scss";
 
-function images({ newProduct, setNewProduct }) {
+function images({ newProduct, setNewProduct  }) {
 
   const [previewImages,setPreviewImages] = useState([]);
+  
+  useEffect(()=>{
+    if(newProduct.images.length === 0){
+      setPreviewImages([]);
+    }
+  },[])
   
 
   const handleAddNewImage = (e) => {

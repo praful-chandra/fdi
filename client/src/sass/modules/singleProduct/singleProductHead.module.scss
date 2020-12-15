@@ -28,7 +28,10 @@
         align-items: flex-start;
         justify-content: space-between;
         height: 100%;
-
+        overflow-y : scroll;
+        &::-webkit-scrollbar {
+            display: none;
+        }
         &>div {
             width: 9rem;
             height: 9rem;
@@ -237,7 +240,7 @@
             &Colors{
                 display: flex;
                 margin-left: -1rem;
-                &>div{
+                &>a>div{
                     cursor: pointer;
                     margin: 1rem;
                     width: 3rem;

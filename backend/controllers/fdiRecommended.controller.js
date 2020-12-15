@@ -72,3 +72,15 @@ exports.list = async(req,res)=>{
         res.status(500).json({ error: "Internal server error" })
     }
 }
+
+exports.status = async (req,res)=>{
+    try {
+        const { product } = req.params;
+
+        const fdir = await FdiR.findOne({ product })
+        res.json(fdir)
+
+    } catch (err) {
+        res.status(500).json({ error: "Intrnal server error" })
+    }
+}
