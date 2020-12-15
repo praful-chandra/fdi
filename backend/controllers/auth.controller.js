@@ -17,7 +17,7 @@ exports.createOrUpdateUser = async (req, res) => {
 };
 
 exports.currentUser = async (req, res) => {
-  try {
+  try { 
     const user = await User.findOne({ email: req.user.email });
     if (user) {
       res.json(user);

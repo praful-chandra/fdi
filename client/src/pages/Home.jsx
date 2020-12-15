@@ -1,9 +1,11 @@
-import React from 'react'
+import React from 'react';
+
+import CaroueseComponent from "../components/homepage/carousel.component";
 
 export default function Home() {
     return (
         <div>
-            Home
+            <CaroueseComponent />
         </div>
     )
 }
