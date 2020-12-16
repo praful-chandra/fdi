@@ -10,4 +10,6 @@ const BestSellerSchema = new mongoose.Schema({
     }
 });
 
+
+
 module.exports = mongoose.model("BestSeller",BestSellerSchema);

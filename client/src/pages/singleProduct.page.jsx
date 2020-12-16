@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "../sass/modules/singleProduct/singleProduct.module.scss";
 import Head from "../components/product/singleProductHead";
 import Description from "../components/product/singleProductDescription";
-import BestSeller from "../components/bestSeller";
+import Recommended from "../components/recommended";
 
 import { getFromColor, getRelated } from "../functions/product.function";
 import { getDeal } from "../functions/deal.functions";
@@ -66,7 +66,7 @@ function singleProductPage(props) {
           <Description body={product.product.description} />
         </div>
         <div className={styles.related}>
-          <BestSeller items={relatedProducts} title="Related items" />
+          <Recommended invert={true} items={relatedProducts} title="Related items" />
         </div>
       </div>
     );

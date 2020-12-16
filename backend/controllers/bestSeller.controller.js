@@ -1,5 +1,5 @@
 const BestSeller = require("../models/bestSeller.model");
-
+const Deal = require("../models/dealOfTheWeek.model");
 
 exports.get = async (req, res) => {
 
@@ -32,8 +32,12 @@ exports.get = async (req, res) => {
 
 exports.list = async (req, res) => {
     try{
+        let { limit, skip } = req.query;
+    skip = limit * skip;
 
         const prods = await BestSeller.find()
+        .limit(parseInt(limit))
+        .skip(parseInt(skip))
         .populate("product")
         .populate({
             path: "product",
@@ -47,9 +51,12 @@ exports.list = async (req, res) => {
                 path: "variance"
             }
         });
+        
+       
     res.json(prods);
 
     }catch (err) {
+        log
         res.status(500).json({ error: "Internal server error" })
     }
 

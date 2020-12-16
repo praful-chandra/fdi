@@ -30,6 +30,7 @@ export default function SingleProductHead({ product }) {
     statusFdiR(product.selectedProduct._id).then(res=>setIsFdi(res));  
   },)
   const optionCard = (opt, active) => {
+    console.log(opt);
     return (
       <Link to={opt.color[0].slug} target="_blank">
         <div className={`${styles.productContentOptionGridTile} , ${active && styles.productContentOptionGridTileActive}`}>
@@ -99,15 +100,12 @@ export default function SingleProductHead({ product }) {
 
         <div className={styles.productContentSocial}>
           <div className={styles.productContentSocialRating}>
-            {" "}
             <span>4.4</span> <FontAwesomeIcon icon={faStar} />{" "}
           </div>
           <div className={styles.productContentSocialShare}>
-            {" "}
             <FontAwesomeIcon icon={faShare} /> Share{" "}
           </div>
           <div className={styles.productContentSocialWishlist}>
-            {" "}
             <FontAwesomeIcon icon={faHeart} />{" "}
           </div>
         </div>
@@ -143,7 +141,9 @@ export default function SingleProductHead({ product }) {
           </div>)
         }
 
-        <div className={styles.productContentOption}>
+        {
+          product.product.options.length > 1 && (
+            <div className={styles.productContentOption}>
           <div className={styles.productContentOptionTitle}>
             Selected : <span>{product.selectedProduct.variance.title}</span>
           </div>
@@ -155,8 +155,12 @@ export default function SingleProductHead({ product }) {
             }
           </div>
         </div>
+          )
+        }
 
-        <div className={styles.productContentOption_alt}>
+        {
+          product.selectedProduct.variance.color.length > 1 && (
+            <div className={styles.productContentOption_alt}>
           <div className={styles.productContentOptionTitle}>
             Color : <span>{product.selectedProduct.name}</span>
           </div>
@@ -168,6 +172,8 @@ export default function SingleProductHead({ product }) {
             }
           </div>
         </div>
+          )
+        }
 
         <div className={styles.productContentHighlight}>
           <ul>

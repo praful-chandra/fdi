@@ -13,6 +13,17 @@ export default function smallProductCardProduct({ item, deal, best }) {
   const sliceString = (str) => {
     return str;
   };
+
+  const getPrice = () =>{
+    if(item.minPrice === item.maxPrice){
+      return priceFormatter(item.minPrice);
+    }else{
+      return <span> {priceFormatter(item.minPrice)} - {priceFormatter(item.maxPrice)}</span>
+
+    }
+  }
+
+  console.log(getPrice());
   return (
     <>
       <div
@@ -46,9 +57,9 @@ export default function smallProductCardProduct({ item, deal, best }) {
           </Link>
           <div className={styles.cardContentsBottom}>
             <div>
-              <span>{priceFormatter(item.minPrice)}</span>
+              <span>{getPrice()}</span>
               <span></span>
-            </div>
+            </div>  
             <div>
               <div className={styles.addCart}>
                 <FontAwesomeIcon icon={emptyHeart} />

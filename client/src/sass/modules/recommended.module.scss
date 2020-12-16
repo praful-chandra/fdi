@@ -1,6 +1,14 @@
 //globals
 @import "../globals";
 
+.sliderCarousel{
+  & button{  
+    background-color: $primaryColor !important;
+    border-radius: 100px;
+    transform: scale(0.7) !important;
+  }
+}
+
 .wrapper{
     width: 100%;
     background-color: $lightGrey;

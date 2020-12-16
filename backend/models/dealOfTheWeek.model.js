@@ -14,7 +14,6 @@ const DealOfTheDaySchema = new mongoose.Schema({
     }
     
 },{
-    
     timestamps : true
 })
 

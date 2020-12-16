@@ -1,10 +1,10 @@
 import React from "react";
-import styles from "../sass/modules/bestSeller.module.scss";
+import styles from "../sass/modules/recommended.module.scss";
 import Carousel, { Dots } from "@brainhubeu/react-carousel";
 import "@brainhubeu/react-carousel/lib/style.css";
 import SmallProductCardProduct from "./smallProductCartProduct";
 
-export default function bestSeller({items, title, bestBadge }) {
+export default function bestSeller({items, title, bestBadge , invert }) {
   const renderCards = () => {
     let data = [];
 
@@ -20,13 +20,15 @@ export default function bestSeller({items, title, bestBadge }) {
   };
 
   return (
-    <div className={styles.wrapper}>
+    <div className={invert ? styles.wrapper : ''}>
       <div className="center">
         <div className={styles.head}>
           <div>
             <h5>{title}</h5>
           </div>
         </div>
+        {
+          items.length > 0 && <div className={styles.sliderCarousel}>
         <Carousel
           arrows
           slidesPerPage={4}
@@ -43,6 +45,9 @@ export default function bestSeller({items, title, bestBadge }) {
         >
           {renderCards()}
         </Carousel>
+        </div>
+        }
+        
       </div>
     </div>
   );

@@ -1,14 +1,13 @@
 import React from "react";
 import styles from "../sass/modules/offerSlider.module.scss";
 import SmallProductCard from "./smallProductCard";
-import Carousel, { Dots } from '@brainhubeu/react-carousel';
+import Carousel from '@brainhubeu/react-carousel';
 import '@brainhubeu/react-carousel/lib/style.css';
 
 
-export default function offerSlider({ items, deal, title }) {
+export default function offerSlider({ invert, items, deal,best, title }) {
 
-
-
+  
   const renderCards = () => {
     let data = [];
 
@@ -17,15 +16,22 @@ export default function offerSlider({ items, deal, title }) {
         <SmallProductCard
           item={itm}
           deal={deal}
+          best={best}
         />
       );
     })
     return data;
   };
 
+  const invertStyles = {
+    backgroundColor : "#F8F8F8",
+    padding : "5rem 0",
+    margin : "5rem 0"
+  }
  
   return (
-    <div className="center">
+    <div style={invert ? {...invertStyles} : {}} >
+      <div className="center">
       <div className={styles.wrapper}>
         <div className={styles.head}>
           <div>
@@ -33,7 +39,8 @@ export default function offerSlider({ items, deal, title }) {
             <button>View All</button>
           </div>
         </div>
-        <Carousel
+       <div className={styles.sliderCarousel}>
+       <Carousel
         arrows
         slidesPerPage={4}
       slidesPerScroll={2}
@@ -51,7 +58,9 @@ export default function offerSlider({ items, deal, title }) {
             renderCards()
           }
         </Carousel>
+       </div>
       </div>
+    </div>
     </div>
   );
 }

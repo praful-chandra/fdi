@@ -37,6 +37,8 @@ const ProductVarianceColorSchema = new mongoose.Schema({
     required: true,
   },
   quantity: { type: Number, default: 0 },
-})
+});
+
+
 
 module.exports = mongoose.model("ProductVarianceColor", ProductVarianceColorSchema);
