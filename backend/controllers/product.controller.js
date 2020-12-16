@@ -136,7 +136,7 @@ exports.add = async (req, res) => {
     });
 
     let maxPrice = 0;
-    let minPrice = 0;
+    let minPrice = Infinity;
 
     let variances = [];
     let colors = [];
@@ -282,6 +282,7 @@ exports.update = async (req, res) => {
         });
         colors.push(newColor._id);
         newColor.variance = newVariance._id;
+        newColor.slug = slugify(`${updatedProduct.name}-${newVariance.title}-${col.name}`);
         await newColor.save();
       })
 
@@ -338,6 +339,15 @@ exports.getfromcolor = async (req, res) => {
   const { slug } = req.params;
 
   try {
+
+    const isMainProduct = await Product.findOne({slug});
+    if(isMainProduct){
+      const colorSlug = await ProductVarianceColor.findOne({product : isMainProduct._id});
+      console.log(colorSlug.slug);
+      res.json({redirect : colorSlug.slug});
+      return;
+    }
+
     let selectedProduct = await ProductVarianceColor.findOne({ slug })
                                 .populate('variance')
                                 .populate({path : "variance" , populate : {path : "color"}});
@@ -353,5 +363,23 @@ exports.getfromcolor = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Internal server error" });
+  }
+}
+
+
+exports.getRelated = async (req,res)=>{
+  try{
+    const {slug} = req.params;
+
+    const product = await Product.findOne({slug});
+    const tagProducts = await Product.find({tags : {$in : product.tags}});
+    const subProducts = await Product.find({subCategory : product.subCategory , _id : {$nin : tagProducts.map(t => t._id)}});
+    const catProducts = await Product.find({category : product.category , _id : {$nin : [...tagProducts.map(t => t._id), ...subProducts.map(s=>s._id)]} } );
+    
+
+    res.json([...tagProducts,...subProducts,...catProducts].slice(0,8));
+
+  }catch(err){
+    res.status(500).json({error : "Internal server error"})
   }
 }

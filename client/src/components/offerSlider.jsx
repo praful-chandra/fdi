@@ -1,62 +1,13 @@
 import React from "react";
 import styles from "../sass/modules/offerSlider.module.scss";
-import Slider from "react-slick";
 import SmallProductCard from "./smallProductCard";
-import { isMobile } from "react-device-detect";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import Carousel, { Dots } from '@brainhubeu/react-carousel';
+import '@brainhubeu/react-carousel/lib/style.css';
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleRight, faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 
 export default function offerSlider({ items, deal, title }) {
-  function SampleNextArrow(props) {
-    const { style, onClick } = props;
-    return (
-      <button
-        className={`${styles.button} `}
-        style={{ ...style }}
-        onClick={onClick}
-      >
-        <FontAwesomeIcon icon={faAngleRight} />
-      </button>
-    );
-  }
 
-  function SamplePrevArrow(props) {
-    const { style, onClick } = props; 
-    return (
-      <button
-        className={`${styles.buttonLeft} `} 
-        style={{ ...style }}
-        onClick={onClick}
-      >
-        <FontAwesomeIcon icon={faAngleLeft} />
-      </button> 
-    );
-  }
 
-  const sliderSettings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 1,
-    initialSlide: 0,
-    lazyLoad: true,
-    nextArrow: isMobile ? <> </> : <SampleNextArrow />,
-    prevArrow: isMobile ? <> </> : <SamplePrevArrow />,
-    swipeToSlide: true,
-    afterChange: function (index) {},
-    responsive: [
-      {
-        breakpoint: 590,
-        settings: {
-          slidesToShow: 2,
-        },
-      },
-    ],
-  };
 
   const renderCards = () => {
     let data = [];
@@ -69,11 +20,10 @@ export default function offerSlider({ items, deal, title }) {
         />
       );
     })
-
-  
-
     return data;
   };
+
+ 
   return (
     <div className="center">
       <div className={styles.wrapper}>
@@ -83,8 +33,24 @@ export default function offerSlider({ items, deal, title }) {
             <button>View All</button>
           </div>
         </div>
-
-        <Slider {...sliderSettings}>{renderCards()}</Slider>
+        <Carousel
+        arrows
+        slidesPerPage={4}
+      slidesPerScroll={2}
+      animationSpeed={1500}
+      offset={50}
+      infinite
+      breakpoints={{
+        590:{
+          slidesPerPage:2,
+          arrows : false
+        }
+      }}
+         >
+          {
+            renderCards()
+          }
+        </Carousel>
       </div>
     </div>
   );

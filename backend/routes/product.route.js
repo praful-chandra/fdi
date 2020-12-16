@@ -16,7 +16,8 @@ const {
   update,
   remove,
   devAdd,
-  getfromcolor
+  getfromcolor,
+  getRelated
 } = require("../controllers/product.controller");
 
 router.get("/", list);
@@ -30,12 +31,9 @@ router.patch(
   update
 );
 router.delete("/:slug", authCheck, adminCheck, remove);
-
 router.post("/dev", authCheck, adminCheck, devAdd);
 
-
-
-
 router.get("/fromColor/:slug",getfromcolor);
+router.get("/related/:slug",getRelated);
 
 module.exports = router;

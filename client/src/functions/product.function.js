@@ -58,6 +58,20 @@ export const deleteProduct = async(slug) =>{
 export const getFromColor = async (slug) =>{
   try {
     const res = await axios.get(`/product/fromcolor/${slug}`);
+    if(!res.error){
+      if(res.data.redirect){
+        window.location.href=`${res.data.redirect}`
+      }else
+      return res.data;
+    }
+  } catch (err) {
+    return { error: "Some error occured" };
+  }
+}
+
+export const getRelated = async (slug) =>{
+  try {
+    const res = await axios.get(`/product/related/${slug}`);
     if(!res.error)
     return res.data;
   } catch (err) {
