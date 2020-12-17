@@ -10,6 +10,7 @@ import {
   faSearch,
   faHeart,
   faShoppingCart,
+  faShoppingBag
 } from "@fortawesome/free-solid-svg-icons";
 import { Menu, Dropdown } from "antd";
 import { DownOutlined, LogoutOutlined, HomeFilled } from "@ant-design/icons";
@@ -45,6 +46,12 @@ function Header({ user, signoutUser, category, subCategories }) {
             <li>We Make Buying Easy For You</li>
             <li>
               <ul className={styles.topBarLinks}>
+              <li>
+                <Link to="/shop">
+                  <FontAwesomeIcon icon={faShoppingBag} />
+                  <span>Shop</span>
+                </Link>
+              </li>
                 <li>
                   <Link to="/login">
                     <FontAwesomeIcon icon={faMapMarkerAlt} />
@@ -96,7 +103,7 @@ function Header({ user, signoutUser, category, subCategories }) {
               />
             </Link>
             <div className={styles.search}>
-              <form action="#">
+              <form action="/shop">
                 <input
                   type="search"
                   name="search"
@@ -128,7 +135,7 @@ function Header({ user, signoutUser, category, subCategories }) {
             <ul className={styles.categoryBarLinks}>
               {category.categories.map((cl) => {
                 return (
-                  <li key={cl._id}>
+                  <li key={cl._id} >
                     <Dropdown
                       overlay={
                         <Menu>
@@ -136,12 +143,12 @@ function Header({ user, signoutUser, category, subCategories }) {
                             (sub) =>
                               sub.parent._id === cl._id && (
                                 <Menu.Item key={`navbar category ${sub._id}`}>
-                                  <a
+                                  <Link
                                     className={styles.categoryBarLinksLink}
-                                    href="#"
+                                    to={`/shop?sub=${sub.slug}`}
                                   >
                                     {sub.name}
-                                  </a>
+                                  </Link>
                                 </Menu.Item>
                               )
                           )}
@@ -150,9 +157,11 @@ function Header({ user, signoutUser, category, subCategories }) {
                       placement="bottomCenter"
                       arrow
                     >
+                      <Link to={`/shop?cat=${cl.slug}`}>
                       <span>
                         {cl.name} <DownOutlined />{" "}
                       </span>
+                      </Link>
                     </Dropdown>
                   </li>
                 );

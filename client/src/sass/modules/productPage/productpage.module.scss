@@ -7,15 +7,11 @@
   margin-top: 2rem !important;
   @include totalCenter();
   align-items: flex-start;
-  &>div {
-    // border: 1px solid;
-    // height: 77vh;
-    // overflow-y: scroll;
-  }
+
 }
 
 .filters {
-  flex-grow: 1;
+  flex-grow: 0.5;
   padding-right: 3rem;
 }
 
@@ -25,7 +21,7 @@
 
 .head {
   text-transform: uppercase;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
   display: flex;
   align-items: flex-end;
   position: relative;
@@ -35,7 +31,7 @@
     font-size: 2rem;
     border-bottom: 4px solid $primaryColor;
     width: max-content;
-
+    font-weight: 600;
     & span {
       margin-left: 4rem;
       font-size: 1.5rem;
@@ -45,7 +41,7 @@
       position: absolute;
       right: 0;
       cursor: pointer;
-      top: 0.7rem;
+      top: 0.5rem;
     }
   }
 
@@ -53,29 +49,29 @@
     flex-grow: 1;
     height: 1px;
     background-color: $darkGrey;
-    margin-bottom: 2px;
+    margin-bottom: 10px;
   }
 
   & h6 {
-    font-size: 2rem;
-
+    font-size: 1.5rem;
+    font-weight: 700;
     & span {
       margin-left: 4rem;
-      font-size: 1.5rem;
+      font-size: 2rem;
       text-transform: capitalize;
       font-weight: 300;
       color: $primaryColor;
       position: absolute;
       right: 0;
       cursor: pointer;
-      top: 1rem;
+      top: 0rem;
     }
   }
 }
 
 .priceBody {
   @include horizontalCenterSpaceBetween();
-  max-width: 27rem;
+  max-width: 24rem;
 
   &>input {
     width: 10rem;
@@ -83,6 +79,12 @@
     font-size: 1.7rem;
     padding: 0.5rem 1rem;
     font-weight: 700;
+    outline: none;
+   border: 1px solid;
+   border-radius: 5px;
+   &::placeholder{
+     font-size: 1.5rem;
+   }
   }
 
   &>div {
@@ -111,6 +113,9 @@ input::-webkit-inner-spin-button {
     &>input {
       margin-right: 3rem;
     }
+    &>label{
+      font-size: 1.5rem;
+    }
   }
 }
 
@@ -132,15 +137,11 @@ input::-webkit-inner-spin-button {
   }
 
   &DropDown {
-    &>select {
       padding: 1rem;
       border: none;
       outline: none;
-      background-color: $white;
-      border-radius: 100rem;
       font-weight: 500;
       color: $darkGrey;
-    }
   }
 
   &PageSelector {

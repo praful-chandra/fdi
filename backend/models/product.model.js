@@ -72,16 +72,36 @@ const ProductSchema = new mongoose.Schema({
   minPrice: {
     type: Number,
     required: true
-  }
+  },
+  reviews : [
+    {
+      star : {
+        type : Number,
+        max : 5,
+        min : 1
+      },
+      comment : String,
+      postedBy : {
+        type : ObjectId,
+        ref : "User",
+        unique : true
+      },
+      date:Date
+    }
+  ]
+},{
+  timestamps : true
 });
 
 ProductSchema.methods.toJSON = function () {
   const product = this.toObject();
 
-  product.images = product.images.map((data, i) => ({
-    thumb: `/api/serveImage/product/${product._id}/${i}/thumb`,
-    full: `/api/serveImage/product/${product._id}/${i}/full`,
-  }));
+  if(product.images){
+    product.images = product.images.map((data, i) => ({
+      thumb: `/api/serveImage/product/${product._id}/${i}/thumb`,
+      full: `/api/serveImage/product/${product._id}/${i}/full`,
+    }));
+  }
 
 
   return product;

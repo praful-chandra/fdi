@@ -23,7 +23,6 @@ export default function smallProductCardProduct({ item, deal, best }) {
     }
   }
 
-  console.log(getPrice());
   return (
     <>
       <div

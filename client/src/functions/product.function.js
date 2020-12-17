@@ -78,3 +78,26 @@ export const getRelated = async (slug) =>{
     return { error: "Some error occured" };
   }
 }
+
+export const addReview = async (productId,review) =>{
+  try{
+
+    const res = await axios.post(`/product/review/${productId}`,review);
+    if(!res.error){
+      return res.data;
+    }
+
+  } catch (err) {
+    return { error: "Some error occured" };
+  }
+}
+
+
+export const listProductwithVariance = async (limit,skip,search) =>{
+  try {
+    const res = await axios.get("/product/withVariance", { params: { limit, skip ,search } });
+    return { success: res.data };
+  } catch (err) {
+    return { error: "Some error occured" };
+  }
+}

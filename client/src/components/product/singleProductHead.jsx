@@ -13,24 +13,38 @@ import {
 
 import DealOfTheWeekBanner from "../../assets/deal_of_the_week.svg";
 import FDIRBanner from "../../assets/fdi_recommended.png";
+import BestBanner from "../../assets/best_seller.svg";
 import PopupComponent from "../../components/showPopup.component";
 
 import styles from "../../sass/modules/singleProduct/singleProductHead.module.scss";
 
 import {statusFdiR} from "../../functions/fdir.function";
+import {getBestSeller} from "../../functions/bestSeller.function";
+import avgRatings from "../../functions/avgRating";
 
 export default function SingleProductHead({ product }) {
 
   
   const [popup,setPopup] = useState(false);
   const [isFdi,setIsFdi] = useState(false);
+  const [isBest,setIsBest] = useState(false);
   const [selectedImage , setSelectedImage] = useState(0);
+
+  useEffect(()=>{
+    if(!product.deal){
+      getBestSeller(product.selectedProduct._id).then(res=>{
+        if(res && !res.error){
+          setIsBest(true);
+        }
+      })
+    }
+  },[])
   
+  const avgR = avgRatings(product.product.reviews);
   useEffect(() => {
     statusFdiR(product.selectedProduct._id).then(res=>setIsFdi(res));  
   },)
   const optionCard = (opt, active) => {
-    console.log(opt);
     return (
       <Link to={opt.color[0].slug} target="_blank">
         <div className={`${styles.productContentOptionGridTile} , ${active && styles.productContentOptionGridTileActive}`}>
@@ -100,7 +114,7 @@ export default function SingleProductHead({ product }) {
 
         <div className={styles.productContentSocial}>
           <div className={styles.productContentSocialRating}>
-            <span>4.4</span> <FontAwesomeIcon icon={faStar} />{" "}
+            <span> { avgR.avg > 0 ? avgR.avg : "NA" } </span> <FontAwesomeIcon icon={faStar} />{" "}
           </div>
           <div className={styles.productContentSocialShare}>
             <FontAwesomeIcon icon={faShare} /> Share{" "}
@@ -133,12 +147,17 @@ export default function SingleProductHead({ product }) {
           product.deal && (<div className={styles.productContentBadge}>
             <div>
               <img src={DealOfTheWeekBanner} alt="" />
-              {/* <span>Extra {priceFormatter(2000)} off</span> */}
             </div>
-            {/* <span className={styles.productContentBadgeInfo}>
-                * Avail extra discount during checkout
-              </span> */}
           </div>)
+        }
+        {
+          isBest && !product.deal && (
+            <div className={styles.productContentBadge}>
+            <div>
+              <img src={BestBanner} alt="" />
+            </div>
+          </div>
+          )
         }
 
         {

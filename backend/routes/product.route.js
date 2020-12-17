@@ -17,10 +17,13 @@ const {
   remove,
   devAdd,
   getfromcolor,
-  getRelated
+  getRelated,
+  addReview,
+  listWithVariance
 } = require("../controllers/product.controller");
 
 router.get("/", list);
+router.get("/withVariance",listWithVariance);  
 router.get("/:slug", get);
 router.post("/", authCheck, adminCheck, upload.array("images[]", 20), add);
 router.patch(
@@ -35,5 +38,7 @@ router.post("/dev", authCheck, adminCheck, devAdd);
 
 router.get("/fromColor/:slug",getfromcolor);
 router.get("/related/:slug",getRelated);
+
+router.post("/review/:productId",authCheck,addReview);
 
 module.exports = router;

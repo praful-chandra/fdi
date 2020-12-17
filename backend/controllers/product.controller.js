@@ -1,4 +1,5 @@
 const slugify = require("slugify");
+const User = require("../models/user.model");
 const Product = require("../models/product.model");
 const SubCat = require("../models/subCategory.model");
 const ProductVariance = require("../models/productVariance.model");
@@ -310,12 +311,15 @@ exports.get = async (req, res) => {
     let product = await Product.findOne({ slug })
       .populate(["tags", "category", "subCategory", "options"])
       .populate("brand", ["name", "_id", "slug"])
-      .populate({ path: "options", populate: { path: 'color' } });
+      .populate({ path: "options", populate: { path: 'color' } })
+      .populate({path : "reviews" , populate :{path : "postedBy"}});
 
-    product.brand._doc.logo = `/api/serveimage/brand/${product.brand._doc._id}`;
+      if(product.brand){
+    product.brand._doc.logo = `/api/serveimage/brand/${product.brand._doc._id}`;}
 
     res.json(product);
   } catch (err) {
+    console.log(err);
     res.status(500).json({ error: "Internal server error" });
   }
 };
@@ -355,7 +359,8 @@ exports.getfromcolor = async (req, res) => {
     let product = await Product.findById(selectedProduct.product)
                         .populate(["tags", "category", "subCategory", "options"])
                         .populate("brand", ["name", "_id", "slug"])
-                        .populate({ path: "options", populate: { path: 'color' } });;
+                        .populate({ path: "options", populate: { path: 'color' } })
+                        .populate({path : "reviews" , populate :{path : "postedBy"}});
 
      product.brand._doc.logo = `/api/serveimage/brand/${product.brand._doc._id}`;
 
@@ -383,3 +388,99 @@ exports.getRelated = async (req,res)=>{
     res.status(500).json({error : "Internal server error"})
   }
 }
+
+
+exports.addReview = async (req,res)=>{
+  try{
+    const {productId} = req.params;
+    const {star,comment} = req.body;
+
+    const product = await Product.findById(productId);
+    const user = await User.findOne({email : req.user.email});
+
+    const existingReview = await product.reviews.find((ele)=> ele.postedBy.toString() === user._id.toString() );
+  
+    if(existingReview){
+      const reviewsUpdated = await Product.updateOne(
+        {
+          reviews : { $elemMatch : existingReview}
+        },
+        {
+          $set : {"reviews.$.star" : star , "reviews.$.comment" : comment, "reviews.$.date" : Date.now()}
+        },{
+          new : true
+        }
+      );
+
+      res.json(reviewsUpdated);
+    }else{
+      const reviewAdded = await Product.findByIdAndUpdate(product._id,
+        {
+          $push : {reviews : {star,comment,postedBy : user._id , date : Date.now()} }
+        },{
+          new : true
+        });
+
+        res.json(reviewAdded);
+    }
+    
+
+  }
+  catch(err){
+    console.log(err);
+    res.status(500).json({error : "Internal server error!"})
+  }
+}
+
+
+exports.listWithVariance = async (req, res) => {
+
+  try {
+    let { limit, skip, search } = req.query;
+    skip = limit * skip;
+    let searchQuery = {};
+    if (search) {
+      search = JSON.parse(search);
+      Object.keys(search).map((_, i) => {
+        const name = Object.keys(search)[i];
+        const value = search[Object.keys(search)[i]]
+        if (value) {
+          if (name === 'name') {
+            searchQuery = {
+              ...searchQuery,
+              [name]: {
+                "$regex": value,
+                "$options": "i"
+              }
+            }
+          } else {
+            searchQuery = {
+              ...searchQuery,
+              [name]: {$in : value}
+            }
+          }
+        }
+      })
+
+    }
+
+    let products = await Product.find(searchQuery)
+      .select("_id")
+      
+
+     products = products.map(p => p._id);
+
+     let allProducts = await ProductVarianceColor.find({product : {$in:products}})
+                        .limit(parseInt(limit))
+                        .skip(parseInt(skip))
+                        .populate("product")
+                        .populate("variance");
+    
+
+    const count = await ProductVarianceColor.find({product : {$in:products}}).countDocuments();
+    res.json({ allProducts, totalCount: count });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};

@@ -68,7 +68,7 @@ exports.get = async (req,res)=>{
     res.json(deal);
 
   }catch (err) {
-    // console.log(err);
+    console.log(err);
     res.status(500).json({ error: "Deal get Failed" });
   }
 }

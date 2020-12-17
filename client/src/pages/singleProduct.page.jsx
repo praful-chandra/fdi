@@ -3,6 +3,7 @@ import styles from "../sass/modules/singleProduct/singleProduct.module.scss";
 import Head from "../components/product/singleProductHead";
 import Description from "../components/product/singleProductDescription";
 import Recommended from "../components/recommended";
+import Review from "../components/product/review";
 
 import { getFromColor, getRelated } from "../functions/product.function";
 import { getDeal } from "../functions/deal.functions";
@@ -14,7 +15,6 @@ function singleProductPage(props) {
 
   const colorSlug = props.match.params.slug;
 
-  console.log(product);
 
   const fetchInitData = async () => {
     try {
@@ -68,6 +68,7 @@ function singleProductPage(props) {
         <div className={styles.related}>
           <Recommended invert={true} items={relatedProducts} title="Related items" />
         </div>
+        <Review reviews={product.product.reviews} productId={product.product._id} />
       </div>
     );
   }

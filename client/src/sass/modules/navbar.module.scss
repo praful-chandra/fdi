@@ -100,8 +100,15 @@
       &>span{
         cursor: pointer;
       }
-     
+      &>a{
+        color: inherit;
+        & svg{
+          font-size: 1.4rem;
+          margin-bottom: 0.2rem;
+        }
+      }
     }
+
 
     &Link{
       margin:0.5rem 0 !important;

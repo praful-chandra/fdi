@@ -1,6 +1,14 @@
 //globals
 @import "../globals";
 
+.wishlist{
+    position: absolute;
+    font-size: 3rem;
+    right: 1rem;
+    cursor: pointer;
+    z-index: 1;
+}
+
 .card {
     &Wrapper {
         width: 100%;
@@ -8,6 +16,8 @@
         margin: 1rem 0;
         box-shadow: 0 0 10px $lightBackground;
         display: flex;
+        position: relative;
+        cursor: pointer;
     }
 
     &Image {
