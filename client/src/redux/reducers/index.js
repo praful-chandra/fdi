@@ -5,11 +5,13 @@ import categoryReducer from "./categoryReducer";
 import subCategoryReducer from "./subCategoryReducer";
 import tagReducer from "./tagReducer";
 import brandReducer from "./brandReducer";
+import cartReducer from "./cartReducer";
 
 export default  combineReducers({
     user : userReducer,
     category : categoryReducer,
     subCategory : subCategoryReducer,
     tag : tagReducer,
-    brand : brandReducer
-})   
+    brand : brandReducer,
+    cart : cartReducer
+})     

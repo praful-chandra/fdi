@@ -93,9 +93,9 @@ export const addReview = async (productId,review) =>{
 }
 
 
-export const listProductwithVariance = async (limit,skip,search) =>{
+export const listProductwithVariance = async (limit,skip,search,sort) =>{
   try {
-    const res = await axios.get("/product/withVariance", { params: { limit, skip ,search } });
+    const res = await axios.get("/product/withVariance", { params: { limit, skip ,search, sort } });
     return { success: res.data };
   } catch (err) {
     return { error: "Some error occured" };

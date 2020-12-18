@@ -90,6 +90,7 @@ exports.add = async (req, res) => {
     model: "",
     highlights: "",
     description: "",
+    metaDescription :"",
     category: "",
     subCategory: "",
     tags: "",
@@ -107,6 +108,7 @@ exports.add = async (req, res) => {
     model,
     highlights,
     description,
+    metaDescription,
     category,
     subCategory,
     tags,
@@ -129,6 +131,7 @@ exports.add = async (req, res) => {
       model,
       highlights,
       description,
+      metaDescription,
       category,
       subCategory,
       tags,
@@ -219,6 +222,7 @@ exports.update = async (req, res) => {
       model: "",
       highlights: "",
       description: "",
+      metaDescription :"",
       category: "",
       subCategory: "",
       tags: "",
@@ -436,9 +440,11 @@ exports.addReview = async (req,res)=>{
 exports.listWithVariance = async (req, res) => {
 
   try {
-    let { limit, skip, search } = req.query;
+    let { limit, skip, search,sort } = req.query;
     skip = limit * skip;
     let searchQuery = {};
+    let minPrice;
+    let maxPrice;
     if (search) {
       search = JSON.parse(search);
       Object.keys(search).map((_, i) => {
@@ -453,7 +459,30 @@ exports.listWithVariance = async (req, res) => {
                 "$options": "i"
               }
             }
-          } else {
+          }
+          else if(name === "search"){
+            searchQuery = {
+              ...searchQuery,
+              
+             $text:{
+               $search: value
+             },
+             "$or":[
+               {
+                 "name" : {$regex : value , $options:"i"}
+               },{
+                 "description" : {$regex : value , $options:"i"}
+               },{
+                 "metaDescription" : {$regex : value , $options:"i"}
+               }
+             ]
+            }
+          }
+           else if(name === "price"){
+             minPrice = value.minPrice;
+             maxPrice = value.maxPrice;
+          }
+          else {
             searchQuery = {
               ...searchQuery,
               [name]: {$in : value}
@@ -463,6 +492,15 @@ exports.listWithVariance = async (req, res) => {
       })
 
     }
+    let sortPrice = false;
+    if(sort == 1){
+      sortPrice = 1;
+    }
+    if(sort == -1 ){
+      sortPrice = -1;
+    }
+    
+   
 
     let products = await Product.find(searchQuery)
       .select("_id")
@@ -471,13 +509,17 @@ exports.listWithVariance = async (req, res) => {
      products = products.map(p => p._id);
 
      let allProducts = await ProductVarianceColor.find({product : {$in:products}})
+                        .where("price").gt(minPrice ? minPrice : 0).lt(maxPrice > 0 ? maxPrice : Infinity)
                         .limit(parseInt(limit))
                         .skip(parseInt(skip))
+                        .sort(sortPrice !== false && {price : sortPrice})
                         .populate("product")
                         .populate("variance");
     
 
-    const count = await ProductVarianceColor.find({product : {$in:products}}).countDocuments();
+    const count = await ProductVarianceColor.find({product : {$in:products}})
+                        .where("price").gt(minPrice ? minPrice : 0).lt(maxPrice > 0 ? maxPrice : Infinity)
+                        .countDocuments();
     res.json({ allProducts, totalCount: count });
   } catch (err) {
     console.log(err);

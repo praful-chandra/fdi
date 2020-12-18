@@ -14,16 +14,16 @@ const UserSchema = new mongoose.Schema(
       type: String,
       default: "Subscriber",
     },
-    cart: {
-      type: Array,
-      default: [],
-    },
     address: String,
     wishList : [{
-        type : ObjectId , ref : "Product"
-    }]
+        type : ObjectId , ref : "ProductVarianceColor"
+    }],
+    cart:[{
+      product : {type : ObjectId , ref : "ProductVarianceColor"},
+      quantity : {type : Number , default : 1}
+    }]                   
   },
   { timestamps: true }
 );
 
-module.exports= mongoose.model('User',UserSchema);
+module.exports= mongoose.model('User',UserSchema);  

@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, connect } from "react-redux";
-import { Form, Button } from "antd";
+import { Form, Button, Input } from "antd";
 import { useToasts } from "react-toast-notifications";
 
 import styles from "../../../sass/modules/adminDashboard/newProduct.module.scss";
 import { listAllCategories } from "../../../redux/actions/categoryActions";
 import { listAllSubCategories } from "../../../redux/actions/subCategoryActions";
 import { listAllTags } from "../../../redux/actions/tagActions";
-import { listBrands} from "../../../redux/actions/BrandActions";
+import { listBrands } from "../../../redux/actions/BrandActions";
 import { addProduct } from "../../../functions/product.function";
 
 import TopBar from "./topBar";
@@ -26,7 +26,8 @@ const initialState = {
   model: "",
   highlights: [],
   description: "",
-  brand : '',
+  metaDescription: "",
+  brand: "",
   category: null,
   subCategory: null,
   tags: [],
@@ -34,8 +35,12 @@ const initialState = {
   addOns: [],
 };
 
-
-function index({ listAllCategories, listAllSubCategories, listAllTags,listBrands}) {
+function index({
+  listAllCategories,
+  listAllSubCategories,
+  listAllTags,
+  listBrands,
+}) {
   const [newProduct, setNewProduct] = useState(initialState);
   const { addToast } = useToasts();
 
@@ -43,7 +48,7 @@ function index({ listAllCategories, listAllSubCategories, listAllTags,listBrands
     category: { categories },
     subCategory: { subCategories },
     tag: { tags },
-    brand : {brands}
+    brand: { brands },
   } = useSelector((state) => state);
 
   useEffect(() => {
@@ -61,8 +66,6 @@ function index({ listAllCategories, listAllSubCategories, listAllTags,listBrands
     }
   }, []);
 
-
-
   const handleSubmit = async () => {
     setNewProduct((oldProd) => ({
       ...oldProd,
@@ -72,7 +75,7 @@ function index({ listAllCategories, listAllSubCategories, listAllTags,listBrands
         o.color = o.color.filter((c) => c.name !== "" && c.hex !== "");
         return o;
       }),
-      addOns : oldProd.options.filter(add=> add.title !== "")
+      addOns: oldProd.options.filter((add) => add.title !== ""),
     }));
     const formData = new FormData();
 
@@ -83,11 +86,6 @@ function index({ listAllCategories, listAllSubCategories, listAllTags,listBrands
     newProduct.images.forEach((image) => {
       formData.append("images[]", image);
     });
-
-    //!DEBUG PURPOSE
-    //   for(var pair of formData.entries()) {
-    //     console.log(pair[0]+ ', '+ pair[1]);
-    //  }
 
     try {
       const result = await addProduct(formData);
@@ -113,6 +111,20 @@ function index({ listAllCategories, listAllSubCategories, listAllTags,listBrands
           <Images newProduct={newProduct} setNewProduct={setNewProduct} />
           <NameModelSku newProduct={newProduct} setNewProduct={setNewProduct} />
           <Highlights newProduct={newProduct} setNewProduct={setNewProduct} />
+          <Form.Item label="Meta description">
+            <Input.TextArea
+              name="metaDescription"
+              value={newProduct.metaDescription}
+              onChange={(e) => {
+                let value = e.target.value;
+                setNewProduct((onp) => ({
+                  ...onp,
+                  metaDescription: value,
+                }));
+              }}
+            />
+          </Form.Item>
+
           <Description newProduct={newProduct} setNewProduct={setNewProduct} />
           <CategorySubcategoryBrand
             newProduct={newProduct}
@@ -143,5 +155,5 @@ export default connect(null, {
   listAllCategories,
   listAllSubCategories,
   listAllTags,
-  listBrands
+  listBrands,
 })(index);

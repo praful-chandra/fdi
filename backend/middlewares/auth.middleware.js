@@ -6,7 +6,7 @@ exports.authCheck = async (req, res, next) => {
     const token = req.headers.authtoken;
     if(!token) throw Error("token required");
     const firebaseUser = await admin.auth().verifyIdToken(token);
-    req.user = firebaseUser;
+    req.user = firebaseUser;   
     next();
 
   }catch(err){

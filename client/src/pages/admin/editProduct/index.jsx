@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, connect } from "react-redux";
-import { Form, Button } from "antd";
+import { useSelector } from "react-redux";
+import { Form, Button, Input } from "antd";
 import { useToasts } from "react-toast-notifications";
 
 import styles from "../../../sass/modules/adminDashboard/newProduct.module.scss";
@@ -47,21 +47,20 @@ function Index(props) {
     // removing blank inputs
     setProduct((oldProd) => ({
       ...oldProd,
-      images: oldProd.images.filter(i => !i.thumb),
+      images: oldProd.images.filter((i) => !i.thumb),
       highlights: oldProd.highlights.filter((h) => h !== ""),
       options: oldProd.options.filter((o) => o.title !== ""),
       options: oldProd.options.map((o) => {
         o.color = o.color.filter((c) => c.name !== "" && c.hex !== "");
         return o;
       }),
-      addOns: oldProd.options.filter(add => add.title !== "")
+      addOns: oldProd.options.filter((add) => add.title !== ""),
     }));
 
     const formData = new FormData();
 
     for (const [key, value] of Object.entries(product)) {
-      if (key !== 'images')
-        formData.append(key, JSON.stringify(value));
+      if (key !== "images") formData.append(key, JSON.stringify(value));
     }
 
     product.images.forEach((image) => {
@@ -74,13 +73,17 @@ function Index(props) {
     //   for(var pair of formData.entries()) {
     //     console.log(pair[0]+ ', '+ pair[1]);
     //  }
-    updateProduct(product.slug, formData).then(response => {
-      alert("successfully Updated");
-      props.history.push(`/admin/dashboard?id=5`)
-    }).catch(err => {
-      addToast("Some error occured !", { appearance: "error", autoDismiss: true })
-    });
-
+    updateProduct(product.slug, formData)
+      .then((response) => {
+        alert("successfully Updated");
+        props.history.push(`/admin/dashboard?id=5`);
+      })
+      .catch((err) => {
+        addToast("Some error occured !", {
+          appearance: "error",
+          autoDismiss: true,
+        });
+      });
   };
 
   if (loading) return <h1>Loading</h1>;
@@ -94,6 +97,19 @@ function Index(props) {
             <Images products={product} setProduct={setProduct} />
             <NameModelSku product={product} setProduct={setProduct} />
             <Highlights product={product} setProduct={setProduct} />
+            <Form.Item label="Meta description">
+              <Input.TextArea
+                name="metaDescription"
+                value={product.metaDescription}
+                onChange={(e) => {
+                  let value = e.target.value;
+                  setProduct((onp) => ({
+                    ...onp,
+                    metaDescription : value,
+                  }));
+                }}
+              />
+            </Form.Item>
             <Description product={product} setProduct={setProduct} />
             <CategorySubcategoryBrand
               brands={brands}

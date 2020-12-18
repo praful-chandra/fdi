@@ -14,10 +14,20 @@ import {
 import {listProductwithVariance} from "../functions/product.function";
 
 
+const handleSearchQuery = (str)=> {
+  let trimedString = str.substring(1);
+  trimedString = trimedString.split("=")
+
+  return {
+    name : trimedString[0] ? trimedString[0] : null,
+    value : trimedString[1] ? trimedString[1].replaceAll("+"," ") : null
+  }
+}
 
   
   
-  function ShopPage() {
+  function ShopPage(props) {
+
 
     const [products ,setProducts] = useState({
         allProducts : [],
@@ -25,8 +35,11 @@ import {listProductwithVariance} from "../functions/product.function";
     });
     const [filters,setFilters] = useState ({
         category : [],
-        brand :[]
+        brand :[],
+        tag :[]
     });
+
+    const [sort,setSort] = useState(0);
 
 
     const [skip,setSkip] = useState(0);
@@ -45,14 +58,31 @@ import {listProductwithVariance} from "../functions/product.function";
             searchQuery.brand = undefined;
         }
 
+        if(filters.filterPrice){
+          searchQuery.price = filters.filterPrice;
+        }
+
+        if(filters.tag.length > 0){
+          searchQuery.tags = filters.tag
+        }else{
+          searchQuery.tags = undefined;
+        }
+
+        const allSearch = handleSearchQuery(props.location.search);
+
+        if(allSearch.name && allSearch.name === "search" && allSearch.value){
+          searchQuery.search = allSearch.value;
+        }
+
         console.log(JSON.stringify(searchQuery));
         
-        listProductwithVariance(5,skip,JSON.stringify(searchQuery)).then(res=>{
+        listProductwithVariance(5,skip,JSON.stringify(searchQuery),sort).then(res=>{
             if(res.success){
                 setProducts(res.success);
+               
             }
         })
-    }, [skip,filters])
+    }, [skip,filters,sort])
 
 
     const FilterBar = () => (
@@ -62,11 +92,10 @@ import {listProductwithVariance} from "../functions/product.function";
             <FontAwesomeIcon icon={faThList} />
           </div>
           <div className={styles.filterBarDropDown}>
-            <Select name="sorting" style={{ width: 220 }} defaultValue="default">
-              <Option value="default">Default Sorting</Option>
-              <Option value="Popular">Popular</Option>
-              <Option value="Price [low - high]">Price [low - high]</Option>
-              <Option value="Price [high - low]">Price [high - low]</Option>
+            <Select name="sorting" style={{ width: 220 }} value={sort} onChange={val=>setSort(val)}>
+              <Option value={0}>Default Sorting</Option>
+              <Option value={1}>Price [low - high]</Option>
+              <Option value={-1}>Price [high - low]</Option>
             </Select>
           </div>
     
@@ -81,7 +110,7 @@ import {listProductwithVariance} from "../functions/product.function";
         <div>
         <div className={`center , ${styles.productPage}`}>
 
-            <FilterPanel filters={filters} setFilters={setFilters} />
+            <FilterPanel filters={filters} setFilters={setFilters} resetSkip={()=>{setSkip(0)}} />
 
         <div className={styles.products}>
           <div className={styles.head}>

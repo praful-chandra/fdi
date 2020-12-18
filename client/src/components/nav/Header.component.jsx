@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { connect } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { UserOutlined } from "@ant-design/icons";
@@ -23,6 +23,24 @@ import { roleBasedRedirect } from "../../functions/auth.function";
 
 function Header({ user, signoutUser, category, subCategories }) {
   let history = useHistory();
+  const handleSearchQuery = (str)=> {
+    let trimedString = str.substring(1);
+    trimedString = trimedString.split("=")
+  
+    return {
+      name : trimedString[0] ? trimedString[0] : null,
+      value : trimedString[1] ? trimedString[1].replaceAll("+"," ") : null
+    }
+  }
+
+  const [search,setSearch] = useState("");
+
+  useEffect(()=>{
+    let query = handleSearchQuery(history.location.search);
+    if(query.name && query.name === "search" && query.value){
+      setSearch(query.value)
+    }
+  },[])
 
   const menu = (
     <Menu>
@@ -37,6 +55,8 @@ function Header({ user, signoutUser, category, subCategories }) {
       </Menu.Item>
     </Menu>
   );
+
+
 
   return (
     <>
@@ -109,6 +129,8 @@ function Header({ user, signoutUser, category, subCategories }) {
                   name="search"
                   id="search"
                   placeholder="Search products"
+                  value={search}
+                  onChange={(e)=>setSearch(e.target.value)}
                 />
                 <button type="submit">
                   <FontAwesomeIcon icon={faSearch} />

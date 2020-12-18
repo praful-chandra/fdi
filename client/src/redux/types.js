@@ -40,3 +40,10 @@ export const brandTypes = {
   UPDATE_BRAND: "UPDATE_BRAND",
   LIST_BRANDS: "LIST_BRANDS",
 };
+
+
+export const cartTypes = {
+  ADD_TO_CART : "ADD_TO_CART",
+  DECREMENT_CART : "DECREMENT_CART",
+  EMPTY_CART : "EMPTY_CART"
+}

@@ -6,7 +6,6 @@ const ProductSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
-    text: true,
   },
   slug: {
     type: String,
@@ -18,6 +17,12 @@ const ProductSchema = new mongoose.Schema({
   model: { type: String, required: true },
   highlights: Array,
   description: {
+    type: String,
+    required: true,
+    text : true
+
+  },
+   metaDescription: {
     type: String,
     required: true,
     text: true,
@@ -92,6 +97,8 @@ const ProductSchema = new mongoose.Schema({
 },{
   timestamps : true
 });
+
+
 
 ProductSchema.methods.toJSON = function () {
   const product = this.toObject();

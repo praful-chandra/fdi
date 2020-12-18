@@ -6,9 +6,9 @@ import {
   faStar,
   faShare,
   faHeart,
-  faAngleDown,
   faCartPlus,
-  faShoppingBag
+  faShoppingBag,
+  faExclamation
 } from "@fortawesome/free-solid-svg-icons";
 
 import DealOfTheWeekBanner from "../../assets/deal_of_the_week.svg";
@@ -269,7 +269,10 @@ export default function SingleProductHead({ product }) {
           </div>
 
           <div className={styles.buyProductAction}>
-            <button className={`${styles.buyProductButton} ${styles.buyProductButtonCart}`} >
+           {
+             product.selectedProduct.quantity > 0 ? (
+               <>
+               <button className={`${styles.buyProductButton} ${styles.buyProductButtonCart}`} >
               <FontAwesomeIcon icon={faCartPlus} />
               <span>Add to Cart</span>
             </button>
@@ -277,6 +280,14 @@ export default function SingleProductHead({ product }) {
               <FontAwesomeIcon icon={faShoppingBag} />
               <span>Buy Now</span>
             </button>
+               </>
+             ) : (
+              <button className={`${styles.buyProductButton} ${styles.buyProductButtonCart}`} disabled={true} style={{color : "red"}} >
+              <FontAwesomeIcon icon={faExclamation} />
+              <span>Out OF Stock</span>
+            </button>
+             )
+           }
           </div>
         </div>
       </div>
