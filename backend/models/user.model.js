@@ -9,21 +9,24 @@ const UserSchema = new mongoose.Schema(
       type: String,
       index: true,
     },
-    picture : {} ,
+    picture: {},
     role: {
       type: String,
       default: "Subscriber",
     },
     address: String,
-    wishList : [{
-        type : ObjectId , ref : "ProductVarianceColor"
-    }],
+    wishList: [
+      {
+        type: ObjectId,
+        ref: "ProductVarianceColor",
+      },
+    ],
     cart:[{
-      product : {type : ObjectId , ref : "ProductVarianceColor"},
+      product : {type : ObjectId , ref: "ReoductVarianceColor"},
       quantity : {type : Number , default : 1}
-    }]                   
+    }]
   },
   { timestamps: true }
 );
 
-module.exports= mongoose.model('User',UserSchema);  
+module.exports = mongoose.model("User", UserSchema);

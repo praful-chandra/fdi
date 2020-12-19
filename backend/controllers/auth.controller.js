@@ -1,6 +1,7 @@
 const User = require("../models/user.model");
 
 exports.createOrUpdateUser = async (req, res) => {
+ try{
   const { name, picture, email } = req.user;
 
   const user = await User.findOneAndUpdate(
@@ -14,6 +15,10 @@ exports.createOrUpdateUser = async (req, res) => {
     const newUser = await new User({ email, name, picture }).save();
     res.json(newUser);
   }
+ }catch(err){
+   console.log(err);
+   res.status(500).json({error : "Internal server error"})
+ }
 };
 
 exports.currentUser = async (req, res) => {

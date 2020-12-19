@@ -26,7 +26,7 @@ exports.addToCart = async (req, res) => {
       res.json(newCArt);
     } else {
       if (product.quantity > existingProduct.quantity) {
-        const updatedCart = await User.update({
+        const updatedCart = await User.updateOne({
           cart: { $elemMatch: existingProduct },
         },{
             $set :{"cart.$.product" : product._id , "cart.$.quantity" : existingProduct.quantity + 1}

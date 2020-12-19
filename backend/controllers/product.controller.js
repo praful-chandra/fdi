@@ -137,7 +137,10 @@ exports.add = async (req, res) => {
       tags,
       addOns,
       brand,
+      maxPrice : 0,
+      minPrice : 0
     });
+    await newProduct.save();
 
     let maxPrice = 0;
     let minPrice = Infinity;
@@ -153,7 +156,9 @@ exports.add = async (req, res) => {
         title: opt.title,
         slug: slugify(`${newProduct.name}-${opt.title}`)
       });
-      variances.push(newVariance._id);
+      await newVariance.save();
+
+      variances.push(newVariance._id);  
       colors = [];
 
       opt.color.map(async col => {
@@ -169,17 +174,17 @@ exports.add = async (req, res) => {
         colors.push(newColor._id);
         await newColor.save();
       })
-
+      
       newVariance.color = colors;
       await newVariance.save();
     })
-
+    
     newProduct.maxPrice = maxPrice;
     newProduct.minPrice = minPrice;
     newProduct.options = variances;
-
+    
+    
     await newProduct.save();
-
     res.json(newProduct);
   } catch (err) {
     console.log(err);
