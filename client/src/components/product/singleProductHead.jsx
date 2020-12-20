@@ -1,33 +1,39 @@
 import React,{useState,useEffect} from 'react';
 import { Link } from "react-router-dom";
+import {connect,useSelector} from "react-redux";
 import priceFormatter from "../../functions/priceFormatter";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faStar,
   faShare,
   faHeart,
-  faCartPlus,
-  faShoppingBag,
-  faExclamation
 } from "@fortawesome/free-solid-svg-icons";
+import {  notification, Space } from 'antd';
+
 
 import DealOfTheWeekBanner from "../../assets/deal_of_the_week.svg";
 import FDIRBanner from "../../assets/fdi_recommended.png";
 import BestBanner from "../../assets/best_seller.svg";
 import PopupComponent from "../../components/showPopup.component";
+import RightBuyComponent from "./singleProductHeadRight";
 
 import styles from "../../sass/modules/singleProduct/singleProductHead.module.scss";
 
 import {statusFdiR} from "../../functions/fdir.function";
 import {getBestSeller} from "../../functions/bestSeller.function";
 import avgRatings from "../../functions/avgRating";
+import {getExchange} from "../../functions/exchange.function";
 
-export default function SingleProductHead({ product }) {
+import {addCart} from "../../redux/actions/cartActions";
 
+ function SingleProductHead({ product ,addCart}) {
+
+  const {user } = useSelector(state => state);
   
   const [popup,setPopup] = useState(false);
   const [isFdi,setIsFdi] = useState(false);
   const [isBest,setIsBest] = useState(false);
+  const [exchange,setExchange] = useState(false);
   const [selectedImage , setSelectedImage] = useState(0);
 
   useEffect(()=>{
@@ -38,6 +44,13 @@ export default function SingleProductHead({ product }) {
         }
       })
     }
+
+    getExchange(product.product.subCategory._id).then(data =>{
+      if(!data || !data.error){
+        setExchange(data);
+      }
+    })
+    
   },[])
   
   const avgR = avgRatings(product.product.reviews);
@@ -46,7 +59,7 @@ export default function SingleProductHead({ product }) {
   },)
   const optionCard = (opt, active) => {
     return (
-      <Link to={opt.color[0].slug} target="_blank">
+      <Link key={`option card ${opt._id}`} to={opt.color[0].slug} target="_blank">
         <div className={`${styles.productContentOptionGridTile} , ${active && styles.productContentOptionGridTileActive}`}>
         <div className={styles.productContentOptionGridTileName}>
           {opt.title}
@@ -61,7 +74,7 @@ export default function SingleProductHead({ product }) {
 
   const optionColor = (col, active) => {
     return (
-      <Link to={col.slug} target="_blank">
+      <Link key={`optionColor ${col._id}`} to={col.slug} target="_blank">
         <div
         className={active && styles.productContentOption_altColorsSelected}
         style={{ backgroundColor: col.hex }}
@@ -69,6 +82,20 @@ export default function SingleProductHead({ product }) {
       </div>
       </Link>
     )
+  }
+  const openNotificationWithIcon = () => {
+    notification["success"]({
+      message: 'Product Added to Cart',
+      
+    });
+  };
+
+  const handleAddCart = (addOns,count,exchangeProduct) =>{
+    addCart(product.selectedProduct._id,addOns,count,exchangeProduct,user).then(data=>{
+      if(data.success){
+          openNotificationWithIcon()
+      }
+    });
   }
 
   return (
@@ -82,7 +109,7 @@ export default function SingleProductHead({ product }) {
         <div className={styles.productImageGrid}>
           {
             product.product.images.map((img,i)=>{
-              return <div onClick={()=>setSelectedImage(i)}>
+              return <div key={`image grid ${i}`} onClick={()=>setSelectedImage(i)}>
               <img src={`${process.env.REACT_APP_API_ROOT_URI}${img.thumb}`} alt="" />
             </div>
             })
@@ -148,7 +175,11 @@ export default function SingleProductHead({ product }) {
             <div>
               <img src={DealOfTheWeekBanner} alt="" />
             </div>
-          </div>)
+            <span className={styles.productContentBadgeInfo}>
+              * Avail extra discount during checkout
+            </span>
+          </div>
+          )
         }
         {
           isBest && !product.deal && (
@@ -156,6 +187,7 @@ export default function SingleProductHead({ product }) {
             <div>
               <img src={BestBanner} alt="" />
             </div>
+            
           </div>
           )
         }
@@ -197,8 +229,8 @@ export default function SingleProductHead({ product }) {
         <div className={styles.productContentHighlight}>
           <ul>
            {
-             product.product.highlights.slice(0,4).map(hig=>(
-              <li>{hig}</li>
+             product.product.highlights.slice(0,4).map((hig,ind)=>(
+              <li key={`highlights ${ind}`} >{hig}</li>
             ))
            }
           </ul>
@@ -207,8 +239,8 @@ export default function SingleProductHead({ product }) {
             <div className={styles.productContentHighlight}>
           <ul>
            {
-             product.product.highlights.map(hig=>(
-              <li>{hig}</li>
+             product.product.highlights.map((hig,ind)=>(
+              <li key={`highlights ${ind}`} >{hig}</li>
             ))
            }
           </ul>
@@ -220,77 +252,12 @@ export default function SingleProductHead({ product }) {
             </div>
         </div>
       </div> 
-
-      <div className={styles.buyProduct}>
-        <div className={styles.buyProductWrapper}>
-          <div
-            className={`${styles.buyProductInactive} , ${styles.buyProductHead}`}
-          >
-            <input type="radio" checked={false} />
-            <div>
-              <span>With Exchange</span>
-              <span>Up to {priceFormatter(5500)} off</span>
-            </div>
-          </div>
-          <div className={styles.buyProductHead}>
-            <input type="radio" checked={true} />
-            <div>
-              <span>Without Exchange</span>
-              <div className={styles.buyProductHeadPrice}>
-                <span>{priceFormatter(12900)}</span>
-                <span>{priceFormatter(1300)}</span>
-              </div>
-            </div>
-          </div>
-          <div className={styles.buyProductAddOn}>
-            <div className={styles.buyProductAddOnTitle}>Add On's</div>
-            <div className={styles.buyProductAddOnItem}>
-              <input type="checkbox" checked={true} />
-              <div>
-                <div>Tv Installation <span>Details</span></div>
-                <div> {priceFormatter(0)} </div>
-              </div>
-            </div>
-
-            <div className={styles.buyProductAddOnItem}>
-              <input type="checkbox" checked={false} />
-              <div>
-                <div>other Add-on <span>Details</span></div>
-                <div> {priceFormatter(3540)} </div>
-              </div>
-            </div>
-          </div>
-
-          <div className={styles.buyProductQuantity}>
-            <span>Quantity : </span> <input type="number" value={1} />
-          </div>
-          <div className={styles.buyProductPin}>
-            <span>Delivery : </span> <input type="number" value={560036} />
-          </div>
-
-          <div className={styles.buyProductAction}>
-           {
-             product.selectedProduct.quantity > 0 ? (
-               <>
-               <button className={`${styles.buyProductButton} ${styles.buyProductButtonCart}`} >
-              <FontAwesomeIcon icon={faCartPlus} />
-              <span>Add to Cart</span>
-            </button>
-            <button className={`${styles.buyProductButton} ${styles.buyProductButtonBag}`} >
-              <FontAwesomeIcon icon={faShoppingBag} />
-              <span>Buy Now</span>
-            </button>
-               </>
-             ) : (
-              <button className={`${styles.buyProductButton} ${styles.buyProductButtonCart}`} disabled={true} style={{color : "red"}} >
-              <FontAwesomeIcon icon={faExclamation} />
-              <span>Out OF Stock</span>
-            </button>
-             )
-           }
-          </div>
-        </div>
-      </div>
+          
+          <RightBuyComponent product={product} addCart={handleAddCart} exchange={exchange} />
+      
     </div>
   )
 }
+
+
+export default connect(null,{addCart})(SingleProductHead);

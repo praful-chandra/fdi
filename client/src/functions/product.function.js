@@ -1,4 +1,3 @@
-import { Table } from "antd";
 import axios from "axios";
 
 export const addProduct = async (product) => {
@@ -96,6 +95,15 @@ export const addReview = async (productId,review) =>{
 export const listProductwithVariance = async (limit,skip,search,sort) =>{
   try {
     const res = await axios.get("/product/withVariance", { params: { limit, skip ,search, sort } });
+    return { success: res.data };
+  } catch (err) {
+    return { error: "Some error occured" };
+  }
+}
+
+export const getColor = async (productId) =>{
+  try {
+    const res = await axios.get(`/product/color/${productId}`);
     return { success: res.data };
   } catch (err) {
     return { error: "Some error occured" };

@@ -50,7 +50,7 @@ function index() {
                     key={`deal card ${dl._id}`}
                     hoverable
                     style={{width : 300}}
-                    cover={<img src={`${process.env.REACT_APP_API_ROOT_URI}${dl.product.product.images[0].thumb}`}/>}
+                    cover={dl.product.product.images[0] && <img src={`${process.env.REACT_APP_API_ROOT_URI}${dl.product.product.images[0].thumb}`}/>}
                     actions={[
                         <EditFilled onClick={()=>{setEdit(dl.product.product.slug)}} />,
                         <Popconfirm title="Do you want to delete ?" 

@@ -5,6 +5,8 @@ const SubCat = require("../models/subCategory.model");
 const ProductVariance = require("../models/productVariance.model");
 const ProductVarianceColor = require("../models/productVarianceColor.model");
 const Deal = require("../models/dealOfTheWeek.model");
+const Best = require("../models/bestSeller.model");
+const FdiR = require("../models/fdiRecommended.model");
 const sharp = require("sharp");
 var uniqid = require('uniqid');
 
@@ -137,10 +139,7 @@ exports.add = async (req, res) => {
       tags,
       addOns,
       brand,
-      maxPrice : 0,
-      minPrice : 0
     });
-    await newProduct.save();
 
     let maxPrice = 0;
     let minPrice = Infinity;
@@ -156,7 +155,7 @@ exports.add = async (req, res) => {
         title: opt.title,
         slug: slugify(`${newProduct.name}-${opt.title}`)
       });
-      await newVariance.save();
+      // await newVariance.save();
 
       variances.push(newVariance._id);  
       colors = [];
@@ -178,7 +177,6 @@ exports.add = async (req, res) => {
       newVariance.color = colors;
       await newVariance.save();
     })
-    
     newProduct.maxPrice = maxPrice;
     newProduct.minPrice = minPrice;
     newProduct.options = variances;
@@ -338,9 +336,14 @@ exports.remove = async (req, res) => {
     const { slug } = req.params;
 
     const deletedProd = await Product.findOneAndDelete({ slug });
+    let listofAllColors = await ProductVarianceColor.find({product : deletedProd._id},{_id : 1});
+    listofAllColors = listofAllColors.map(l=>l._id);
     await ProductVariance.deleteMany({ product: deletedProd._id })
     await ProductVarianceColor.deleteMany({ product: deletedProd._id })
 
+    await Best.deleteMany({product : {$in : listofAllColors} })
+    await FdiR.deleteMany({product : {$in : listofAllColors}})
+    await Deal.deleteMany({product : {$in : listofAllColors}})
 
     res.json({ success: true });
   } catch (err) {
@@ -364,7 +367,7 @@ exports.getfromcolor = async (req, res) => {
     let selectedProduct = await ProductVarianceColor.findOne({ slug })
                                 .populate('variance')
                                 .populate({path : "variance" , populate : {path : "color"}});
-                                
+                             
     let product = await Product.findById(selectedProduct.product)
                         .populate(["tags", "category", "subCategory", "options"])
                         .populate("brand", ["name", "_id", "slug"])
@@ -520,7 +523,8 @@ exports.listWithVariance = async (req, res) => {
                         .sort(sortPrice !== false && {price : sortPrice})
                         .populate("product")
                         .populate("variance");
-    
+    //!IMPORTANT                        
+    //TODO : SORT USING BOTH DISCOUNT PRICE AND NORMAL PRICE
 
     const count = await ProductVarianceColor.find({product : {$in:products}})
                         .where("price").gt(minPrice ? minPrice : 0).lt(maxPrice > 0 ? maxPrice : Infinity)
@@ -531,3 +535,18 @@ exports.listWithVariance = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+
+exports.getColor = async (req,res)=>{
+  try{
+
+    const {productId} = req.params;
+
+    const product = await ProductVarianceColor.findById(productId);
+    
+    res.json(product)
+
+  }catch(err){
+    res.json({error : "Internal Server error"})
+  }
+}

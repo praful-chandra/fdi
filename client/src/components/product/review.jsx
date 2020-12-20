@@ -27,7 +27,7 @@ function Review({reviews , productId}) {
     const data = [];
 
     for(let i = 0 ; i <= count && i< reviews.length ; i++){
-      data.push(<ReviewBody rating={reviews[i]} />)
+      data.push(<ReviewBody key={`review body ${i}`} rating={reviews[i]} />)
     }
 
     return data;

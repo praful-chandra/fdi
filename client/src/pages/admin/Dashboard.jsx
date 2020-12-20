@@ -12,6 +12,8 @@ import DealOfTheWeekComponent from "../../components/admin/dealoftheweek";
 import BestSellerComponent from "../../components/admin/bestSellers";
 import FDIRecommendedComponent from "../../components/admin/fdiRecommended";
 
+import ExchangeComponent from "../../components/admin/exchange";
+
 import styles from "../../sass/modules/userDashboard/userDash.module.scss";
 
 
@@ -20,7 +22,7 @@ function Dashboard(props) {
     let page = props.location.search.split('=')[1];
     page = parseInt(page);
 
-    const [selected, setSelected] = useState(page || 0);
+    const [selected, setSelected] = useState(page || 11);
     const { user } = useSelector(state => state);
 
     const renderContent = () => {
@@ -35,6 +37,8 @@ function Dashboard(props) {
             case 7: return <BestSellerComponent />;
             case 8: return <FDIRecommendedComponent />;
             case 10: return <ResetPasswordComponent />;
+            case 11: return <ExchangeComponent />;
+
             default: return <HomeComponent />;
         }
     }

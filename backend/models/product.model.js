@@ -89,7 +89,8 @@ const ProductSchema = new mongoose.Schema({
       postedBy : {
         type : ObjectId,
         ref : "User",
-        unique : true
+        unique : true,
+        sparse : true
       },
       date:Date
     }

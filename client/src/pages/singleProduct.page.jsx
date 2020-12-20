@@ -4,7 +4,6 @@ import Head from "../components/product/singleProductHead";
 import Description from "../components/product/singleProductDescription";
 import Recommended from "../components/recommended";
 import Review from "../components/product/review";
-
 import { getFromColor, getRelated } from "../functions/product.function";
 import { getDeal } from "../functions/deal.functions";
 

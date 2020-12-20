@@ -19,12 +19,15 @@ const {
   getfromcolor,
   getRelated,
   addReview,
-  listWithVariance
+  listWithVariance,
+  getColor
 } = require("../controllers/product.controller");
 
 router.get("/", list);
 router.get("/withVariance",listWithVariance);  
+router.get("/color/:productId",getColor);
 router.get("/:slug", get);
+
 router.post("/", authCheck, adminCheck, upload.array("images[]", 20), add);
 router.patch(
   "/:slug",

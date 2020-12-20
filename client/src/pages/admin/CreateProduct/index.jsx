@@ -94,6 +94,7 @@ function index({
         autoDismiss: true,
       });
       setNewProduct(initialState);
+      window.location.reload();
     } catch (err) {
       console.log(err);
       addToast(err.response ? err.response.data.error : "failed to create", {

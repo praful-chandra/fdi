@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { UserOutlined } from "@ant-design/icons";
@@ -8,39 +8,66 @@ import {
   faTruck,
   faMapMarkerAlt,
   faSearch,
-  faHeart,
-  faShoppingCart,
-  faShoppingBag
+  faShoppingBag,
 } from "@fortawesome/free-solid-svg-icons";
-import { Menu, Dropdown } from "antd";
-import { DownOutlined, LogoutOutlined, HomeFilled } from "@ant-design/icons";
+import { Menu, Dropdown, Badge, Affix } from "antd";
+import {
+  DownOutlined,
+  LogoutOutlined,
+  HomeFilled,
+  ShoppingFilled,
+  HeartFilled,
+} from "@ant-design/icons";
 
 import styles from "../../sass/modules/navbar.module.scss";
 import Logo from "../../logo.svg";
 
 import { signoutUser } from "../../redux/actions/userActions";
+import { getCart, getLocalCart } from "../../redux/actions/cartActions";
 import { roleBasedRedirect } from "../../functions/auth.function";
+import priceFormatter from "../../functions/priceFormatter";
 
-function Header({ user, signoutUser, category, subCategories }) {
+import CartSlider from "./cartSlider";
+import NavBarMobile from "./navbarMobile";
+
+function Header({
+  user,
+  signoutUser,
+  category,
+  subCategories,
+  getCart,
+  cartItems,
+  getLocalCart,
+  totalPrice,
+}) {
   let history = useHistory();
-  const handleSearchQuery = (str)=> {
+  const handleSearchQuery = (str) => {
     let trimedString = str.substring(1);
-    trimedString = trimedString.split("=")
-  
+    trimedString = trimedString.split("=");
+
     return {
-      name : trimedString[0] ? trimedString[0] : null,
-      value : trimedString[1] ? trimedString[1].replaceAll("+"," ") : null
-    }
-  }
+      name: trimedString[0] ? trimedString[0] : null,
+      value: trimedString[1] ? trimedString[1].replaceAll("+", " ") : null,
+    };
+  };
 
-  const [search,setSearch] = useState("");
+  const [search, setSearch] = useState("");
+  const [cartSlider, setCartSlider] = useState(false);
 
-  useEffect(()=>{
+  useEffect(() => {
     let query = handleSearchQuery(history.location.search);
-    if(query.name && query.name === "search" && query.value){
-      setSearch(query.value)
+    if (query.name && query.name === "search" && query.value) {
+      setSearch(query.value);
     }
-  },[])
+  }, []);
+
+  useEffect(() => {
+    if (user.user && user.token) {
+      getCart();
+    } else {
+      // getLocalCart();
+    }
+  }, [user.user]);
 
   const menu = (
     <Menu>
@@ -56,22 +83,27 @@ function Header({ user, signoutUser, category, subCategories }) {
     </Menu>
   );
 
-
-
   return (
     <>
+      <CartSlider
+        status={cartSlider}
+        cartItems={cartItems}
+        setClose={() => {
+          setCartSlider(false);
+        }}
+      />
       <nav className={styles.desktop}>
         <div className={styles.topBar}>
           <ul className="center">
             <li>We Make Buying Easy For You</li>
             <li>
               <ul className={styles.topBarLinks}>
-              <li>
-                <Link to="/shop">
-                  <FontAwesomeIcon icon={faShoppingBag} />
-                  <span>Shop</span>
-                </Link>
-              </li>
+                <li>
+                  <Link to="/shop">
+                    <FontAwesomeIcon icon={faShoppingBag} />
+                    <span>Shop</span>
+                  </Link>
+                </li>
                 <li>
                   <Link to="/login">
                     <FontAwesomeIcon icon={faMapMarkerAlt} />
@@ -113,51 +145,57 @@ function Header({ user, signoutUser, category, subCategories }) {
           </ul>
         </div>
 
-        <div className={styles.middleBar}>
-          <div className="center">
-            <Link to="/">
-              <img
-                className={styles.middleBarLogo}
-                src={Logo}
-                alt="fairdeal International"
-              />
-            </Link>
-            <div className={styles.search}>
-              <form action="/shop">
-                <input
-                  type="search"
-                  name="search"
-                  id="search"
-                  placeholder="Search products"
-                  value={search}
-                  onChange={(e)=>setSearch(e.target.value)}
+        <Affix offsetTop={0}>
+          <div className={styles.middleBar}>
+            <div className="center">
+              <Link to="/">
+                <img
+                  className={styles.middleBarLogo}
+                  src={Logo}
+                  alt="fairdeal International"
                 />
-                <button type="submit">
-                  <FontAwesomeIcon icon={faSearch} />
-                </button>
-              </form>
-            </div>
+              </Link>
+              <div className={styles.search}>
+                <form action="/shop">
+                  <input
+                    type="search"
+                    name="search"
+                    id="search"
+                    placeholder="Search products"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                  />
+                  <button type="submit">
+                    <FontAwesomeIcon icon={faSearch} />
+                  </button>
+                </form>
+              </div>
 
-            <div className={styles.middleBarLinks}>
-              <ul>
-                <li>
-                  <FontAwesomeIcon icon={faHeart} />
-                </li>
-                <li>
-                  <FontAwesomeIcon icon={faShoppingCart} />
-                  <span>Rs. 33500.</span>
-                </li>
-              </ul>
+              <div className={styles.middleBarLinks}>
+                <ul>
+                  <li>
+                    <Badge count={0}>
+                      <HeartFilled />
+                    </Badge>
+                  </li>
+                  <li onClick={() => setCartSlider(true)}>
+                    <Badge count={cartItems.length}>
+                      <ShoppingFilled />
+                    </Badge>
+                    <span>{priceFormatter(totalPrice)}</span>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
+        </Affix>
 
         <div className={styles.categoryBar}>
           <div className="center">
             <ul className={styles.categoryBarLinks}>
               {category.categories.map((cl) => {
                 return (
-                  <li key={cl._id} >
+                  <li key={cl._id}>
                     <Dropdown
                       overlay={
                         <Menu>
@@ -180,9 +218,9 @@ function Header({ user, signoutUser, category, subCategories }) {
                       arrow
                     >
                       <Link to={`/shop?cat=${cl.slug}`}>
-                      <span>
-                        {cl.name} <DownOutlined />{" "}
-                      </span>
+                        <span>
+                          {cl.name} <DownOutlined />{" "}
+                        </span>
                       </Link>
                     </Dropdown>
                   </li>
@@ -192,6 +230,11 @@ function Header({ user, signoutUser, category, subCategories }) {
           </div>
         </div>
       </nav>
+    <div className={styles.mobile}>
+    <Affix offsetTop={0}>
+     <NavBarMobile cartItems={cartItems} totalPrice={totalPrice} />
+      </Affix>
+    </div>
     </>
   );
 }
@@ -200,6 +243,10 @@ const mapStateToProps = (state) => ({
   user: state.user,
   category: state.category,
   subCategories: state.subCategory.subCategories,
+  cartItems: state.cart.items,
+  totalPrice: state.cart.totalPrice,
 });
 
-export default connect(mapStateToProps, { signoutUser })(Header);
+export default connect(mapStateToProps, { signoutUser, getCart, getLocalCart })(
+  Header
+);

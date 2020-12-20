@@ -50,7 +50,9 @@ export default function Index() {
                            return  <tr>
                            <th scope="row">{i + 1}</th>
                            <td>
-                               <img style={{maxWidth : "50px"}} src={`${process.env.REACT_APP_API_ROOT_URI}${b.product.product.images[0].thumb}`} />
+                             {
+                                b.product.product.images[0] &&   <img style={{maxWidth : "50px"}} src={`${process.env.REACT_APP_API_ROOT_URI}${b.product.product.images[0].thumb}`} />
+                             }
                            </td>
                            <td>
                                {

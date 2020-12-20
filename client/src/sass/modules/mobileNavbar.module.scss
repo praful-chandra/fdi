@@ -1,0 +1,46 @@
+//globals
+@import "../globals";
+
+@media only screen and (max-width: 650px) {
+  .desktop {
+    display: none;
+  }
+
+  .mobile {
+    display: block;
+  }
+}
+
+.mobile {
+  padding: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
+  box-shadow: 0 10px 15px rgb(202, 202, 202);
+  &Logo {
+    width: 30rem;
+    margin-left: 2rem;
+  }
+}
+
+.hamburger{
+  font-size: 4rem;
+  width: fit-content;
+}
+
+.middleBarLinks{
+  transform: translateY(1.5rem);
+  &>ul{
+  display: flex;
+  align-items: center;
+
+    &>li{
+      margin-left: 2rem;
+      font-size: 3rem;
+      &>span>span{
+        font-size: 5rem;
+      }
+    }
+  }
+}

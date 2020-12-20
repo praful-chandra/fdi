@@ -8,6 +8,7 @@ import priceFormatter from "../functions/priceFormatter";
 import styles from "../sass/modules/smallProductCard.customer.module.scss";
 
 import DealLogo from "../assets/deal_of_the_week.svg";
+import BestLogo from "../assets/best_seller.svg"
 
 export default function smallProductCardProduct({ item, deal, best }) {
   const sliceString = (str) => {
@@ -37,7 +38,7 @@ export default function smallProductCardProduct({ item, deal, best }) {
 
         {best && (
           <div className={styles.cardBadge}>
-            <img src={require("../assets/best_seller.svg")} alt="" />
+            <img src={BestLogo} alt="" />
           </div>
         )} 
 

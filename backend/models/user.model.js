@@ -18,12 +18,16 @@ const UserSchema = new mongoose.Schema(
     wishList: [
       {
         type: ObjectId,
-        ref: "ProductVarianceColor",
+        ref: "ProductVarianceColor", 
       },
     ],
     cart:[{
-      product : {type : ObjectId , ref: "ReoductVarianceColor"},
-      quantity : {type : Number , default : 1}
+      product : {type : mongoose.Types.ObjectId , ref: "ProductVarianceColor"},
+      quantity : {type : Number , default : 1},
+      productImage : String,
+      addOns : [],
+      exchange : {},
+      name :String
     }]
   },
   { timestamps: true }

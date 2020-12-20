@@ -11,13 +11,13 @@ function singleProductDescription({body}) {
             </div>
           </div>
 
-          <p> 
+          <div> 
             <ReactQuill
                 value={body}
                 readOnly={true}
                 theme={"bubble"}
              />
-           </p>
+           </div>
         </div>
     )
 }
