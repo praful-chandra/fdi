@@ -1,7 +1,8 @@
 import React,{useEffect} from "react";
+import {connect,useSelector} from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {Link} from "react-router-dom";
-// import {  faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
+import {  faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as emptyHeart } from "@fortawesome/free-regular-svg-icons";
 import priceFormatter from "../functions/priceFormatter";
 import {getDeal} from "../functions/deal.functions";
@@ -10,7 +11,11 @@ import styles from "../sass/modules/smallProductCard.customer.module.scss";
 import DealLogo from "../assets/deal_of_the_week.svg";
 import BestLogo from "../assets/best_seller.svg";
 
-export default function smallProductCard({ item, deal, best }) {
+import {toggleWishlist} from "../redux/actions/wishListActions";
+
+function smallProductCard({ item, deal, best ,toggleWishlist}) {
+
+  const {wishList} = useSelector(state => state);
 
   useEffect(()=>{
     if(!deal){
@@ -49,7 +54,7 @@ export default function smallProductCard({ item, deal, best }) {
           <h3>
             {sliceString(`${item.product.product.name} (${item.product.product.model}) (${item.product.variance.title}) - ${item.product.name}`)}{" "}
           </h3>
-          <Link to={`/product/${item.product.slug}`} target="_blank">
+          <Link to={`/product/${item.product.slug}`}>
           <div className={styles.cardContentsImages}>
             <img
                src={`${process.env.REACT_APP_API_ROOT_URI}${item.product.product.images[0].thumb}`}
@@ -71,8 +76,10 @@ export default function smallProductCard({ item, deal, best }) {
             )
             }
             <div>
-              <div className={styles.addCart}>
-                <FontAwesomeIcon icon={emptyHeart} />
+              <div className={styles.addCart} onClick={()=>toggleWishlist(item.product._id)}>
+                <FontAwesomeIcon icon={
+                  wishList.find(wl => wl.product.toString() === item.product._id.toString()) ? solidHeart : emptyHeart
+                } />
               </div>
             </div>
           </div>
@@ -85,3 +92,6 @@ export default function smallProductCard({ item, deal, best }) {
     </>
   );
 }
+
+
+export default connect(null,{toggleWishlist})(smallProductCard)

@@ -24,6 +24,7 @@ import Logo from "../../logo.svg";
 
 import { signoutUser } from "../../redux/actions/userActions";
 import { getCart, getLocalCart } from "../../redux/actions/cartActions";
+import {listWishList} from "../../redux/actions/wishListActions";
 import { roleBasedRedirect } from "../../functions/auth.function";
 import priceFormatter from "../../functions/priceFormatter";
 
@@ -39,6 +40,8 @@ function Header({
   cartItems,
   getLocalCart,
   totalPrice,
+  wishList,
+  listWishList
 }) {
   let history = useHistory();
   const handleSearchQuery = (str) => {
@@ -64,10 +67,15 @@ function Header({
   useEffect(() => {
     if (user.user && user.token) {
       getCart();
+      listWishList()
     } else {
       // getLocalCart();
     }
   }, [user.user]);
+
+  useEffect(() => {
+    
+  }, [wishList])
 
   const menu = (
     <Menu>
@@ -174,7 +182,7 @@ function Header({
               <div className={styles.middleBarLinks}>
                 <ul>
                   <li>
-                    <Badge count={0}>
+                    <Badge count={wishList.length}>
                       <HeartFilled />
                     </Badge>
                   </li>
@@ -245,8 +253,9 @@ const mapStateToProps = (state) => ({
   subCategories: state.subCategory.subCategories,
   cartItems: state.cart.items,
   totalPrice: state.cart.totalPrice,
+  wishList : state.wishList
 });
 
-export default connect(mapStateToProps, { signoutUser, getCart, getLocalCart })(
+export default connect(mapStateToProps, { signoutUser, getCart, getLocalCart ,listWishList})(
   Header
 );

@@ -26,7 +26,7 @@ export default function Home() {
         })
         listBestSeller(10).then(data=>{
             if(data){
-                setBests(data);
+                setBests(data.bests);
             }
         })
     },[])
@@ -37,8 +37,8 @@ export default function Home() {
             <CaroueseComponent />
             <InfoCard />
             <BannerSmall />
-            <OfferSlider items={deals} deal={true} title={"deal of the week"} />
-            <OfferSlider invert={true} items={bests} best={true} title={"Best Sellers"} />
+            <OfferSlider items={deals} deal={true} title={"deal of the week"} link="/deal" />
+            <OfferSlider invert={true} items={bests} best={true} title={"Best Sellers"} link="/best" />
             {
                 categories.map((cat,i)=>{
                     return <CategorySlider invert={(i + 1) % 2 === 0} category={cat} />

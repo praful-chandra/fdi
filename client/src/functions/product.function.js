@@ -92,7 +92,7 @@ export const addReview = async (productId,review) =>{
 }
 
 
-export const listProductwithVariance = async (limit,skip,search,sort) =>{
+export const listProductwithVariance = async (limit,skip,search,sort,type) =>{
   try {
     const res = await axios.get("/product/withVariance", { params: { limit, skip ,search, sort } });
     return { success: res.data };

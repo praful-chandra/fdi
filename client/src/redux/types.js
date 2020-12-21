@@ -50,3 +50,7 @@ export const cartTypes = {
   GET_CART : "GET_CART",
   GET_LOCAL_CART : "GET_LOCAL_CART"
 }
+
+export const wishListTypes = {
+  LIST_WISHLIST : "LIST_WISHLIST"
+}

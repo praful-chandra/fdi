@@ -22,7 +22,7 @@ function Dashboard(props) {
     let page = props.location.search.split('=')[1];
     page = parseInt(page);
 
-    const [selected, setSelected] = useState(page || 11);
+    const [selected, setSelected] = useState(page || 0);
     const { user } = useSelector(state => state);
 
     const renderContent = () => {

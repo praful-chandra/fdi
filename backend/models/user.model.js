@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { ObjectId } = mongoose.Schema.Types;
+const  ObjectId  = mongoose.Schema.Types.ObjectId;
 
 const UserSchema = new mongoose.Schema(
   {
@@ -22,7 +22,7 @@ const UserSchema = new mongoose.Schema(
       },
     ],
     cart:[{
-      product : {type : mongoose.Types.ObjectId , ref: "ProductVarianceColor"},
+      product : {type : ObjectId , ref: "ProductVarianceColor"},
       quantity : {type : Number , default : 1},
       productImage : String,
       addOns : [],

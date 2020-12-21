@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const ExchangeSchema = new mongoose.Schema({
     categoryName : String,
     subCategory :{
-        type : mongoose.Types.ObjectId,
+        type : mongoose.Schema.Types.ObjectId,
         ref : "subCategory"
     },
     type :[

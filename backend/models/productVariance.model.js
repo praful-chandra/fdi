@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 
 const ProductvarianceSchema = new mongoose.Schema({
     product : {
-        type : mongoose.Types.ObjectId,
+        type : mongoose.Schema.Types.ObjectId,
         ref: 'Product'
     },
     slug:{
@@ -18,7 +18,7 @@ const ProductvarianceSchema = new mongoose.Schema({
       required: true,
     },
     color :[{
-        type : mongoose.Types.ObjectId,
+        type : mongoose.Schema.Types.ObjectId,
         ref:'ProductVarianceColor'
     }]
   })

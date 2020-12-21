@@ -1,11 +1,12 @@
 import React from "react";
+import {Link} from "react-router-dom";
 import styles from "../sass/modules/offerSlider.module.scss";
 import SmallProductCard from "./smallProductCard";
 import Carousel from '@brainhubeu/react-carousel';
 import '@brainhubeu/react-carousel/lib/style.css';
 
 
-export default function offerSlider({ invert, items, deal,best, title }) {
+export default function offerSlider({ invert, items, deal,best, title ,link}) {
 
   
   const renderCards = () => {
@@ -36,7 +37,9 @@ export default function offerSlider({ invert, items, deal,best, title }) {
         <div className={styles.head}>
           <div>
             <h5>{title}</h5>
+            <Link to={link}>
             <button>View All</button>
+            </Link>
           </div>
         </div>
        <div className={styles.sliderCarousel}>

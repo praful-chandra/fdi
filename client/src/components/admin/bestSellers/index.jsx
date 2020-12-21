@@ -8,7 +8,9 @@ import { listBestSeller, addBestSeller } from "../../../functions/bestSeller.fun
 
 export default function Index() {
 
-    const [bests, setBests] = useState([]);
+    const [bests, setBests] = useState({
+        bests : []
+    });
     const [reset,setReset] = useState(false);
     const { addToast } = useToasts();
     
@@ -46,7 +48,7 @@ export default function Index() {
                 </thead>
                 <tbody>
                    {
-                       bests.map((b,i)=>{
+                       bests.bests.map((b,i)=>{
                            return  <tr>
                            <th scope="row">{i + 1}</th>
                            <td>

@@ -6,6 +6,7 @@ import subCategoryReducer from "./subCategoryReducer";
 import tagReducer from "./tagReducer";
 import brandReducer from "./brandReducer";
 import cartReducer from "./cartReducer";
+import wishListReducer from "./wishListReducer";
 
 export default  combineReducers({
     user : userReducer,
@@ -13,5 +14,6 @@ export default  combineReducers({
     subCategory : subCategoryReducer,
     tag : tagReducer,
     brand : brandReducer,
-    cart : cartReducer
+    cart : cartReducer,
+    wishList : wishListReducer
 })     

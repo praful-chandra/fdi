@@ -46,7 +46,7 @@ export default function smallProductCardProduct({ item, deal, best }) {
           <h3>
             {sliceString(item.name)}{" "}
           </h3>
-          <Link to={`/product/${item.slug}`} target="_blank">
+          <a href={`/product/${item.slug}`}>
           <div className={styles.cardContentsImages}>
             <img
                src={`${process.env.REACT_APP_API_ROOT_URI}${item.images[0].thumb}`}
@@ -54,16 +54,16 @@ export default function smallProductCardProduct({ item, deal, best }) {
               alt="tv1"
             />
           </div>
-          </Link>
+          </a>
           <div className={styles.cardContentsBottom}>
             <div>
               <span>{getPrice()}</span>
               <span></span>
             </div>  
             <div>
-              <div className={styles.addCart}>
+              {/* <div className={styles.addCart}>
                 <FontAwesomeIcon icon={emptyHeart} />
-              </div>
+              </div> */}
             </div>  
           </div>
           {/* <div className={styles.cardContentsWishList}>

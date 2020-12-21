@@ -5,14 +5,14 @@ const Product = require("../models/product.model");
 
 exports.addToCart = async (req, res) => {
   try {
-    const { productId, addOns, quantity ,exchange} = req.body;
+    const { productId, addOns, quantity, exchange } = req.body;
     const user = await User.findOne({ email: req.user.email });
     if (!user) {
       throw new Error("Not Authorized");
     }
 
     const product = await ProductVarianceColor.findById(productId);
-    const mainProduct = await Product.findById(product.product,{images : 0});
+    const mainProduct = await Product.findById(product.product, { images: 0 });
     const variance = await ProductVariance.findById(product.variance);
     let productImage = `/api/serveImage/product/${product.product}/0/thumb`;
     if (product.quantity < quantity) {
@@ -27,7 +27,13 @@ exports.addToCart = async (req, res) => {
         user._id,
         {
           $push: {
-            cart: { product: product._id, quantity, productImage, addOns ,exchange },
+            cart: {
+              product: product._id,
+              quantity,
+              productImage,
+              addOns,
+              exchange,
+            },
           },
         },
         { new: true }
@@ -37,7 +43,7 @@ exports.addToCart = async (req, res) => {
         success: {
           _id: productId,
           product: product._id,
-          name : `${mainProduct.name}(${variance.title})(${product.name})`,
+          name: `${mainProduct.name}(${variance.title})(${product.name})`,
           price: product.price,
           quantity,
           addOns,
@@ -56,8 +62,7 @@ exports.addToCart = async (req, res) => {
             "cart.$.productImage": productImage,
             "cart.$.addOns": addOns,
             "cart.$.exchange": exchange,
-            "cart.$.name" : `${mainProduct.name}(${variance.title})(${product.name})`,
-
+            "cart.$.name": `${mainProduct.name}(${variance.title})(${product.name})`,
           },
         },
         {
@@ -69,12 +74,12 @@ exports.addToCart = async (req, res) => {
         success: {
           _id: existingProduct._id,
           product: product._id,
-          name : `${mainProduct.name}(${variance.title})(${product.name})`,
+          name: `${mainProduct.name}(${variance.title})(${product.name})`,
           price: product.price,
           quantity: quantity,
           productImage,
           addOns,
-          exchange
+          exchange,
         },
       });
     }
@@ -83,28 +88,26 @@ exports.addToCart = async (req, res) => {
   }
 };
 
-exports.decrement = async(req,res) =>{
-res.send();
-}
+exports.decrement = async (req, res) => {
+  res.send();
+};
 
 exports.listCart = async (req, res) => {
   try {
-    const user = await User.findOne(
-      { email: req.user.email },
-      { cart: 1 }
-    ).populate({ path: "cart", populate: { path: "product" } })
-    .populate({path : "cart.product",populate : {path : "product"}})
-    .populate({path : "cart.product",populate : {path : "variance"}});
+    const user = await User.findOne({ email: req.user.email }, { cart: 1 })
+      .populate({ path: "cart", populate: { path: "product" } })
+      .populate({ path: "cart.product", populate: { path: "product" } })
+      .populate({ path: "cart.product", populate: { path: "variance" } });
     if (user.cart) {
       const finalCart = user.cart.map((uc) => ({
         quantity: uc.quantity,
         _id: uc._id,
         product: uc.product._id,
-        name : `${uc.product.product.name} (${uc.product.variance.title}) (${uc.product.name})`,
+        name: `${uc.product.product.name} (${uc.product.variance.title}) (${uc.product.name})`,
         price: uc.product.price,
         productImage: uc.productImage,
-        addOns : uc.addOns,
-        exchange : uc.exchange 
+        addOns: uc.addOns,
+        exchange: uc.exchange,
       }));
       res.json(finalCart);
     } else {
@@ -112,5 +115,52 @@ exports.listCart = async (req, res) => {
     }
   } catch (err) {
     res.status(500).json({ error: err.message || "Some error occured" });
+  }
+};
+
+exports.WishList = async (req, res) => {
+  try {
+    const { productId } = req.params;
+    const user = await User.findOne({ email: req.user.email });
+    let isExist = user.wishList.find(
+      (w) => w.toString() === productId.toString()
+    );
+
+    if (isExist) {
+      await User.findByIdAndUpdate(user._id, {
+        $pull: { wishList: productId },
+      });
+      res.json({ success: true });
+    } else {
+      await User.findByIdAndUpdate(user._id, {
+        $push: { wishList: productId },
+      });
+      res.json({ success: true });
+    }
+  } catch (err) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+exports.listWishList = async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.user.email })
+      .populate("wishList")
+      .populate({ path: "wishList", populate: { path: "product" } })
+      .populate({ path: "wishList", populate: { path: "variance" } });
+      if (user.wishList) {
+        const finalCart = user.wishList.map((uc) => ({
+          product: uc._id,
+          name: `${uc.product.name} (${uc.variance.title}) (${uc.name})`,
+          price: uc.price,
+          productImage: `/api/serveImage/product/${uc.product._id}/0/thumb`,
+        }));
+        res.json(finalCart);    
+      } else {
+        throw new Error("Authentication Error");
+      }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Internal server error" });
   }
 };

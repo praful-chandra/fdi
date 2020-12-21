@@ -3,11 +3,11 @@ const mongoose = require("mongoose");
 
 const ProductVarianceColorSchema = new mongoose.Schema({
   product: {
-    type: mongoose.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'Product'
   },
   variance: {
-    type: mongoose.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'ProductVariance'
   },
   name: {

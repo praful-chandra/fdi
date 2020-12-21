@@ -160,3 +160,35 @@ input::-webkit-inner-spin-button {
   width: 100%;
   min-height: 60vh;
 }
+
+.mobileFilters{
+  display: none;
+}
+
+.desktopFilters{
+  display: block;
+}
+
+@media only screen and (max-width: 650px) {
+  .productPage{
+    display: block;
+    padding: 1rem;
+  }
+
+  .desktopFilters{
+    display: none;
+  }
+
+  .mobileFilters{
+    display: block;
+    margin-bottom: 5rem;
+  }
+
+  .filterBar{
+    height: 10rem;
+  }
+
+  .head{
+    // display: none;
+  }
+}

@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch ,BrowserRouter as Router } from "react-router-dom";
 
 import Header from "./components/nav/Header.component";
 import "./sass/index.scss";
@@ -15,6 +15,8 @@ import Dashboard from "./pages/user/Dashboard";
 import AdminDash from "./pages/admin/Dashboard";
 import CreateProduct from "./pages/admin/CreateProduct/index";
 import EditProduct from "./pages/admin/editProduct/index";
+import DealPage from "./pages/deal.page";
+import BestPage from "./pages/bestSeller.page";
 
 import SingleProductPage from "./pages/singleProduct.page";
 import ShopPage from "./pages/shop.page";
@@ -70,7 +72,7 @@ function App({
   }, []);
 
   return (   
-    <>
+    <Router>
       <Header />
       <Switch>
         <Route exact path="/" component={Home} />
@@ -80,7 +82,12 @@ function App({
         <Route exact path="/register" component={Register} />
         <Route exact path="/register/complete" component={RegisterComplete} />
         <Route exact path="/resetpassword" component={ResetPassword} />
+        <Route exact path="/deal" component={DealPage} />
+        <Route exact path="/best" component={BestPage} />
+
+
         <UserPrivateRoute exact path="/user/dashboard" component={Dashboard} />
+        
         <AdminPrivateRoute
           exact
           path="/admin/dashboard"
@@ -97,7 +104,7 @@ function App({
           component={EditProduct}
         />
       </Switch>
-    </>
+    </Router>
   );
 }
 

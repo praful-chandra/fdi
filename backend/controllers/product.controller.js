@@ -428,10 +428,10 @@ exports.addReview = async (req,res)=>{
     }else{
       const reviewAdded = await Product.findByIdAndUpdate(product._id,
         {
-          $push : {reviews : {star,comment,postedBy : user._id , date : Date.now()} }
+          $addToSet : {reviews : {star,comment,postedBy : user._id.toString() , date : Date.now()} }
         },{
           new : true
-        });
+        });  
 
         res.json(reviewAdded);
     }
@@ -448,7 +448,7 @@ exports.addReview = async (req,res)=>{
 exports.listWithVariance = async (req, res) => {
 
   try {
-    let { limit, skip, search,sort } = req.query;
+    let { limit, skip, search,sort ,type} = req.query;
     skip = limit * skip;
     let searchQuery = {};
     let minPrice;
@@ -459,6 +459,7 @@ exports.listWithVariance = async (req, res) => {
         const name = Object.keys(search)[i];
         const value = search[Object.keys(search)[i]]
         if (value) {
+          
           if (name === 'name') {
             searchQuery = {
               ...searchQuery,
@@ -510,23 +511,31 @@ exports.listWithVariance = async (req, res) => {
     
    
 
-    let products = await Product.find(searchQuery)
-      .select("_id")
+    let products = [];
+    let findFrom = "product"
+
+  
+      products = await Product.find(searchQuery)
+      .select("_id");
+      products = products.map(p => p._id);
+    
       
 
-     products = products.map(p => p._id);
 
-     let allProducts = await ProductVarianceColor.find({product : {$in:products}})
+     let allProducts = await ProductVarianceColor.find({[findFrom] : {$in:products}})
                         .where("price").gt(minPrice ? minPrice : 0).lt(maxPrice > 0 ? maxPrice : Infinity)
                         .limit(parseInt(limit))
                         .skip(parseInt(skip))
-                        .sort(sortPrice !== false && {price : sortPrice})
                         .populate("product")
-                        .populate("variance");
+                        .populate("variance")
+                        .sort(sortPrice !== false && {price : sortPrice});
+
+                       
     //!IMPORTANT                        
     //TODO : SORT USING BOTH DISCOUNT PRICE AND NORMAL PRICE
 
-    const count = await ProductVarianceColor.find({product : {$in:products}})
+
+    const count = await ProductVarianceColor.find({[findFrom] : {$in:products}})
                         .where("price").gt(minPrice ? minPrice : 0).lt(maxPrice > 0 ? maxPrice : Infinity)
                         .countDocuments();
     res.json({ allProducts, totalCount: count });

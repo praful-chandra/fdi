@@ -13,6 +13,7 @@ export default function bestSeller({items, title, bestBadge , invert }) {
         <SmallProductCardProduct
           item={itm}
           best={bestBadge || false}
+          
         />
       );
     })

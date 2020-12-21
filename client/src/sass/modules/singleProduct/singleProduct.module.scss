@@ -256,9 +256,27 @@
       }
 
       .reviews{
-          flex-direction: column;
-          &Head{
+         &Head{
+            flex-direction: column;
+            &>div{
+                width: 100%;
+            }
+            &Left{
+                &>div:first-child>div{
+                    flex-direction: column;
+                }
+                &>div:first-child{
+                    width: 100%;
+                }
+            }  
 
-          }
+         }
+
+         &>New{
+             & button{
+                align-self: center;
+             }
+         }
+      
       }
   }

@@ -9,9 +9,9 @@ export const getBestSeller = async product => {
     }
 }
 
-export const listBestSeller = async (limit) => {
+export const listBestSeller = async (limit,skip) => {
     try {
-        const bestSeller = await axios.get(`/bestseller`,{params : {limit}});
+        const bestSeller = await axios.get(`/bestseller`,{params : {limit,skip}});
         return bestSeller.data;
     } catch (err) {
         return { error: "Some error had occured" }

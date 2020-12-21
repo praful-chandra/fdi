@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { ObjectId } = mongoose.Types;
+const  ObjectId  = mongoose.Schema.Types.ObjectId;
 
 const ProductSchema = new mongoose.Schema({
   name: {
@@ -87,10 +87,8 @@ const ProductSchema = new mongoose.Schema({
       },
       comment : String,
       postedBy : {
-        type : ObjectId,
-        ref : "User",
-        unique : true,
-        sparse : true
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "User"
       },
       date:Date
     }

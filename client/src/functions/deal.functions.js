@@ -1,9 +1,9 @@
 import axios from "axios";
 
-export const listDeals = async(limit) =>{
+export const listDeals = async(limit,skip) =>{
     try{
 
-        const deals = await axios.get("/dow",{params : {limit}});
+        const deals = await axios.get("/dow",{params : {limit,skip}});
         return deals.data;
 
     }catch(err){

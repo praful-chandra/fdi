@@ -2,7 +2,7 @@ const mongoose =  require('mongoose');
 
 const DealOfTheDaySchema = new mongoose.Schema({
     product :{
-        type : mongoose.Types.ObjectId,
+        type : mongoose.Schema.Types.ObjectId,
         ref:'ProductVarianceColor',
         unique : true,
         index : true

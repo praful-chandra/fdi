@@ -15,7 +15,7 @@ function cartSlider({ status, setClose, cartItems,width}) {
       visible={status}
       footer={
         <div className={styles.actionButton}>
-          <button className="text-center btn btn-primary btn-raised btn-block">
+          <button  className={`text-center btn btn-primary btn-raised btn-block ${styles.actionBtn}`}>
             Go To Cart
           </button>
         </div>

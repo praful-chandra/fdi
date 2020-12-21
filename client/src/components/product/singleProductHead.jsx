@@ -59,7 +59,7 @@ import {addCart} from "../../redux/actions/cartActions";
   },)
   const optionCard = (opt, active) => {
     return (
-      <Link key={`option card ${opt._id}`} to={opt.color[0].slug} target="_blank">
+      <a key={`option card ${opt._id}`} href={opt.color[0].slug} replace={true}>
         <div className={`${styles.productContentOptionGridTile} , ${active && styles.productContentOptionGridTileActive}`}>
         <div className={styles.productContentOptionGridTileName}>
           {opt.title}
@@ -68,19 +68,19 @@ import {addCart} from "../../redux/actions/cartActions";
           {priceFormatter(opt.color[0].price)}
         </div>
       </div>
-      </Link>
+      </a>
     )
   }
 
   const optionColor = (col, active) => {
     return (
-      <Link key={`optionColor ${col._id}`} to={col.slug} target="_blank">
+      <a key={`optionColor ${col._id}`} href={col.slug}>
         <div
         className={active && styles.productContentOption_altColorsSelected}
         style={{ backgroundColor: col.hex }}
       >
       </div>
-      </Link>
+      </a>
     )
   }
   const openNotificationWithIcon = () => {

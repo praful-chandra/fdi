@@ -35,7 +35,7 @@ exports.list = async (req, res) => {
         let { limit, skip } = req.query;
     skip = limit * skip;
 
-        const prods = await BestSeller.find()
+        const bests = await BestSeller.find()
         .limit(parseInt(limit))
         .skip(parseInt(skip))
         .populate("product")
@@ -52,9 +52,11 @@ exports.list = async (req, res) => {
             }
         });
         
-       
-    res.json(prods);
 
+    const count = await BestSeller.find().count();
+
+       
+    res.json({ bests, totalCount: count });
     }catch (err) {
         log
         res.status(500).json({ error: "Internal server error" })
