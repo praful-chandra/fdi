@@ -45,12 +45,16 @@
       & > li {
         margin-left: 3rem;
         cursor: pointer;
-        &>span {
-          font-size: 2rem;
-          &>span{
-            font-size: 3rem;
-          }
+        &>span>span{
+          font-size: 3rem;  
           margin-left: 1rem;
+        }
+        & a>span {
+          font-size: 3rem;
+          // &>span{
+          //   font-size: 3rem;
+          // }
+          // 
         }
       }
     }

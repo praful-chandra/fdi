@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
-
+import {connect} from "react-redux";
+import {Button} from "antd";
 import styles from "../../sass/modules/cartSlider.module.scss";
 
-import priceFormatter from "../../functions/priceFormatter";
+import {deleteCart} from "../../redux/actions/cartActions";
 
-export default function cartSliderItem({ item }) {
+function cartSliderItem({ item ,deleteCart}) {
   return (
-    <li className={styles.thumbItem}>
+    <li>
+      <div className={styles.thumbItem}>
       <img
         src={`${process.env.REACT_APP_API_ROOT_URI}${item.productImage}`}
         alt={item.name}
@@ -32,6 +34,11 @@ export default function cartSliderItem({ item }) {
           <span style={{ fontWeight: "600" }}>Qty :</span> {item.quantity}
         </p>
       </div>
+      </div>
+              <Button block danger type="primary" onClick={()=>deleteCart(item.product)}>Remove from cart</Button>
     </li>
   );
 }
+
+
+export default connect(null,{deleteCart})(cartSliderItem)

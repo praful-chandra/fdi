@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Checkbox, Select, Radio, Form } from "antd";
+import { Checkbox, Select, Radio, Button } from "antd";
 const { Option } = Select;
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -30,6 +30,9 @@ function singleProductHeadRight({ product, addCart, exchange }) {
     }
   };
 
+  const handleCartAdd = ()=>{
+    addCart(addOns, count,exchangeProduct)
+  }
 
   const buyProductBody = () => (
     <>
@@ -74,9 +77,9 @@ function singleProductHeadRight({ product, addCart, exchange }) {
       </div>
       <div className={styles.buyProductAction}>
         {product.selectedProduct.quantity > 0 ? (
-          <>
+          <div>
             <button
-              onClick={() => addCart(addOns, count,exchangeProduct)}
+              onClick={handleCartAdd}
               className={`${styles.buyProductButton} ${styles.buyProductButtonCart}`}
             >
               <FontAwesomeIcon icon={faCartPlus} />
@@ -88,7 +91,7 @@ function singleProductHeadRight({ product, addCart, exchange }) {
               <FontAwesomeIcon icon={faShoppingBag} />
               <span>Buy Now</span>
             </button>
-          </>
+          </div>
         ) : (
           <button
             className={`${styles.buyProductButton} ${styles.buyProductButtonCart}`}

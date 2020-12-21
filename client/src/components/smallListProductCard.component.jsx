@@ -1,14 +1,18 @@
 import React from "react";
+import { useSelector, connect } from "react-redux";
 import styles from "../sass/modules/listProductCard.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as emptyHeart } from "@fortawesome/free-regular-svg-icons";
+import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
 import { faStar, faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 import priceFormatter from "../functions/priceFormatter";
 import avgRatings from "../functions/avgRating";
 import DealBadge from "../assets/deal_of_the_week.svg";
+import { toggleWishlist } from "../redux/actions/wishListActions";
 
-function smallListProductCardComponent({ product, deal }) {
-  console.log(product);
+function smallListProductCardComponent({ product, deal ,toggleWishlist}) {
+  const { wishList } = useSelector((state) => state);
+
   const avgRev = avgRatings(product.product.product.reviews);
 
   return (
@@ -19,8 +23,22 @@ function smallListProductCardComponent({ product, deal }) {
           alt=""
         />
       </div>
-      <div className={styles.wishlist} onClick={() => {}}>
-        <FontAwesomeIcon icon={emptyHeart} />
+      <div
+        className={styles.wishlist}
+        style={{
+          color: wishList.find((w) => w.product === product.product._id)
+            ? "red"
+            : "#000",
+        }}
+        onClick={() => {toggleWishlist(product.product._id)}}
+      >
+        <FontAwesomeIcon
+          icon={
+            wishList.find((w) => w.product === product.product._id)
+              ? solidHeart
+              : emptyHeart
+          }
+        />
       </div>
       <div
         className={styles.cardContent}
@@ -55,7 +73,8 @@ function smallListProductCardComponent({ product, deal }) {
             </div>
             <div className={styles.priceBoxCostPrice}>
               <div className={styles.priceBoxCostPriceSave}>
-                Save {priceFormatter(product.product.price - product.discountPrice)}
+                Save{" "}
+                {priceFormatter(product.product.price - product.discountPrice)}
               </div>
               <div className={styles.priceBoxCostPriceWas}>
                 was {priceFormatter(product.product.price)}
@@ -74,4 +93,4 @@ function smallListProductCardComponent({ product, deal }) {
   );
 }
 
-export default smallListProductCardComponent;
+export default connect(null, {toggleWishlist})(smallListProductCardComponent);

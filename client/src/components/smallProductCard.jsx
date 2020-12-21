@@ -76,7 +76,9 @@ function smallProductCard({ item, deal, best ,toggleWishlist}) {
             )
             }
             <div>
-              <div className={styles.addCart} onClick={()=>toggleWishlist(item.product._id)}>
+              <div className={styles.addCart} style={{
+                color : wishList.find(wl => wl.product.toString() === item.product._id.toString()) ? "red" : "#000"
+              }} onClick={()=>toggleWishlist(item.product._id)}>
                 <FontAwesomeIcon icon={
                   wishList.find(wl => wl.product.toString() === item.product._id.toString()) ? solidHeart : emptyHeart
                 } />

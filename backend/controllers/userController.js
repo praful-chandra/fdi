@@ -118,6 +118,22 @@ exports.listCart = async (req, res) => {
   }
 };
 
+exports.deleteCart = async (req, res) => {
+  try {
+    const { productId } = req.params;
+    console.log(productId);
+    await User.findOneAndUpdate(
+      { email: req.user.email },
+      {
+        $pull: { cart : {product : productId}},
+      }
+    );
+    res.json({ success: true });
+  } catch (err) {
+    res, status(500).json({ error: "Internal server error" });
+  }
+};
+
 exports.WishList = async (req, res) => {
   try {
     const { productId } = req.params;
@@ -148,17 +164,17 @@ exports.listWishList = async (req, res) => {
       .populate("wishList")
       .populate({ path: "wishList", populate: { path: "product" } })
       .populate({ path: "wishList", populate: { path: "variance" } });
-      if (user.wishList) {
-        const finalCart = user.wishList.map((uc) => ({
-          product: uc._id,
-          name: `${uc.product.name} (${uc.variance.title}) (${uc.name})`,
-          price: uc.price,
-          productImage: `/api/serveImage/product/${uc.product._id}/0/thumb`,
-        }));
-        res.json(finalCart);    
-      } else {
-        throw new Error("Authentication Error");
-      }
+    if (user.wishList) {
+      const finalCart = user.wishList.map((uc) => ({
+        product: uc._id,
+        name: `${uc.product.name} (${uc.variance.title}) (${uc.name})`,
+        price: uc.price,
+        productImage: `/api/serveImage/product/${uc.product._id}/0/thumb`,
+      }));
+      res.json(finalCart);
+    } else {
+      throw new Error("Authentication Error");
+    }
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Internal server error" });

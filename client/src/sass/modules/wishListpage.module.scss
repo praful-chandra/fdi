@@ -1,0 +1,72 @@
+//globals
+@import "../globals";
+
+
+.head {
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: flex-end;
+    position: relative;
+  
+    & h5 {
+  
+      font-size:3rem;
+      border-bottom: 4px solid $primaryColor;
+      width: max-content;
+      font-weight: 600;
+      & span {
+        margin-left: 4rem;
+        font-size: 1.5rem;
+        text-transform: capitalize;
+        font-weight: 300;
+        color: $primaryColor;
+        position: absolute;
+        right: 0;
+        cursor: pointer;
+        top: 0.5rem;
+      }
+    }
+  
+    & div {
+      flex-grow: 1;
+      height: 2px;
+      background-color: $darkGrey;
+      margin-bottom: 17px;
+    }
+  
+    & h6 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      & span {
+        margin-left: 4rem;
+        font-size: 2rem;
+        text-transform: capitalize;
+        font-weight: 300;
+        color: $primaryColor;
+        position: absolute;
+        right: 0;
+        cursor: pointer;
+        top: 0rem;
+      }
+    }
+  }
+  
+
+
+
+.wrapper{
+    margin-top: 5rem;
+}
+
+.item{
+    & img{
+        width: 10rem;
+    }
+}
+
+.delete{
+    color: red;
+    cursor: pointer;
+    font-size: 3rem;
+}

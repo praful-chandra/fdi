@@ -1,5 +1,4 @@
 import React,{useState,useEffect} from 'react';
-import { Link } from "react-router-dom";
 import {connect,useSelector} from "react-redux";
 import priceFormatter from "../../functions/priceFormatter";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,6 +7,7 @@ import {
   faShare,
   faHeart,
 } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as emptyHeart } from "@fortawesome/free-regular-svg-icons";
 import {  notification, Space } from 'antd';
 
 
@@ -25,10 +25,11 @@ import avgRatings from "../../functions/avgRating";
 import {getExchange} from "../../functions/exchange.function";
 
 import {addCart} from "../../redux/actions/cartActions";
+import {toggleWishlist} from "../../redux/actions/wishListActions";
 
- function SingleProductHead({ product ,addCart}) {
+ function SingleProductHead({ product ,addCart,toggleWishlist}) {
 
-  const {user } = useSelector(state => state);
+  const {user,wishList } = useSelector(state => state);
   
   const [popup,setPopup] = useState(false);
   const [isFdi,setIsFdi] = useState(false);
@@ -146,8 +147,10 @@ import {addCart} from "../../redux/actions/cartActions";
           <div className={styles.productContentSocialShare}>
             <FontAwesomeIcon icon={faShare} /> Share{" "}
           </div>
-          <div className={styles.productContentSocialWishlist}>
-            <FontAwesomeIcon icon={faHeart} />{" "}
+          <div className={styles.productContentSocialWishlist}
+            onClick={()=>toggleWishlist(product.selectedProduct._id)}
+          >
+            <FontAwesomeIcon icon={wishList.find(w => w.product === product.selectedProduct._id) ? faHeart : emptyHeart} />{" "}
           </div>
         </div>
 
@@ -260,4 +263,4 @@ import {addCart} from "../../redux/actions/cartActions";
 }
 
 
-export default connect(null,{addCart})(SingleProductHead);
+export default connect(null,{addCart,toggleWishlist})(SingleProductHead);

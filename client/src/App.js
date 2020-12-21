@@ -17,6 +17,7 @@ import CreateProduct from "./pages/admin/CreateProduct/index";
 import EditProduct from "./pages/admin/editProduct/index";
 import DealPage from "./pages/deal.page";
 import BestPage from "./pages/bestSeller.page";
+import WishListPage from "./pages/wishList.page";
 
 import SingleProductPage from "./pages/singleProduct.page";
 import ShopPage from "./pages/shop.page";
@@ -87,6 +88,8 @@ function App({
 
 
         <UserPrivateRoute exact path="/user/dashboard" component={Dashboard} />
+        <UserPrivateRoute exact path="/wishlist" component={WishListPage} />
+
         
         <AdminPrivateRoute
           exact

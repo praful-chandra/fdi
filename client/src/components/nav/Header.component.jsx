@@ -169,7 +169,6 @@ function Header({
                     type="search"
                     name="search"
                     id="search"
-                    placeholder="Search products"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                   />
@@ -181,11 +180,17 @@ function Header({
 
               <div className={styles.middleBarLinks}>
                 <ul>
-                  <li>
+                  {
+                    user.user && (
+                      <li>
+                    <Link to="/wishList" >
                     <Badge count={wishList.length}>
                       <HeartFilled />
                     </Badge>
+                    </Link>
                   </li>
+                    )
+                  }
                   <li onClick={() => setCartSlider(true)}>
                     <Badge count={cartItems.length}>
                       <ShoppingFilled />
