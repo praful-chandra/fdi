@@ -529,8 +529,9 @@
       &Grid {
         width: 100%;
         &Tile {
-          width: 20rem;
-          height: 13rem;
+          padding: 0 5rem;
+          width: fit-content;
+          height: 20rem;
           font-size: 3.4rem;
         }
       }

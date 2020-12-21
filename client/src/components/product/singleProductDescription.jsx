@@ -11,7 +11,7 @@ function singleProductDescription({body}) {
             </div>
           </div>
 
-          <div> 
+          <div className={styles.descriptionBody}> 
             <ReactQuill
                 value={body}
                 readOnly={true}
@@ -23,3 +23,4 @@ function singleProductDescription({body}) {
 }
 
 export default singleProductDescription
+ 
