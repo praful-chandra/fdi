@@ -2,7 +2,8 @@ import { Button } from 'antd';
 import React,{useState} from 'react';
 
 import styles from "../../sass/modules/userDashboard/address.module.scss";
-import {addAddress} from "../../functions/user.function";
+import {addAddress,deleteAddress,updateAddress} from "../../functions/user.function";
+
 
 const initState = {
     firstName : "",
@@ -17,8 +18,8 @@ const initState = {
     pin : ''
   }
 
-function addressFormComponent({close}) {
-    const [address,setAddress] = useState(initState);
+function addressFormComponent({close,selected}) {
+    const [address,setAddress] = useState(selected || initState);
 
 
     const handleAddressChange  = e =>{
@@ -31,7 +32,15 @@ function addressFormComponent({close}) {
     const handleAddessSave = async (e) =>{
         e.preventDefault();
 
-        const res = await addAddress(address);
+
+        const res = selected ? await updateAddress(selected._id,address) : await addAddress(address)  ;
+        if(res.success){
+            close();
+        }
+    }
+
+    const handleDelete = async() =>{
+        const res = await deleteAddress(selected._id);
         if(res.success){
             close();
         }
@@ -97,6 +106,11 @@ function addressFormComponent({close}) {
                 </div>
 
                 <Button type="primary" onClick={handleAddessSave}> Save </Button>
+
+                {
+                    selected && <Button type="primary" danger onClick={handleDelete}> Delete </Button>
+                }
+
             </form>
         </div>
     )

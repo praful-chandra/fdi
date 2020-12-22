@@ -34,6 +34,11 @@ export default (state = INITIAL_STATE , action) =>{
             userLoading : false
         };
 
+        case userActionTypes.UPDATE_ADDRESS : return{
+            ...state,
+            user : {...state.user , address : action.payload}
+        }
+
         default : return state
 
     }

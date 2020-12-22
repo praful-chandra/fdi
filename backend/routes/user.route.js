@@ -5,7 +5,7 @@ const router = express.Router();
 const {authCheck,adminCheck} = require('../middlewares/auth.middleware');
 
 //Controllers
-const {addToCart,decrement,listCart,WishList,listWishList,deleteCart,addAddress,listAddress}  =require("../controllers/userController");
+const {addToCart,decrement,listCart,WishList,listWishList,deleteCart,addAddress,listAddress,deleteAddress,updateAddress}  =require("../controllers/userController");
 
 
 router.post("/addcart",authCheck,addToCart);
@@ -15,6 +15,8 @@ router.delete("/cart/:productId",authCheck,deleteCart);
 router.post("/wishlist/:productId",authCheck,WishList);
 router.get("/wishlist/list",authCheck,listWishList);
 router.post("/address",authCheck,addAddress);
-router.get("/address/list",authCheck,listAddress)
+router.get("/address/list",authCheck,listAddress);
+router.delete("/address/:id",authCheck,deleteAddress);
+router.patch("/address/:id",authCheck,updateAddress);
 
 module.exports = router;

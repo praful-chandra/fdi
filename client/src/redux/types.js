@@ -3,6 +3,7 @@ export const userActionTypes = {
   LOGOUT: "LOGOUT",
   USER_LOADING: "USER_LOADING",
   USER_LOADING_DONE: "USER_LOADING_DONE",
+  UPDATE_ADDRESS : "UPDATE_ADDRESS"
 };
 
 export const categoryActionTypes = {

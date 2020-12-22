@@ -235,3 +235,61 @@ exports.listAddress = async (req,res)=>{
     res.status(500).json({ error: "Internal server error" })
   }
 }
+
+
+exports.updateAddress = async(req,res)=>{
+  try {
+
+    const {id} = req.params;
+    let {
+      firstName,
+      lastName,
+      emailAddress,
+      phoneNumber,
+      country,
+      gst,
+      address,
+      city,
+      state,
+      pin
+    } = req.body;
+
+    if(typeof(phoneNumber) === "string"){
+
+      phoneNumber = phoneNumber.substring(0,3) === "+91" ? parseInt(phoneNumber.substring(3)) : parseInt(phoneNumber);
+    }
+
+    await User.findOneAndUpdate({email : req.user.email},{$pull : {address : {_id : id}}});
+
+   await User.findOneAndUpdate({email : req.user.email},{$push : {address : {
+      firstName,
+      lastName,
+      emailAddress,
+      phoneNumber,
+      country,
+      gst,
+      address,
+      city,
+      state,
+      pin
+    }}});
+
+    res.json({success : true});
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Internal server error" })
+  }
+}
+
+exports.deleteAddress = async (req,res)=>{
+  try{
+
+    const {id} = req.params;
+
+    await User.findOneAndUpdate({email : req.user.email},{$pull : {address : {_id : id}}});
+    res.json({success : true})
+
+  }catch(err){
+    res.status(500).json({error : "Internal server error"})
+  }
+}

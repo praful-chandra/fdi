@@ -187,6 +187,17 @@ function cartPage({ deleteCart }) {
             </li>
 
             {
+             calculateAddons() > 0 && (
+              <li>
+              <span>Add Ons : </span>
+              <span>
+                {priceFormatter(calculateAddons())}
+              </span>
+            </li>
+             )
+           }
+
+            {
              (deals === false || deals > 0) && (
                 <li>
               <span>Deal of the Week Offer : </span>
@@ -199,16 +210,7 @@ function cartPage({ deleteCart }) {
               )
             }
 
-           {
-             calculateAddons() > 0 && (
-              <li>
-              <span>Add Ons : </span>
-              <span>
-                {priceFormatter(calculateAddons())}
-              </span>
-            </li>
-             )
-           }
+          
 
             {
               calculateExchanges() > 0 && (
