@@ -91,12 +91,11 @@ import {toggleWishlist} from "../../redux/actions/wishListActions";
     });
   };
 
-  const handleAddCart = (addOns,count,exchangeProduct) =>{
-    addCart(product.selectedProduct._id,addOns,count,exchangeProduct,user).then(data=>{
+  const handleAddCart = async (addOns,count,exchangeProduct) =>{
+   let data = await addCart(product.selectedProduct._id,addOns,count,exchangeProduct,user)
       if(data.success){
           openNotificationWithIcon()
       }
-    });
   }
 
   return (

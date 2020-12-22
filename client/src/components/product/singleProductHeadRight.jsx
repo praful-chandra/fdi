@@ -16,8 +16,6 @@ function singleProductHeadRight({ product, addCart, exchange }) {
   const [count, setCount] = useState(1);
   const [selected, setSelected] = useState(1);
   const [exchangeProduct, setExchangeProduct] = useState(null);
-
-
   const handleAddOn = (e) => {
     const item = e.target.value;
 
@@ -32,6 +30,16 @@ function singleProductHeadRight({ product, addCart, exchange }) {
 
   const handleCartAdd = ()=>{
     addCart(addOns, count,exchangeProduct)
+  }
+
+  const renderQtyItems = () =>{
+    let data = [];
+    for(let i = 1; i <= product.selectedProduct.quantity && i<= 5 ; i++){
+          
+          data.push(<Option key={`rightquantity prodyuct ${i}`} value={i}>{i}</Option>)
+    }
+
+    return data;
   }
 
   const buyProductBody = () => (
@@ -62,11 +70,9 @@ function singleProductHeadRight({ product, addCart, exchange }) {
       <div className={styles.buyProductQuantity}>
         <span>Quantity : </span>{" "}
         <Select value={count} onChange={val => setCount(val)} >
-          <Option value={1}>1</Option>
-          <Option value={2}>2</Option>
-          <Option value={3}>3</Option>
-          <Option value={4}>4</Option>
-          <Option value={5}>5</Option>
+         {
+           renderQtyItems()
+         }
 
         </Select>
 

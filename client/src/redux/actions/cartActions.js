@@ -3,11 +3,13 @@ import axios from "axios";
 
 
 export const addCart = (productId,addOns,count,exchangeProduct,user)=> async dispatch =>{
+    console.log(exchangeProduct);
 
     try{
         exchangeProduct = exchangeProduct ? {
             name : exchangeProduct.name,
-            exchangePrice : exchangeProduct.exchangePrice
+            exchangePrice : exchangeProduct.exchangePrice,
+            exchangeItem : exchangeProduct._id
         } : {}
 
         // if(user.user && user.token){

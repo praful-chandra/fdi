@@ -15,7 +15,8 @@ function singleProductDescription({body}) {
             <ReactQuill
                 value={body}
                 readOnly={true}
-                theme={"bubble"}
+                // theme={"bubble"}
+                modules={{toolbar : false}}
              />
            </div>
         </div>

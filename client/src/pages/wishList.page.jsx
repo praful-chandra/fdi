@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector, connect } from "react-redux";
+import {Link} from "react-router-dom";
 import styles from "../sass/modules/wishListpage.module.scss";
 import { DeleteFilled } from "@ant-design/icons";
 import {toggleWishlist} from "../redux/actions/wishListActions";
@@ -31,7 +32,11 @@ function wishListPage({toggleWishlist}) {
                     src={`${process.env.REACT_APP_API_ROOT_URI}${w.productImage}`}
                   />
                 </th>
-                <td>{w.name}</td>
+                <td>
+                  <Link to={`/product/${w.slug}`} >
+                  {w.name}
+                  </Link>
+                </td>
                 <td>{w.price}</td>
                 <td className={styles.delete} onClick={()=>toggleWishlist(w.product)}>
                   <DeleteFilled />{" "}

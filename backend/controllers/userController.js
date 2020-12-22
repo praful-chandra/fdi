@@ -10,7 +10,6 @@ exports.addToCart = async (req, res) => {
     if (!user) {
       throw new Error("Not Authorized");
     }
-
     const product = await ProductVarianceColor.findById(productId);
     const mainProduct = await Product.findById(product.product, { images: 0 });
     const variance = await ProductVariance.findById(product.variance);
@@ -43,6 +42,7 @@ exports.addToCart = async (req, res) => {
         success: {
           _id: productId,
           product: product._id,
+          slug : product.slug,
           name: `${mainProduct.name}(${variance.title})(${product.name})`,
           price: product.price,
           quantity,
@@ -74,6 +74,7 @@ exports.addToCart = async (req, res) => {
         success: {
           _id: existingProduct._id,
           product: product._id,
+          slug : product.slug,
           name: `${mainProduct.name}(${variance.title})(${product.name})`,
           price: product.price,
           quantity: quantity,
@@ -103,6 +104,7 @@ exports.listCart = async (req, res) => {
         quantity: uc.quantity,
         _id: uc._id,
         product: uc.product._id,
+        slug : uc.product.slug,
         name: `${uc.product.product.name} (${uc.product.variance.title}) (${uc.product.name})`,
         price: uc.product.price,
         productImage: uc.productImage,
@@ -170,6 +172,7 @@ exports.listWishList = async (req, res) => {
         name: `${uc.product.name} (${uc.variance.title}) (${uc.name})`,
         price: uc.price,
         productImage: `/api/serveImage/product/${uc.product._id}/0/thumb`,
+        slug : uc.slug
       }));
       res.json(finalCart);
     } else {

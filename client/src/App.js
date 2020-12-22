@@ -18,9 +18,9 @@ import EditProduct from "./pages/admin/editProduct/index";
 import DealPage from "./pages/deal.page";
 import BestPage from "./pages/bestSeller.page";
 import WishListPage from "./pages/wishList.page";
-
 import SingleProductPage from "./pages/singleProduct.page";
 import ShopPage from "./pages/shop.page";
+import CartPage from "./pages/cart.page";
   
 import { auth } from "./firebase";
 
@@ -85,6 +85,8 @@ function App({
         <Route exact path="/resetpassword" component={ResetPassword} />
         <Route exact path="/deal" component={DealPage} />
         <Route exact path="/best" component={BestPage} />
+        <Route exact path="/cart" component={CartPage} />
+
 
 
         <UserPrivateRoute exact path="/user/dashboard" component={Dashboard} />

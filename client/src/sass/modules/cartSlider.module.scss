@@ -14,7 +14,7 @@
 
 .actionButton{
     @include totalCenter();
-    &>button{
+    & button{
         background-color: $primaryColor !important;
         font-size: 1.8rem;
         font-weight: 600;
@@ -52,7 +52,7 @@
 
 @media only screen and (max-width: 650px) {
     .actionButton{
-       &>button{
+       & button{
         font-size: 4rem;
        }
     }

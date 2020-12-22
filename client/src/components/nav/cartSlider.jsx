@@ -1,6 +1,6 @@
 import React from "react";
 import { Drawer } from "antd";
-
+import {Link} from "react-router-dom";
 import styles from "../../sass/modules/cartSlider.module.scss";
 
 import ListItem from "./cartSliderItem";
@@ -15,9 +15,11 @@ function cartSlider({ status, setClose, cartItems,width}) {
       visible={status}
       footer={
         <div className={styles.actionButton}>
+          <Link to="/cart" >
           <button  className={`text-center btn btn-primary btn-raised btn-block ${styles.actionBtn}`}>
             Go To Cart
           </button>
+          </Link>
         </div>
       }
     >
