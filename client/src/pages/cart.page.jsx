@@ -2,16 +2,22 @@ import React,{useState,useEffect} from "react";
 import { useSelector, connect } from "react-redux";
 import { Link } from "react-router-dom";
 import styles from "../sass/modules/cart.module.scss";
-import { Table, Space, Button,Spin } from "antd";
+import { Table, Space, Button,Spin,Input } from "antd";
 import PriceFormatter from "../functions/priceFormatter";
 import { deleteCart } from "../redux/actions/cartActions";
 import priceFormatter from "../functions/priceFormatter";
 import {DeleteFilled,LoadingOutlined} from "@ant-design/icons";
 import {getDeal} from "../functions/deal.functions";
+import {getCoupon} from "../functions/coupon.function";
+import {useToasts} from "react-toast-notifications";
+
+const { Search } = Input;
 function cartPage({ deleteCart }) {
   const { cart } = useSelector((state) => state);
   const[deals,setDeals] = useState(false);
+  const[coupon,setCoupon] = useState(false);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+  const {addToast} = useToasts();
 
   useEffect(()=>{
     calculateDiscount().then(val=>setDeals(val));
@@ -62,9 +68,35 @@ function cartPage({ deleteCart }) {
     return sum;
   }
 
+  const calculateCoupon = ()=> {
+    let sum = 0
+    if(coupon){
+      let cartTotal = cart.totalPrice - deals;
+      let finalSum = (coupon.percentage / 100) * cartTotal;
+
+      if(finalSum <= coupon.upto) 
+          sum = finalSum
+      else
+          sum = coupon.upto
+    }
+    return sum;
+  }
+
   const handleDelete = (record) => {
     deleteCart(record.product);
   };
+
+  
+
+  const checkCoupon = async text =>{
+    const coupon = await getCoupon(text);
+    if(coupon && !coupon.error){
+      setCoupon(coupon);
+      addToast(`${text.toUpperCase()} Added`,{appearance :"success" ,autoDismiss : true})
+    }else{
+      addToast("COUPON NOT FOUND !",{appearance :"error" ,autoDismiss : true})
+    }
+  }
 
   const columns = [
     {
@@ -188,12 +220,27 @@ function cartPage({ deleteCart }) {
             </li>
               )
             }
+
+{
+              coupon && (
+                <li>
+              <span>Coupon : <p style={{fontWeight : 300}}>{coupon.code} <Button onClick={()=>setCoupon(false)} danger icon={<DeleteFilled />} type="ghost" /> </p>  </span>
+              
+              <span>
+               - {priceFormatter(calculateCoupon())}
+              </span>
+            </li>
+              )
+            }
           </ul>
 
           <p className={styles.cartFinal} >
             <span>Total : </span>
-            <span>{priceFormatter(cart.totalPrice - deals)}</span>
+            <span>{priceFormatter(cart.totalPrice - deals - calculateCoupon())}</span>
           </p>
+
+          <Search placeholder="input search text" shape="round"  style={{ width: "100%" }} onSearch={checkCoupon} enterButton="Apply Coupon" />
+          <button className={styles.checkout} >Checkout</button>
         </div>
       </div>
     </div>

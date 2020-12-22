@@ -1,0 +1,96 @@
+//imports
+@import "../../index.scss";
+
+.wrapper {
+    // border: 1px solid;
+    width: 95%;
+  
+    & > h2 {
+      color: $primaryColor;
+      text-align: center;
+      font-size: 4rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+  
+  }
+
+  .addressGrid{
+      width: 100%;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+  }
+
+
+  .addressItem{
+      width: 30rem;
+      height: 30rem;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgb(226, 226, 226);
+      margin: 2rem;
+      cursor: pointer;
+      transition: all 0.25s;
+      & span{
+          font-weight: 700;
+          font-size: 2rem;
+        }
+        & p{
+          overflow: hidden;
+          max-height: 90%;
+      }
+
+      &:hover{
+          box-shadow: 0 0 15px $primaryColor;
+      }
+  }
+
+  .addressNew{
+      @include totalCenter();
+      color: $primaryColor;
+     font-size: 10rem;
+  }
+
+
+  .addressForm{
+    position: relative;
+    background-color: #fff;
+    width: 90vw;
+    height: 90vh;
+    border-radius: 15px;
+    padding: 3rem;
+    padding-top: 5rem;  
+    overflow: scroll;
+    & input{
+      font-size: 2rem;
+    }
+  }
+  
+.inputGroup{
+  display: flex;
+  flex-direction: column;
+  margin: 2rem 0;
+  & label{
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  & input{
+    font-size: 2rem;
+    border-radius: 100px;
+    outline: none;
+    border: 1px solid $mediumGrey;
+    padding: 0.5rem 1rem;
+  }
+}
+
+.close{
+  background-color: $primaryColor;
+  color: #fff;
+  border: none;
+  padding: 1rem;
+  cursor: pointer;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}

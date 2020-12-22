@@ -127,7 +127,7 @@ function singleProductHeadRight({ product, addCart, exchange }) {
         <span>Without Exchange</span>
         {product.deal ? (
           <div className={styles.buyProductHeadPrice}>
-            <span>{priceFormatter(12900)}</span>
+            <span>{priceFormatter(product.deal.discountPrice)}</span>
             <span>{priceFormatter(product.selectedProduct.price)}</span>
           </div>
         ) : (

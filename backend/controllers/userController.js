@@ -42,7 +42,7 @@ exports.addToCart = async (req, res) => {
         success: {
           _id: productId,
           product: product._id,
-          slug : product.slug,
+          slug: product.slug,
           name: `${mainProduct.name}(${variance.title})(${product.name})`,
           price: product.price,
           quantity,
@@ -74,7 +74,7 @@ exports.addToCart = async (req, res) => {
         success: {
           _id: existingProduct._id,
           product: product._id,
-          slug : product.slug,
+          slug: product.slug,
           name: `${mainProduct.name}(${variance.title})(${product.name})`,
           price: product.price,
           quantity: quantity,
@@ -104,7 +104,7 @@ exports.listCart = async (req, res) => {
         quantity: uc.quantity,
         _id: uc._id,
         product: uc.product._id,
-        slug : uc.product.slug,
+        slug: uc.product.slug,
         name: `${uc.product.product.name} (${uc.product.variance.title}) (${uc.product.name})`,
         price: uc.product.price,
         productImage: uc.productImage,
@@ -127,7 +127,7 @@ exports.deleteCart = async (req, res) => {
     await User.findOneAndUpdate(
       { email: req.user.email },
       {
-        $pull: { cart : {product : productId}},
+        $pull: { cart: { product: productId } },
       }
     );
     res.json({ success: true });
@@ -172,7 +172,7 @@ exports.listWishList = async (req, res) => {
         name: `${uc.product.name} (${uc.variance.title}) (${uc.name})`,
         price: uc.price,
         productImage: `/api/serveImage/product/${uc.product._id}/0/thumb`,
-        slug : uc.slug
+        slug: uc.slug
       }));
       res.json(finalCart);
     } else {
@@ -183,3 +183,55 @@ exports.listWishList = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+
+exports.addAddress = async (req, res) => {
+  try {
+
+    let {
+      firstName,
+      lastName,
+      emailAddress,
+      phoneNumber,
+      country,
+      gst,
+      address,
+      city,
+      state,
+      pin
+    } = req.body;
+
+    phoneNumber = phoneNumber.substring(0,3) === "+91" ? parseInt(phoneNumber.substring(3)) : parseInt(phoneNumber);
+    console.log(phoneNumber);
+
+    const user = await User.findOneAndUpdate({email : req.user.email},{$push : {address : {
+      firstName,
+      lastName,
+      emailAddress,
+      phoneNumber,
+      country,
+      gst,
+      address,
+      city,
+      state,
+      pin
+    }}});
+
+    res.json({success : true});
+  } catch (err) {
+    // console.log(err);
+    res.status(500).json({ error: "Internal server error" })
+  }
+}
+
+exports.listAddress = async (req,res)=>{
+  try{
+    const address = await User.findOne({email : req.user.email},{address : 1});
+
+    res.json(address.address);
+
+  }catch (err) {
+    // console.log(err);
+    res.status(500).json({ error: "Internal server error" })
+  }
+}

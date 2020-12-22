@@ -3,7 +3,7 @@ import React from "react";
 import styles from "../../sass/modules/userDashboard/userDash.module.scss";
 
 function UserNavComponent({ user, selected, setSelected }) {
-  const navItems = ["personal Info", "my orders", "address", "change password"];
+  const navItems = [ "my orders", "address", "change password"];
   return (
     <div className={styles.navWrap}>
       <div className={styles.profileInfo}>

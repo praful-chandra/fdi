@@ -28,7 +28,21 @@ const UserSchema = new mongoose.Schema(
       addOns : [],
       exchange : {},
       name :String
-    }]
+    }],
+    address:[
+      {
+        firstName : String,
+        lastName : String,
+        emailAddress : String,
+        phoneNumber : Number,
+        country : String,
+        gst : String,
+        address : String,
+        city : String,
+        state : String,
+        pin : Number
+      }
+    ]
   },
   { timestamps: true }
 );

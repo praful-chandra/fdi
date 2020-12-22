@@ -8,7 +8,10 @@ const CouponSchema = new mongoose.Schema({
     },
     code :{
         type :String,
-        required : true
+        required : true,
+        unique : true,
+        index : true,
+        uppercase : true
     },
     percentage :{
         type : Number,

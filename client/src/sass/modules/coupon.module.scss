@@ -1,0 +1,31 @@
+//globals
+@import "../globals";
+
+
+.wrapper {
+    // border: 1px solid;
+    width: 95%;
+  
+    & > h2 {
+      color: $primaryColor;
+      text-align: center;
+      font-size: 4rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+  
+  }
+
+.form{
+    margin: 5rem 0;
+    border: 1px solid;
+    padding: 3rem;
+}
+
+.flexHorizontal{
+    display: flex;
+    justify-content: space-between;
+    &>div{
+        width: 45%;
+    }
+}
