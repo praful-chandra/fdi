@@ -245,7 +245,7 @@ function Header({
       </nav>
     <div className={styles.mobile}>
     <Affix offsetTop={0}>
-     <NavBarMobile cartItems={cartItems} totalPrice={totalPrice} />
+     <NavBarMobile logOut={signoutUser} cartItems={cartItems} totalPrice={totalPrice} />
       </Affix>
     </div>
     </>

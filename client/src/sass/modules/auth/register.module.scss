@@ -83,3 +83,30 @@
     }
 }   
 
+@media only screen and (max-width : 650px){
+    .wrapper{
+        display: block;
+        margin-top: 10rem;
+    }
+    .form{
+        width: 100vw;
+        box-shadow: none;
+        & input{
+            font-size: 5rem;
+            &::placeholder{
+                font-size: 5rem;
+            }
+        } 
+        & a{
+            font-size: 3rem;
+        }
+        & button{   
+            width: 100%;
+        }
+
+        .formButton{
+            font-size: 4rem !important;    
+            height: 10rem !important;
+        }
+    }
+}

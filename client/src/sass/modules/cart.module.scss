@@ -121,3 +121,69 @@
     cursor: pointer;
     width: 100%;
 }
+
+.mobileItems{
+    &Item{
+        width: 95%;
+        margin: 1rem auto;
+        padding: 1rem;
+        box-shadow: 0 0 15px rgb(236, 236, 236);
+
+        &>div:first-child{
+            display: flex;
+            padding: 1rem;
+
+            & img{
+                width: 20rem;
+                height: 35rem;
+                object-fit: contain;
+                margin-right: 3rem;
+                
+            }
+            & span{
+                font-weight: 600;
+                font-size: 3rem;
+            }
+        }
+    }
+}
+
+.mobilePrice{
+    color: $primaryColor;
+    font-weight: 800 !important;   
+}
+
+
+
+@media only screen and (max-width : 650px){
+    .cart{
+        &Body{
+            flex-direction: column-reverse;
+            align-items: center;
+            justify-content: unset;
+        }
+
+        &Right{
+            flex: 1;
+            width: 100%;
+        }
+
+        &Left{
+            flex: 1;
+            width: 100%;
+            & thead{
+                display: none;
+            }
+
+            & tr{
+
+                &>td:first-child{
+                    display: block;
+                }
+            }
+
+           
+        }
+    }
+}
+

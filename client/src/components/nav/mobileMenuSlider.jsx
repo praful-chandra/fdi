@@ -2,20 +2,27 @@ import React, { useState, useEffect } from "react";
 import { Drawer, Menu, Input, Form } from "antd";
 import { CompassOutlined, FolderOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
+import  {Link} from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTruck,
   faMapMarkerAlt,
   faShoppingBag,
+  faUser,
+  faTachometerAlt,
+  faSignOutAlt,
+  faSignInAlt
+
 } from "@fortawesome/free-solid-svg-icons";
 const { SubMenu } = Menu;
 const { Search } = Input;
 
-function mobileMenuSlider({ status, setClose }) {
+function mobileMenuSlider({ logOut,status, setClose }) {
   const {
     category: { categories },
     subCategory: { subCategories },
+    user : {user}
   } = useSelector((state) => state);
 
   const handleSearch = (val) => {
@@ -56,17 +63,39 @@ function mobileMenuSlider({ status, setClose }) {
           ))}
         </SubMenu>
 
-        <SubMenu title="quickLinks" icon={<CompassOutlined />}>
-          <Menu.Item icon={<FontAwesomeIcon icon={faShoppingBag} />}>
+        <Menu.Item icon={<FontAwesomeIcon icon={faShoppingBag} />}>
+            <Link to="/shop">
             Shop
+            </Link>
           </Menu.Item>
           <Menu.Item icon={<FontAwesomeIcon icon={faMapMarkerAlt} />}>
             Store Locators
           </Menu.Item>
-          <Menu.Item icon={<FontAwesomeIcon icon={faTruck} />}>
+
+        {
+           user ? (
+             <>
+              <Menu.Item icon={<FontAwesomeIcon icon={faTruck} />}>
             Orders
           </Menu.Item>
-        </SubMenu>
+          <Menu.Item icon={<FontAwesomeIcon icon={faTachometerAlt} />}>
+            {
+              <Link to="/user/dashboard">
+                Dashboard
+              </Link>
+            }
+          </Menu.Item>
+          <Menu.Item onClick={logOut} icon={<FontAwesomeIcon icon={faSignOutAlt} />}>
+            Logout
+          </Menu.Item>
+             </>
+          ) : (
+             <Menu.Item icon={<FontAwesomeIcon icon={faSignInAlt} />}>
+             <Link to="/login">
+             Login</Link>
+           </Menu.Item>
+          )
+         }
       </Menu>
     </Drawer>
   );

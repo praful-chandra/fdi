@@ -8,7 +8,7 @@ import priceFormatter from "../../functions/priceFormatter"
 import CartSlider from "./cartSlider";
 import MenuSlider from "./mobileMenuSlider";
 
-function navbarMobile({cartItems}) {
+function navbarMobile({cartItems,logOut}) {
     const [sideCart,setSideCart] = useState(false);
     const [menu,setMenu] = useState(false);
   return (
@@ -21,7 +21,7 @@ function navbarMobile({cartItems}) {
           setSideCart(false);
         }}
       />
-      <MenuSlider status={menu} setClose={()=>{setMenu(false)}} />
+      <MenuSlider logOut={logOut} status={menu} setClose={()=>{setMenu(false)}} />
         <div className={styles.hamburger} onClick={()=>setMenu(true)}>
         <MenuOutlined />
         </div>

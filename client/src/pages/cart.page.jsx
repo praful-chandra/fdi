@@ -10,9 +10,10 @@ import { DeleteFilled, LoadingOutlined } from "@ant-design/icons";
 import { getDeal } from "../functions/deal.functions";
 import { getCoupon } from "../functions/coupon.function";
 import { useToasts } from "react-toast-notifications";
+import { isMobile } from "react-device-detect";
 
 const { Search } = Input;
-function cartPage({ deleteCart, review ,next }) {
+function cartPage({ deleteCart, review, next }) {
   const { cart } = useSelector((state) => state);
   const [deals, setDeals] = useState(false);
   const [coupon, setCoupon] = useState(false);
@@ -102,15 +103,14 @@ function cartPage({ deleteCart, review ,next }) {
     }
   };
 
-  const handleReviewNext = () =>{
+  const handleReviewNext = () => {
     const finalCart = {
-      items : cart.items,
+      items: cart.items,
       coupon,
-      totalAmount : cart.totalPrice - deals - calculateCoupon()
-
-    }
+      totalAmount: cart.totalPrice - deals - calculateCoupon(),
+    };
     next(finalCart);
-  }
+  };
 
   const columns = [
     {
@@ -168,10 +168,9 @@ function cartPage({ deleteCart, review ,next }) {
       dataIndex: "quantity",
       key: "quantity",
     },
-    
   ];
 
-  if(!review){
+  if (!review) {
     columns.push({
       title: "Delete",
       key: "action",
@@ -187,20 +186,75 @@ function cartPage({ deleteCart, review ,next }) {
           ></Button>
         </Space>
       ),
-    })
+    });
   }
   return (
     <div className={`center ${styles.wrapper}`}>
-      {
-        !review && (<div className={styles.head}>
+      {!review && (
+        <div className={styles.head}>
           <h5>Your Cart</h5>
           <div></div>
-        </div>)
-      }
+        </div>
+      )}
 
       <div className={styles.cartBody}>
         <div className={styles.cartLeft}>
-          <Table dataSource={cart.items} columns={columns} pagination={false} />
+          {!isMobile ? (
+            <Table
+              dataSource={cart.items}
+              columns={columns}
+              pagination={false}
+            />
+          ) : (
+            <div className={styles.mobileItems}>
+              {cart.items.map((itm) => (
+                <div className={styles.mobileItemsItem}>
+                  <div>
+                    <img
+                      src={`${process.env.REACT_APP_API_ROOT_URI}${itm.productImage}`}
+                      alt=""
+                    />
+                    <div>
+                      <p>
+                        {itm.name}
+                        {itm.addOns.length > 0 && (
+                          <p>
+                            <span>Addons : </span>
+                            <ul>
+                              {itm.addOns.map((add) => (
+                                <li key={add._id}>
+                                  {" "}
+                                  {add.title} : {priceFormatter(add.price)}{" "}
+                                </li>
+                              ))}
+                            </ul>
+                          </p>
+                        )}
+
+{itm.exchange.name && (
+            <p>
+              <span>Exchange :</span>
+              <ul>
+                <li>
+                  {itm.exchange.name} : -
+                  {priceFormatter(itm.exchange.exchangePrice)}
+                </li>
+              </ul>
+            </p>
+          )}
+                      </p>
+                      <span className={styles.mobilePrice} >{priceFormatter(itm.price)}</span>
+                    </div>
+                  </div>
+                  {!review && (
+                    <Button danger block type="primary">
+                      Delete
+                    </Button>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
         <div className={styles.cartRight}>
           <div className={styles.head}>
@@ -277,8 +331,9 @@ function cartPage({ deleteCart, review ,next }) {
                 enterButton="Apply Coupon"
               />
 
-              <button className={styles.checkout} onClick={handleReviewNext}>Pay Now</button>
-
+              <button className={styles.checkout} onClick={handleReviewNext}>
+                Pay Now
+              </button>
             </>
           ) : (
             <>
