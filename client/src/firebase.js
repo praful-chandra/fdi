@@ -15,3 +15,4 @@ var firebaseConfig = {
 
   export const auth = firebase.auth();
   export const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+  export const firebaseObj = firebase;

@@ -21,6 +21,7 @@ import WishListPage from "./pages/wishList.page";
 import SingleProductPage from "./pages/singleProduct.page";
 import ShopPage from "./pages/shop.page";
 import CartPage from "./pages/cart.page";
+import CheckoutPage from "./pages/checkout.page";
   
 import { auth } from "./firebase";
 
@@ -91,6 +92,8 @@ function App({
 
         <UserPrivateRoute exact path="/user/dashboard" component={Dashboard} />
         <UserPrivateRoute exact path="/wishlist" component={WishListPage} />
+        <UserPrivateRoute exact path="/checkout" component={CheckoutPage} />
+
 
         
         <AdminPrivateRoute

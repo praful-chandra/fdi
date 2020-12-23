@@ -7,7 +7,11 @@ exports.authCheck = async (req, res, next) => {
     if(!token) throw Error("token required"); 
     
     admin.auth().verifyIdToken(token).then(decodedToken =>{
+      if(!decodedToken.email){
+        decodedToken.email = decodedToken.phone_number;
+      }
       req.user = decodedToken;   
+      console.log(decodedToken);
       next();
 
     }).catch(err=> {   res.status(401).json({error : "Invalid or expired token"})});

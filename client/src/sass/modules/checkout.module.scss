@@ -1,0 +1,67 @@
+//globals
+@import "../globals";
+
+.wrapper{
+    margin-top: 5rem;
+}
+
+.componentWrapper{
+    margin-top: 3rem;
+}
+
+.addressGrid{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+
+.addressItem{
+    width: 30rem;
+    height: 30rem;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgb(226, 226, 226);
+    margin: 2rem;
+    cursor: pointer;
+    transition: all 0.25s;
+    & span{
+        font-weight: 700;
+        font-size: 2rem;
+      }
+      & p{
+        overflow: hidden;
+        max-height: 50%;
+    }
+
+    &:hover{
+        box-shadow: 0 0 15px $primaryColor;
+    }
+}
+
+.addressNew{
+    @include totalCenter();
+    color: $primaryColor;
+   font-size: 10rem;
+}
+
+
+.img{
+    width: 15rem;
+}
+
+.cartProductName{
+    &>p{
+        margin-top: 1rem;
+        &>span{
+            margin-top: 1rem;
+            text-decoration: underline;
+            font-weight: 600;
+        }
+        &>ul span{
+            font-weight: 500;
+            margin-left: 1rem;
+        }
+    }
+}
