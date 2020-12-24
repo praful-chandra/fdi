@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const getSubCategory = async slug =>{
     try{
-        const subCategory = await axios.get("/subcategory/slug");
+        const subCategory = await axios.get(`/subcategory/${slug}`);
         return subCategory.data;
     }
     catch(err){

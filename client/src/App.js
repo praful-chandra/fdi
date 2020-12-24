@@ -22,6 +22,8 @@ import SingleProductPage from "./pages/singleProduct.page";
 import ShopPage from "./pages/shop.page";
 import CartPage from "./pages/cart.page";
 import CheckoutPage from "./pages/checkout.page";
+import ShopCategoryPage from "./pages/shopCategory";
+import ShopSubPage from "./pages/shopSub";
   
 import { auth } from "./firebase";
 
@@ -80,6 +82,8 @@ function App({
         <Route exact path="/" component={Home} />
         <Route exact path="/product/:slug" component={SingleProductPage} />
         <Route exact path="/shop" component={ShopPage} />
+        <Route exact path="/category/:slug" component={ShopCategoryPage} />
+        <Route exact path="/subcategory/:slug" component={ShopSubPage} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/register/complete" component={RegisterComplete} />

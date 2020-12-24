@@ -3,7 +3,6 @@ import axios from "axios";
 
 
 export const addCart = (productId,addOns,count,exchangeProduct,user)=> async dispatch =>{
-    console.log(exchangeProduct);
 
     try{
         exchangeProduct = exchangeProduct ? {
@@ -12,7 +11,7 @@ export const addCart = (productId,addOns,count,exchangeProduct,user)=> async dis
             exchangeItem : exchangeProduct._id
         } : {}
 
-        // if(user.user && user.token){
+        if(user.user && user.token){
             const res = await axios.post("/user/addCart",{productId,addOns,quantity :count,exchange : exchangeProduct});
 
         if(res && res.data.success){
@@ -21,15 +20,15 @@ export const addCart = (productId,addOns,count,exchangeProduct,user)=> async dis
                 payload : res.data.success
             })
         }
-        // }else{
-        //     const product = await axios.get(`/product/color/${productId}`);
-        //     if(product.data){
-        //         dispatch({
-        //             type : cartTypes.ADD_TO_LOCAL_CART,
-        //             payload : product.data
-        //         })
-        //     }
-        // }
+        }else{
+            const product = await axios.get(`/product/color/${productId}`);
+            if(product.data){
+                dispatch({
+                    type : cartTypes.ADD_TO_LOCAL_CART,
+                    payload : {product : product.data, count,addOns,exchangeProduct,}
+                })
+            }
+        }
 
         return {success : true}
 

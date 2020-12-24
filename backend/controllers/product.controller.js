@@ -448,7 +448,7 @@ exports.addReview = async (req,res)=>{
 exports.listWithVariance = async (req, res) => {
 
   try {
-    let { limit, skip, search,sort ,type} = req.query;
+    let { limit, skip, search,sort } = req.query;
     skip = limit * skip;
     let searchQuery = {};
     let minPrice;
@@ -473,9 +473,7 @@ exports.listWithVariance = async (req, res) => {
             searchQuery = {
               ...searchQuery,
               
-             $text:{
-               $search: value
-             },
+        
              "$or":[
                {
                  "name" : {$regex : value , $options:"i"}
@@ -514,7 +512,8 @@ exports.listWithVariance = async (req, res) => {
     let products = [];
     let findFrom = "product"
 
-  
+    
+
       products = await Product.find(searchQuery)
       .select("_id");
       products = products.map(p => p._id);

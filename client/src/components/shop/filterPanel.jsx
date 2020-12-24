@@ -104,7 +104,7 @@ function FilterPanel({ filters, setFilters, resetSkip }) {
     setFilters({
       category: [],
       brand: [],
-      tag : []
+      tag : [],
     });
    
   };

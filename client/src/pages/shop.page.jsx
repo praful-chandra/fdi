@@ -25,10 +25,14 @@ const handleSearchQuery = (str) => {
 };
 
 function ShopPage(props) {
+
+
   const [products, setProducts] = useState({
     allProducts: [],
     totalCount: 0,
   });
+
+
   const [filters, setFilters] = useState({
     category: [],
     brand: [],
@@ -36,16 +40,20 @@ function ShopPage(props) {
   });
 
 
+
   const [sort, setSort] = useState(0);
   const [skip, setSkip] = useState(0);
 
   useEffect(() => {
+    
     let searchQuery = {};
     if (filters.category.length > 0) {
       searchQuery.category = filters.category;
     } else {
       searchQuery.category = undefined;
     }
+
+   
 
     if (filters.brand.length > 0) {
       searchQuery.brand = filters.brand;
@@ -73,11 +81,12 @@ function ShopPage(props) {
 
 
 
-    console.log(JSON.stringify(searchQuery));
+    // console.log(JSON.stringify(searchQuery));
 
     listProductwithVariance(5, skip, JSON.stringify(searchQuery), sort).then(
       (res) => {
         if (res.success) {
+          console.log(res.success);
           setProducts(res.success);
         }
       }
@@ -137,7 +146,7 @@ function ShopPage(props) {
         </span>
         <div className={styles.products}>
           <div className={styles.head}>
-            <h5>Shop </h5>
+            <h5>SHOP </h5>
             <div></div>
           </div>
           {FilterBar()}

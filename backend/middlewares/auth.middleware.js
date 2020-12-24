@@ -11,7 +11,6 @@ exports.authCheck = async (req, res, next) => {
         decodedToken.email = decodedToken.phone_number;
       }
       req.user = decodedToken;   
-      console.log(decodedToken);
       next();
 
     }).catch(err=> {   res.status(401).json({error : "Invalid or expired token"})});

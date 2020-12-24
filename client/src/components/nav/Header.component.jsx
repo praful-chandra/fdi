@@ -216,12 +216,12 @@ function Header({
                             (sub) =>
                               sub.parent._id === cl._id && (
                                 <Menu.Item key={`navbar category ${sub._id}`}>
-                                  <Link
+                                  <a
                                     className={styles.categoryBarLinksLink}
-                                    to={`/shop?sub=${sub.slug}`}
+                                    href={`/subcategory/${sub.slug}`}
                                   >
                                     {sub.name}
-                                  </Link>
+                                  </a>
                                 </Menu.Item>
                               )
                           )}
@@ -230,11 +230,11 @@ function Header({
                       placement="bottomCenter"
                       arrow
                     >
-                      <Link to={`/shop?cat=${cl.slug}`}>
+                      <a href={`/category/${cl.slug}`}>
                         <span>
                           {cl.name} <DownOutlined />{" "}
                         </span>
-                      </Link>
+                      </a>
                     </Dropdown>
                   </li>
                 );
