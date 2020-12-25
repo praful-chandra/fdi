@@ -40,26 +40,34 @@ export const addCart = (productId,addOns,count,exchangeProduct,user)=> async dis
 
 }
 
-export const deleteCart = productId => async dispatch =>{
-    try{
+export const deleteCart = (productId,user) => async dispatch =>{
+    if(user.user && user.token){
+        try{
 
-        const cart = await axios.delete(`/user/cart/${productId}`);
-        if(cart.data.success){
-            return {success : true}
+            const cart = await axios.delete(`/user/cart/${productId}`);
+            if(cart.data.success){
+                return {success : true}
+            }
+    
+        }catch(err){
+            return {
+                error: (err.response && err.response.data) || "Some error occured",
+              };
+        }finally{
+            const res = await axios.get("/user/getCart");
+            if(res && res.data){
+                dispatch({
+                    type : cartTypes.GET_CART,
+                    payload : res.data
+                })
+            }
         }
-
-    }catch(err){
-        return {
-            error: (err.response && err.response.data) || "Some error occured",
-          };
-    }finally{
-        const res = await axios.get("/user/getCart");
-        if(res && res.data){
-            dispatch({
-                type : cartTypes.GET_CART,
-                payload : res.data
-            })
-        }
+    }else{
+       
+        dispatch({
+            type : cartTypes.DELETE_LOCAL_CART,
+            payload : productId
+        })
     }
 }
 

@@ -7,7 +7,7 @@ const INITIAL_STATE = {
 
 
 //Helpers
-import {addToCart,addToLocalCart} from "../helpers/cart.helpers";
+import {addToCart,addToLocalCart,deleteLocalCart} from "../helpers/cart.helpers";
 import {getTotalPrice} from "../../functions/cart.function";
 
 export default (state = INITIAL_STATE ,action)=>{
@@ -42,6 +42,14 @@ export default (state = INITIAL_STATE ,action)=>{
                 ...state,
                 items : addToLocalCart(state.items,action.payload),
                 totalPrice : getTotalPrice(addToLocalCart(state.items,action.payload))
+            }
+        }
+
+        case cartTypes.DELETE_LOCAL_CART :{
+            return {
+                ...state,
+                items : deleteLocalCart(state.items , action.payload),
+                totalPrice : getTotalPrice(deleteLocalCart(state.items,action.payload))
             }
         }
 

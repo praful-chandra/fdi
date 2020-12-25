@@ -24,8 +24,10 @@ export const currentAdmin = async (token) => {
 
 
 
-export const roleBasedRedirect = async (user, history) => {
-  if (user.role === "Admin") {
+export const roleBasedRedirect = async (user, history,intent) => {
+  if(intent){
+      history.push(`${intent.from}`)
+  }else   if (user.role === "Admin") {
     history.push("/admin/dashboard");
   } else {
     history.push("/user/dashboard");

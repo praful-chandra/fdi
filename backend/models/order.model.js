@@ -2,6 +2,13 @@ const mongoose = require("mongoose");
 
 const OrderSchema = new mongoose.Schema({
 
+    orderId :{
+        type: String,
+        required: true,
+        unique: true,
+        index: true,
+        uppercase : true
+        },
     customer:{
         type : mongoose.Schema.Types.ObjectId,
         ref:"User"
@@ -9,10 +16,8 @@ const OrderSchema = new mongoose.Schema({
     cart : [{
         product : {type : mongoose.Schema.Types.ObjectId , ref: "ProductVarianceColor"},
         quantity : {type : Number , default : 1},
-        productImage : String,
         addOns : [],
         exchange : {},
-        name :String
       }],
     
       coupon :{
@@ -20,8 +25,20 @@ const OrderSchema = new mongoose.Schema({
           ref : "Coupon"
       },
       total : Number,
-      address : {}
+      address : {},
+      status:{
+          type : String,
+          enum : ["Created","Processing","Packed","Shipped","Delivered","Failed","Returned"],
+          default : "Created"
+      },
+      paymentStatus :{
+          type : String,
+          enum : ["UnPaid","Paid","Pending"],
+          default : "UnPaid"
+      }
 
 },{
     timestamps : true
 })
+
+module.exports = mongoose.model("Order",OrderSchema);

@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
-import {connect} from "react-redux";
+import React from "react";
+import {connect,useSelector} from "react-redux";
 import {Button} from "antd";
 import styles from "../../sass/modules/cartSlider.module.scss";
 
 import {deleteCart} from "../../redux/actions/cartActions";
 
 function cartSliderItem({ item ,deleteCart}) {
+  const {user } = useSelector(state => state);
   return (
     <li>
       <div className={styles.thumbItem}>
@@ -35,7 +36,7 @@ function cartSliderItem({ item ,deleteCart}) {
         </p>
       </div>
       </div>
-              <Button block danger type="primary" onClick={()=>deleteCart(item.product)}>Remove from cart</Button>
+              <Button block danger type="primary" onClick={()=>deleteCart(item.product,user)}>Remove from cart</Button>
     </li>
   );
 }

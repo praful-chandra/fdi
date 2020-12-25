@@ -17,7 +17,6 @@ export const addToLocalCart = (allCart, product) => {
   if ( product.product.quantity >= product.count ) {
     
     let finalCart = allCart.filter(ac => ac.product != product.product._id);
-    
    finalCart = [...finalCart ,{
     quantity : product.count,
     _id : uuid(),
@@ -25,26 +24,29 @@ export const addToLocalCart = (allCart, product) => {
     slug : product.product.slug,
     name : product.product.slug,
     price : product.product.price,
-    productImage : `/api/serveImage/product/${product.product._id}/0/thumb`,
+    productImage : `/api/serveImage/product/${product.product.product}/0/thumb`,
     addOns : product.addOns,
     exchange : product.exchangeProduct
   }]
+
+  updateLocalStorage(finalCart);
     
     return finalCart;
 
-    // const newCart = allCart.map((ac) =>
-    // ac.product === product._id
-    // ? {
-    //   ...ac,
-    //   quantity: product.count,
-    //   productImage: `/api/serveImage/product/${product.product}/0/thumb`,
-    // }
-    // : ac
-    // );
-    // updateLocalStorage(newCart);
-    // return newCart;
+    
   }
 };
+
+
+export const deleteLocalCart = (allCart,product) =>{
+
+  let newCart = allCart.filter(ac =>{
+    return  ac.product !== product
+  });
+  updateLocalStorage(newCart);
+  return newCart;
+
+}
 
 export const updateLocalStorage = (allCart) => {
   let stringCart = JSON.stringify(allCart);

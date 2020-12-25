@@ -65,11 +65,14 @@ function Header({
   }, []);
 
   useEffect(() => {
+    let localC = window.localStorage.getItem("cart");
     if (user.user && user.token) {
-      getCart();
+      if(!localC || localC === '[]'){
+        getCart();
+      }
       listWishList()
     } else {
-      // getLocalCart();
+      getLocalCart();
     }
   }, [user.user]);
 

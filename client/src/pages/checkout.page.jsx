@@ -40,6 +40,8 @@ function checkoutPage() {
     },
   ];
 
+  console.log(cart);
+
   return (
     <div className={`center ${styles.wrapper}`}  >
       <Steps current={current} type="navigation" status="process" >

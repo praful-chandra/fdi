@@ -46,6 +46,7 @@ export const brandTypes = {
 export const cartTypes = {
   ADD_TO_CART : "ADD_TO_CART",
   ADD_TO_LOCAL_CART : "ADD_TO_LOCAL_CART",
+  DELETE_LOCAL_CART : "DELETE_LOCAL_CART",
   DECREMENT_CART : "DECREMENT_CART",
   EMPTY_CART : "EMPTY_CART",
   GET_CART : "GET_CART",

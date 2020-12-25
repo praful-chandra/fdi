@@ -22,12 +22,17 @@ const Login = function ({
   userLoadingDone,
   history,
   user,
+  location
 }) {
   useEffect(() => {
     if (user.user) {
       history.push("/");
     }
   }, [user]);
+
+  const intent = location.state;
+
+
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -128,7 +133,7 @@ const Login = function ({
 
       signInUser(userObj);
 
-      roleBasedRedirect(mongoResult.data,history);
+      roleBasedRedirect(mongoResult.data,history,intent);
 
     } catch (err) {
       addToast(err.message, { appearance: "error", autoDismiss: true });
@@ -148,7 +153,7 @@ const Login = function ({
           user: mongoResult.data,
         };
         signInUser(userObj);
-        roleBasedRedirect(mongoResult.data,history);
+        roleBasedRedirect(mongoResult.data,history,intent);
 
       })
       .catch((err) => {

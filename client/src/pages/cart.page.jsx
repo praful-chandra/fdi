@@ -14,7 +14,7 @@ import { isMobile } from "react-device-detect";
 
 const { Search } = Input;
 function cartPage({ deleteCart, review, next }) {
-  const { cart } = useSelector((state) => state);
+  const { cart,user } = useSelector((state) => state);
   const [deals, setDeals] = useState(false);
   const [coupon, setCoupon] = useState(false);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -84,7 +84,7 @@ function cartPage({ deleteCart, review, next }) {
   };
 
   const handleDelete = (record) => {
-    deleteCart(record.product);
+    deleteCart(record.product,user);
   };
 
   const checkCoupon = async (text) => {
@@ -337,7 +337,7 @@ function cartPage({ deleteCart, review, next }) {
             </>
           ) : (
             <>
-              <Link to="/checkout">
+              <Link to={user.user && user.token  ? "/checkout" : {pathname : "/login" , state : {from :"/cart"}}}>
                 <button className={styles.checkout}>Checkout</button>
               </Link>
             </>
