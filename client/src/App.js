@@ -24,6 +24,7 @@ import CartPage from "./pages/cart.page";
 import CheckoutPage from "./pages/checkout.page";
 import ShopCategoryPage from "./pages/shopCategory";
 import ShopSubPage from "./pages/shopSub";
+import ManagerIndex from "./pages/manager";
   
 import { auth } from "./firebase";
 
@@ -37,6 +38,7 @@ import { listBrands} from "./redux/actions/BrandActions";
 //PrivateRoutes
 import UserPrivateRoute from "./components/routes/UserPrivate.route";
 import AdminPrivateRoute from "./components/routes/AdminPrivate.route";
+import ManagerPrivateRoute from "./components/routes/ManagerPrivate.route";
 
 function App({
   signInUser,
@@ -114,6 +116,12 @@ function App({
           exact
           path="/admin/editProduct/:slug"
           component={EditProduct}
+        />
+
+        <ManagerPrivateRoute 
+          exact
+          path="/manager/dashboard"
+          component={ManagerIndex}
         />
       </Switch>
     </Router>

@@ -14,7 +14,8 @@ function adminNavComponent({ user, selected, setSelected }) {
     "FDI Recommended",
     "coupons",
     "change password",
-    "Exchange"
+    "Exchange",
+    "Manager"
   ];
   return (
     <div className={styles.navWrap}>

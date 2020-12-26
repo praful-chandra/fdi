@@ -6,6 +6,8 @@ import styles from "../sass/modules/checkout.module.scss";
 
 import SelectAddress from "../components/checkout/selectAddress.component";
 import CartPage from "../pages/cart.page";
+import PaymentComponent from "../components/checkout/payment.component";
+
 
 function checkoutPage() {
   const [current, setCurrent] = useState(0);
@@ -34,13 +36,10 @@ function checkoutPage() {
     },
     {
       title: "Payment",
-      content: <div>
-          {JSON.stringify(cart)}
-      </div>,
+      content: <PaymentComponent cart={cart} address={address} />,
     },
   ];
 
-  console.log(cart);
 
   return (
     <div className={`center ${styles.wrapper}`}  >

@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 //importing Middlewares
-const {authCheck,adminCheck} = require('../middlewares/auth.middleware');
+const {authCheck} = require('../middlewares/auth.middleware');
 
 //Controllers
 const {addToCart,decrement,listCart,WishList,listWishList,deleteCart,addAddress,listAddress,deleteAddress,updateAddress}  =require("../controllers/userController");

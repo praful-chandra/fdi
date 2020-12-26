@@ -31,16 +31,31 @@ const UserSchema = new mongoose.Schema(
     }],
     address:[
       {
-        firstName : String,
+        firstName : {
+          type : String,
+          required : true
+        },
         lastName : String,
-        emailAddress : String,
-        phoneNumber : Number,
+        emailAddress : {
+          type : String,
+          required : true
+        },
+        phoneNumber : {
+          type : Number,
+          required : true
+        },
         country : String,
         gst : String,
-        address : String,
+        address : {
+          type : String,
+          required : true
+        },
         city : String,
         state : String,
-        pin : Number
+        pin : {
+          type : Number,
+          required : true
+        }
       }
     ]
   },

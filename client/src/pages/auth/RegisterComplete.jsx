@@ -6,7 +6,7 @@ import { useToasts } from "react-toast-notifications";
 
 import styles from "../../sass/modules/auth/register.module.scss";
 
-import { createOrUpdateUser } from "../../functions/auth.function";
+import { createOrUpdateUser,roleBasedRedirect } from "../../functions/auth.function";
 import {signInUser} from "../../redux/actions/userActions";
 
 /* eslint-disable react/prop-types */
@@ -24,6 +24,7 @@ function RegisterComplete({ history,signInUser }) {
     if (user.token) {
       history.push("/");
     }
+    console.log(auth.currentUser);
   }, [user]);
   const handleSubmit = async (e) => {
     e.preventDefault();

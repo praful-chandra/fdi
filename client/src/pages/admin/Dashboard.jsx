@@ -12,6 +12,7 @@ import DealOfTheWeekComponent from "../../components/admin/dealoftheweek";
 import BestSellerComponent from "../../components/admin/bestSellers";
 import FDIRecommendedComponent from "../../components/admin/fdiRecommended";
 import CouponComponent from "../../components/admin/coupon.component";
+import ManagerComponent from "../../components/admin/manager";
 
 import ExchangeComponent from "../../components/admin/exchange";
 
@@ -40,6 +41,7 @@ function Dashboard(props) {
             case 9 : return <CouponComponent />;
             case 10: return <ResetPasswordComponent />;
             case 11: return <ExchangeComponent />;
+            case 12: return <ManagerComponent />;
 
             default: return <HomeComponent />;
         }

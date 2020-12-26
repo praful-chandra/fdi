@@ -6,7 +6,7 @@ const multer = require("multer");
 const upload = multer();
 
 //importing Middlewares
-const { authCheck, adminCheck } = require("../middlewares/auth.middleware");
+const { authCheck, checkPermission } = require("../middlewares/auth.middleware");
 
 //importing controllers
 const {
@@ -28,16 +28,16 @@ router.get("/withVariance",listWithVariance);
 router.get("/color/:productId",getColor);
 router.get("/:slug", get);
 
-router.post("/", authCheck, adminCheck, upload.array("images[]", 20), add);
+router.post("/", authCheck, checkPermission("Products"), upload.array("images[]", 20), add);
 router.patch(
   "/:slug",
   authCheck,
-  adminCheck,
+  checkPermission("Products"),
   upload.array("images[]", 20),
   update
 );
-router.delete("/:slug", authCheck, adminCheck, remove);
-router.post("/dev", authCheck, adminCheck, devAdd);
+router.delete("/:slug", authCheck, checkPermission("Products"), remove);
+router.post("/dev", authCheck, checkPermission("Products"), devAdd);
 
 router.get("/fromColor/:slug",getfromcolor);
 router.get("/related/:slug",getRelated);

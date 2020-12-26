@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 //importing Middlewares
-const { authCheck, adminCheck } = require("../middlewares/auth.middleware");
+const { authCheck, adminCheck ,checkPermission } = require("../middlewares/auth.middleware");
 
 //importing controllers
 const {
@@ -15,9 +15,9 @@ const {
 
 router.get("/", list);
 router.get("/:slug", read);
-router.post("/", authCheck, adminCheck, create);
-router.patch("/:slug", authCheck, adminCheck, update);
-router.delete("/:slug", authCheck, adminCheck, remove);
+router.post("/", authCheck, checkPermission("Category"), create);
+router.patch("/:slug", authCheck, checkPermission("Category"), update);
+router.delete("/:slug", authCheck, checkPermission("Category"), remove);
 
 
 module.exports = router;

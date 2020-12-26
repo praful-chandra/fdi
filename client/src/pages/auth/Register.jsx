@@ -33,7 +33,7 @@ function Register({history}) {
     addToast( `Email is sent to ${email}. click link to complete registration`, { appearance: 'success', autoDismiss:true });
 
     //saving email to local storage
-    window.localStorage.setItem('emailForRegistration',email);
+    window.localStorage.setItem('emailForRegistration',email);  
 
     //clear state
     setEmail('');

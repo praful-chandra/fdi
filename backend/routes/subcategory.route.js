@@ -3,7 +3,7 @@ const router = express.Router();
 
 
 //importing Middlewares
-const { authCheck, adminCheck } = require("../middlewares/auth.middleware");
+const { authCheck, checkPermission } = require("../middlewares/auth.middleware");
 
 //importing controllers
 const {
@@ -19,9 +19,9 @@ const {
   router.get("/", list);
   router.get("/bycategory",getByCategory);
   router.get("/:slug", read);
-  router.post("/", authCheck, adminCheck, create);
-  router.patch("/:slug", authCheck, adminCheck, update);
-  router.delete("/:slug", authCheck, adminCheck, remove);
+  router.post("/", authCheck, checkPermission("SubCategory"), create);
+  router.patch("/:slug", authCheck, checkPermission("SubCategory"), update);
+  router.delete("/:slug", authCheck, checkPermission("SubCategory"), remove);
 
 
 module.exports = router;

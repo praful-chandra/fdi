@@ -38,7 +38,7 @@ function cartPage({ deleteCart, review, next }) {
     let sum = 0;
     cart.items.map((itm) => {
       itm.addOns.map((add) => {
-        sum += add.price;
+        sum +=( add.price * itm.quantiry);
       });
     });
 
@@ -63,7 +63,7 @@ function cartPage({ deleteCart, review, next }) {
       let deal = await getDeal(cart.items[i].product);
       {
         if (deal) {
-          sum += cart.items[i].price - deal.discountPrice;
+          sum += (cart.items[i].price - deal.discountPrice) * cart.items[i].quantity;
         }
       }
     }

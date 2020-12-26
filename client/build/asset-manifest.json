@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/static/css/main.033d0c9e.chunk.css",
+    "main.js": "/static/js/main.5ce201ab.chunk.js",
+    "main.js.map": "/static/js/main.5ce201ab.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.5bc3e566.js",
+    "runtime-main.js.map": "/static/js/runtime-main.5bc3e566.js.map",
+    "static/css/2.ae015a66.chunk.css": "/static/css/2.ae015a66.chunk.css",
+    "static/js/2.9a091ef5.chunk.js": "/static/js/2.9a091ef5.chunk.js",
+    "static/js/2.9a091ef5.chunk.js.map": "/static/js/2.9a091ef5.chunk.js.map",
+    "static/js/3.759e0ed6.chunk.js": "/static/js/3.759e0ed6.chunk.js",
+    "static/js/3.759e0ed6.chunk.js.map": "/static/js/3.759e0ed6.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.ae015a66.chunk.css.map": "/static/css/2.ae015a66.chunk.css.map",
+    "static/css/main.033d0c9e.chunk.css.map": "/static/css/main.033d0c9e.chunk.css.map",
+    "static/js/2.9a091ef5.chunk.js.LICENSE.txt": "/static/js/2.9a091ef5.chunk.js.LICENSE.txt",
+    "static/js/main.5ce201ab.chunk.js.LICENSE.txt": "/static/js/main.5ce201ab.chunk.js.LICENSE.txt",
+    "static/media/best_seller.6b97b2e5.svg": "/static/media/best_seller.6b97b2e5.svg",
+    "static/media/deal_of_the_week.19fc7e83.svg": "/static/media/deal_of_the_week.19fc7e83.svg",
+    "static/media/logo.37cf8297.svg": "/static/media/logo.37cf8297.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.5bc3e566.js",
+    "static/css/2.ae015a66.chunk.css",
+    "static/js/2.9a091ef5.chunk.js",
+    "static/css/main.033d0c9e.chunk.css",
+    "static/js/main.5ce201ab.chunk.js"
+  ]
+}

@@ -65,7 +65,7 @@ function mobileMenuSlider({ logOut,status, setClose }) {
 
         <Menu.Item icon={<FontAwesomeIcon icon={faShoppingBag} />}>
             <Link to="/shop">
-            Shop
+            Shop  
             </Link>
           </Menu.Item>
           <Menu.Item icon={<FontAwesomeIcon icon={faMapMarkerAlt} />}>

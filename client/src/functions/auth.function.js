@@ -22,6 +22,12 @@ export const currentAdmin = async (token) => {
   return await axios.post("/auth/current-admin", {});
 };
 
+export const currentManager = async(token)=>{
+  axios.defaults.headers.common["authtoken"] = token;
+  return await axios.post("/auth/current-manager", {});
+
+}
+
 
 
 export const roleBasedRedirect = async (user, history,intent) => {
@@ -29,7 +35,10 @@ export const roleBasedRedirect = async (user, history,intent) => {
       history.push(`${intent.from}`)
   }else   if (user.role === "Admin") {
     history.push("/admin/dashboard");
-  } else {
+  } else if(user.role === "Manager"){
+    history.push("/manager/dashboard")
+  }
+  else {
     history.push("/user/dashboard");
   }
 };

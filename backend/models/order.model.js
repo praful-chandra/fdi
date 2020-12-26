@@ -14,15 +14,26 @@ const OrderSchema = new mongoose.Schema({
         ref:"User"
     },
     cart : [{
-        product : {type : mongoose.Schema.Types.ObjectId , ref: "ProductVarianceColor"},
-        quantity : {type : Number , default : 1},
+        product : {
+            name : String,
+            price : Number,
+            discountPrice : Number,
+            image : String,
+            productId : {
+                type : mongoose.Schema.Types.ObjectId,
+                ref:"ProductVarianceColor"
+            }
+        },
+        quantity : Number,
         addOns : [],
         exchange : {},
       }],
     
       coupon :{
-          type : mongoose.Schema.Types.ObjectId,
-          ref : "Coupon"
+          title : String,
+          discountPrecentage : Number,
+          upto : Number,
+          code : String
       },
       total : Number,
       address : {},
