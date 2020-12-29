@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from "react-redux";
 import ResetPasswordComponent from "../../components/user/passwordReset.component";
 import AdminNavComponent from "../../components/admin/adminNav.component";
-import HomeComponent from "../../components/admin/home.component";
+import HomeComponent from "../../components/admin/homepage";
 import CategoryComponent from "../../components/admin/category";
 import SubCategoryComponent from "../../components/admin/subCategory"
 import TagComponent from "../../components/admin/tag";

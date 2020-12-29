@@ -10,7 +10,7 @@ exports.authCheck = async (req, res, next) => {
     admin
       .auth()
       .verifyIdToken(token)
-      .then((decodedToken) => {
+      .then((decodedToken) => {  
         if (!decodedToken.email) {
           decodedToken.email = decodedToken.phone_number;
         }
@@ -52,7 +52,7 @@ exports.checkPermission = (type) => {
 
     if (user.role === "Admin") {
       next();
-    } else if (user.role === "Manager") {
+    } else if (user.role === "Manager") {  
       let permission = await ManagerRole.findOne({ role: type });
 
       if (permission) {

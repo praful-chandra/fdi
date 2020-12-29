@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Steps, Button, message } from "antd";
 const { Step } = Steps;
-
+import {isMobile} from "react-device-detect";
 import styles from "../sass/modules/checkout.module.scss";
 
 import SelectAddress from "../components/checkout/selectAddress.component";
@@ -44,8 +44,8 @@ function checkoutPage() {
   return (
     <div className={`center ${styles.wrapper}`}  >
       <Steps current={current} type="navigation" status="process" >
-        {steps.map((item) => (
-          <Step  key={item.title} title={item.title} />
+        {steps.map((item,ind) => (
+          <Step  key={item.title} title={item.title} style={{display : isMobile && ind !== current ? "none" : "initial"}} />
         ))}
       </Steps>
 

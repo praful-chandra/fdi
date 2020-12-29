@@ -5,7 +5,7 @@ exports.createOrUpdateUser = async (req, res) => {
   const { name,picture,  email } = req.user;
 
 
-  const user = await User.findOneAndUpdate(
+  const user = await User.findOneAndUpdate( 
     { email },
     { name, picture },
     { new: true }
