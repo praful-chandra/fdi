@@ -25,6 +25,7 @@ import CheckoutPage from "./pages/checkout.page";
 import ShopCategoryPage from "./pages/shopCategory";
 import ShopSubPage from "./pages/shopSub";
 import ManagerIndex from "./pages/manager";
+import PaymentStatusPage from "./pages/paymentStatus.page";
   
 import { auth } from "./firebase";
 
@@ -93,12 +94,14 @@ function App({
         <Route exact path="/deal" component={DealPage} />
         <Route exact path="/best" component={BestPage} />
         <Route exact path="/cart" component={CartPage} />
+        <Route exact path="/paymentstatus" component={PaymentStatusPage} />
 
 
 
         <UserPrivateRoute exact path="/user/dashboard" component={Dashboard} />
         <UserPrivateRoute exact path="/wishlist" component={WishListPage} />
         <UserPrivateRoute exact path="/checkout" component={CheckoutPage} />
+        
 
 
         

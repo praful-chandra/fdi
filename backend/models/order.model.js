@@ -39,14 +39,15 @@ const OrderSchema = new mongoose.Schema({
       address : {},
       status:{
           type : String,
-          enum : ["Created","Processing","Packed","Shipped","Delivered","Failed","Returned"],
+          enum : ["Created","Processing","Packed","Shipped","Delivered","Failed","ReturnRequested","Returned"],
           default : "Created"
       },
       paymentStatus :{
           type : String,
-          enum : ["UnPaid","Paid","Pending"],
+          enum : ["UnPaid","cancelled","failed","paid"],
           default : "UnPaid"
-      }
+      },
+      paymentGatewayInformation:{}
 
 },{
     timestamps : true

@@ -87,3 +87,27 @@ exports.addOrder = async (req,res) =>{
         res.status(500).json({error : "Internal server error"})
     }
 }
+
+exports.getOrder = async(req,res)=>{
+    const {orderId} = req.params;
+    try{
+
+        const order = await Order.findOne({orderId});
+        res.json({paymentStatus : order.paymentStatus});
+
+    }catch(err){
+        res.status(500).json({error : "Inrternal server error"})
+    }
+}
+
+exports.listOrder = async(req,res)=>{
+    try{
+
+        const user = await User.findOne({email : req.user.email});
+        const orders = await Order.find({customer : user._id});
+        return res.json(orders);
+
+    }catch(err){
+        res.status(500).json({error : "Inrternal server error"})
+    }
+}

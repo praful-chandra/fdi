@@ -3,6 +3,7 @@ import {useSelector} from "react-redux";
 import UserNavComponent from "../../components/user/UserNav.component";
 import ResetPasswordComponent from "../../components/user/passwordReset.component";
 import AddressComponent from "../../components/user/address.component";
+import OrdersComponent from "../../components/user/orders.component";
 
 import styles from "../../sass/modules/userDashboard/userDash.module.scss";
 
@@ -12,6 +13,7 @@ function Dashboard() {
 
     const renderContent = () =>{
         switch(selected){
+            case 0 : return <OrdersComponent />;
             case 1 : return <AddressComponent />;
             case 2 : return  <ResetPasswordComponent />;
             default : return <> </>

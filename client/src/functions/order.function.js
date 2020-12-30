@@ -29,3 +29,29 @@ export const payNow = async(orderDets) =>{
         return {error : "Internal Server Error"}
     }
 }
+
+export const getOrder = async(orderId) =>{
+    try{
+
+        let order = await axios.get(`/order/paymentStatus/${orderId}`);
+        if(order && !order.error) {
+            return order.data;
+        }
+
+    }catch(err){
+        return {error : "Internal Server Error"}
+    }
+}
+
+export const listOrders = async()=>{
+    try{
+
+        let order = await axios.get(`/order/`);
+        if(order && !order.error) {
+            return order.data;
+        }
+
+    }catch(err){
+        return {error : "Internal Server Error"}
+    }
+}
