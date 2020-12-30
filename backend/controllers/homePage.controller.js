@@ -3,16 +3,15 @@ const {
   homePageBannerModel,
   homePageDealModel,
 } = require("../models/homePage.model");
-const { rawListeners } = require("../models/user.model");
 
 const resizeImage = (image, width, height) =>
   new Promise(async (resolve) => {
     const result = await sharp(image.buffer)
       .resize(width, height, {
         fit: "contain",
-        background: { r: 255, g: 255, b: 255 },
+        background: { r: 000, g: 000, b: 000 ,alpha : 0},
       })
-      .toFormat("jpg")
+      .toFormat("png")
       .toBuffer();
 
     resolve(result);
@@ -25,10 +24,11 @@ exports.addBanner = async (req, res) => {
       newBody[key] = value;
     }
 
+
     const backgroundImage = await resizeImage(
       req.files.backgroundImage[0],
       1920,
-      500
+      1080
     );
     const foregroundImage = await resizeImage(
       req.files.foregroundImage[0],
@@ -45,6 +45,34 @@ exports.addBanner = async (req, res) => {
 
     res.json(newHomePageBanner);
   } catch (err) {
+    console.log(err);
     res.status(500).json({ error: "Internal server error !" });
   }
 };
+
+
+exports.listBanner = async (req,res)=>{
+  try{
+
+    const listBanner = await homePageBannerModel.find();
+    res.json(listBanner);
+
+  }catch(err){
+    res.status(500).json({error : "Internal server error"})
+  }
+}
+
+exports.deleteBanner = async (req,res)=>{
+  try{
+
+    const {id} = req.params;
+
+    const deletedBanner = await homePageBannerModel.findByIdAndDelete(id);
+    if(deletedBanner){
+      res.json({success : true})
+    }
+    
+  }catch(err){
+    res.status(500).json({error : "Internal server error"})
+  }
+}

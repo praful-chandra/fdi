@@ -16,6 +16,22 @@ const HomePageDealSchema = new mongoose.Schema({
   },
 });
 
+
+HomePageBannerSchema.methods.toJSON = function(){
+  const banner = this.toObject();
+
+  if(banner.backgroundImage){
+    banner.backgroundImage = `/api/serveImage/homepage/${banner._id}/banner/background`
+  }
+
+  if(banner.foregroundImage){
+    banner.foregroundImage = `/api/serveImage/homepage/${banner._id}/banner/foreground`
+  }
+
+  return banner;
+
+}
+
 const homePageBannerModel = mongoose.model(
   "HomePageBanner",
   HomePageBannerSchema

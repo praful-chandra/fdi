@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Button } from "antd";
+import { UploadOutlined } from '@ant-design/icons';
 import styles from "../../../sass/modules/adminDashboard/homepage.module.scss";
-
 import uploadBannerPlaceholder from "../../../assets/uploadBanner.png";
 import uploadBannerSmallPlaceHolder from "../../../assets/uploadBannerSmall.png";
+import {addBanner} from "../../../functions/homepage.function";
 
-function newBannerComponent() {
+function newBannerComponent({close}) {
   const [bgImg, setBgImg] = useState(uploadBannerPlaceholder);
   const [itemImg, setItemImg] = useState(uploadBannerSmallPlaceHolder);
 
@@ -24,7 +25,7 @@ function newBannerComponent() {
   };
 
   const handleBackgroundImage = (e) => {
-    if(e.targer.files[0]){}
+    if(e.target.files[0]){}
     let url = URL.createObjectURL(e.target.files[0]);
     setBgImg(url);
 
@@ -37,9 +38,28 @@ function newBannerComponent() {
 
     setItemImg(url);
 
-    setData((od) => ({ ...od, backgroundImage: e.target.files[0] }));
+    setData((od) => ({ ...od, foregroundImage: e.target.files[0] }));
    }
   };
+
+  const handleSave = () =>{
+
+    const formData = new FormData();
+
+    formData.append("backgroundImage",data.backgroundImage);
+    formData.append("foregroundImage",data.foregroundImage);
+    formData.append("title",data.title);
+    formData.append("description",data.description);
+
+    addBanner(formData).then(res=>{
+      if(res && !res.error){
+        alert("SUCCESS !");
+        close();
+      }
+    })
+
+
+  }
 
   return (
     <div className={styles.newBanner}>
@@ -77,14 +97,14 @@ function newBannerComponent() {
           </div>
         </div>
       </div>
-      <label>
-        BackgroundImage :
-        <input type="file" onChange={handleBackgroundImage} />
+      <label htmlFor="BackgroundImage" className={styles.inputButton} >
+          <UploadOutlined />Upload Background Image
+        <input type="file" onChange={handleBackgroundImage} hidden id="BackgroundImage" />
       </label>
       <div className={styles.newBannerFooter}>
-        <Button type="primary">Save</Button>
+        <Button type="primary" onClick={handleSave}  >Save</Button>
 
-        <Button type="primary" danger>
+        <Button type="primary" onClick={close} danger>
           Cancel
         </Button>
       </div>

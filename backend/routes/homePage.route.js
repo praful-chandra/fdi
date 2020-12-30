@@ -9,9 +9,9 @@ const upload = multer();
 const {authCheck,adminCheck} = require("../middlewares/auth.middleware");
 
 //Controllers
-const {addBanner} = require("../controllers/homePage.controller");
+const {addBanner,listBanner,deleteBanner} = require("../controllers/homePage.controller");
 
-router.post("/banner",upload.fields([
+router.post("/banner",authCheck,adminCheck,upload.fields([
     {
         name : "backgroundImage",
     maxCount : 1
@@ -20,6 +20,10 @@ router.post("/banner",upload.fields([
         maxCount : 1
     }
 ]),addBanner);  
+
+router.get("/banner",listBanner);
+router.delete("/banner/:id",authCheck,adminCheck,deleteBanner);
+
 
 
 module.exports = router;

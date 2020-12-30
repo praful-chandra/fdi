@@ -18,7 +18,7 @@ export const createOrder = async(cart,address) => {
 export const payNow = async(orderDets) =>{
     try{
 
-        const paytm = await axios.post("/payment/paytm",orderDets);
+        const paytm = await axios.post("/payment/cashfree",orderDets);
         
         if(!paytm.error){
             return paytm.data;

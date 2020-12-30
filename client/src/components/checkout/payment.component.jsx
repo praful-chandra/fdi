@@ -1,5 +1,4 @@
 import React,{useState,useEffect} from 'react';
-
 import {createOrder,payNow} from "../../functions/order.function";
 import post from "../../functions/post.function";
 
@@ -9,17 +8,27 @@ function paymentComponent({cart,address}) {
         createOrder(cart,address).then(data=>{
             data = data.order
             let orderObj = {
-                amount : data.total,
+                orderAmount : data.total.toString(),
                 customerId : data.customer,
-                email : data.address.emailAddress,
-                phone : data.address.phoneNumber,
-                orderId : data.orderId
+                customerName : data.address.firstName,
+                customerEmail : data.address.emailAddress,
+                customerPhone : data.address.phoneNumber.toString(),
+                orderId : data.orderId,
+                orderCurrency: "INR",
+                orderNote : "TEST",
+                notifyUrl : "",
             }
+            
 
-            payNow(orderObj).then(pd=>{
+
+            
+
+
+            payNow(orderObj)
+            .then(pd=>{
                 let details = {
-                    action : "https://securegw-stage.paytm.in/order/process",
-                    params : pd
+                    action : pd.path,
+                    params : pd.signatureForm
                 }
 
                 console.log(details);
