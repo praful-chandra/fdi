@@ -55,3 +55,25 @@ export const listOrders = async()=>{
         return {error : "Internal Server Error"}
     }
 }
+
+export const getAllOrders = async(status)=>{
+    try{
+        let order = await axios.post("/order/all",{status});
+        if(order && !order.error) {
+            return order.data;
+        }
+    }catch(err){
+        return {error : "Internal Server Error"}
+    }
+}
+
+export const changeOrderStatus = async(orderId,status)=>{
+    try{
+        let order = await axios.post("/order/changeStatus",{orderId,newStatus :status});
+        if(order && !order.error) {
+            return order.data;
+        }
+    }catch(err){
+        return {error : "Internal Server Error"}
+    }
+}

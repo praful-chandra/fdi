@@ -13,4 +13,95 @@
   
   }
 
-  
+  .viewOrder{
+    background-color: #fff;
+    width: 90vw;
+    height: 90vh;
+    overflow-y: scroll;
+    position: relative;
+    padding: 3rem;
+    &Close{
+      position: absolute;
+      right: 2rem;
+      top: 2rem;
+      cursor: pointer;
+    }
+  }
+
+  .order{
+    &Item{
+      width: 100%;
+      box-shadow: 0 0 6px $mediumGrey;
+      border-radius: 10px;
+      &Head{
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        padding: 2rem;
+        background-color: $lightGrey;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        &>div{
+          @include totalCenter();
+          flex-direction: column;
+          &>span:nth-child(2){
+            font-weight: 700;
+          }
+        }
+      }
+      &Status{
+        &>ul{
+          @include totalCenter();
+          &>li{
+            margin: 2rem;
+            font-weight: 600;
+            font-size: 2rem;
+            color: $darkGrey;
+            &>span{
+              font-weight: 800;
+            }
+          }
+
+        }
+      }
+
+      &Single{
+        width: 100%;
+        margin: 1rem 0;
+        padding: 2rem;
+
+        &Image{
+          width: 100%;
+          height: 20rem;
+          object-fit: contain;
+          object-position: center;
+          margin-bottom: 1rem;
+        }
+
+        &Body{
+          width: 100%;
+          min-height: 20rem;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: space-between;
+        }
+        &Price{
+          font-weight: 900;
+          font-size: 2rem;
+        }
+        &Name{
+          font-size: 2rem;
+        }
+        &Addons{
+          &>h4{
+            text-decoration: underline;
+            font-weight: 600;
+          }
+          &>ul>li>span{
+            font-weight: 600;
+          }
+        }
+      }
+    }
+  }

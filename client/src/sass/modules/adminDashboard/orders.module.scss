@@ -1,0 +1,26 @@
+//imports
+@import "../../index.scss";
+
+.heading{
+    color: $primaryColor;
+    font-size: 3rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.wrapper{
+    width: 100%;
+
+}
+
+.menu{
+    border: 1px solid;
+    margin: 0 auto;
+}
+
+.body{
+    margin-top: 3rem;
+    width: 100%; 
+}

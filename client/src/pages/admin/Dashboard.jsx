@@ -13,7 +13,7 @@ import BestSellerComponent from "../../components/admin/bestSellers";
 import FDIRecommendedComponent from "../../components/admin/fdiRecommended";
 import CouponComponent from "../../components/admin/coupon.component";
 import ManagerComponent from "../../components/admin/manager";
-
+import OrdersComponent from "../../components/admin/orders";
 import ExchangeComponent from "../../components/admin/exchange";
 
 import styles from "../../sass/modules/userDashboard/userDash.module.scss";
@@ -30,18 +30,19 @@ function Dashboard(props) {
     const renderContent = () => {
         switch (selected) {
             case 0: return <HomeComponent />;
-            case 1: return <CategoryComponent />;
-            case 2: return <SubCategoryComponent />;
-            case 3: return <TagComponent />;
-            case 4: return <BrandComponent />;
-            case 5: return <ProductComponent />;
-            case 6: return <DealOfTheWeekComponent />;
-            case 7: return <BestSellerComponent />;
-            case 8: return <FDIRecommendedComponent />;
-            case 9 : return <CouponComponent />;
-            case 10: return <ResetPasswordComponent />;
-            case 11: return <ExchangeComponent />;
-            case 12: return <ManagerComponent />;
+            case 1: return <OrdersComponent />;
+            case 2: return <CategoryComponent />;
+            case 3: return <SubCategoryComponent />;
+            case 4: return <TagComponent />;
+            case 5: return <BrandComponent />;
+            case 6: return <ProductComponent />;
+            case 7: return <DealOfTheWeekComponent />;
+            case 8: return <BestSellerComponent />;
+            case 9: return <FDIRecommendedComponent />;
+            case 10 : return <CouponComponent />;
+            case 11: return <ResetPasswordComponent />;
+            case 12: return <ExchangeComponent />;
+            case 13: return <ManagerComponent />;
 
             default: return <HomeComponent />;
         }

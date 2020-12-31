@@ -4,6 +4,7 @@ import styles from "../../sass/modules/userDashboard/userDash.module.scss";
 function adminNavComponent({ user, selected, setSelected }) {
   const navItems = [
     "home",
+    "Orders",
     "Categories",
     "sub categories",
     "Tags",
