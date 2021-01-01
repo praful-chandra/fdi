@@ -1,12 +1,17 @@
 const express = require("express");
 const router = express.Router();
-
+const path = require("path");
 const Product = require("../models/product.model");
 const Brand = require("../models/brand.model");
 const {
   homePageBannerModel,
   homePageDealModel,
 } = require("../models/homePage.model");
+
+router.get("/logo",async(req,res)=>{
+  res.setHeader('Content-Type', 'image/svg+xml');
+  res.sendFile(path.join(__dirname,'../','logo.svg'));
+})
 
 router.get("/product/:id/:index/:type", async (req, res) => {
   const { id, index, type } = req.params;

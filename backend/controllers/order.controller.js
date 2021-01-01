@@ -4,6 +4,8 @@ const ProductVarianceColor = require("../models/productVarianceColor.model");
 const Deals = require("../models/dealOfTheWeek.model");
 const Coupon = require("../models/coupon.model");
 var uniqid = require("uniqid");
+const pdf = require('html-pdf');
+const pdfTemplate = require("../documents/invoice");
 
 exports.addOrder = async (req, res) => {
   try {
@@ -140,3 +142,40 @@ exports.changeOrderStatus = async (req, res) => {
     res.status(500).json({ error: "Inrternal server error" });
   }
 };
+
+
+exports.genPdf = async (req,res)=>{
+    try{
+      const {orderId} = req.params;
+      const user = await User.findOne({email : req.user.email});
+
+      let searchQuery = {
+        orderId
+      }
+      if(user.role !== 'Admin'){
+        searchQuery.customer = user._id;       
+      }
+
+      let order = await Order.findOne(searchQuery);
+
+      if(!order){
+        return res.status(203).json({ error: "Not Authorized" });
+      }
+
+
+
+      pdf.create(pdfTemplate(order),{}).toBuffer((err,response)=>{
+        if(err){
+          return res.status(500).json({ error: "Inrternal server error" });
+        }else{
+          // res.contentType("application/pdf");
+          res.send(response);
+      }
+      })
+
+    }catch(err){
+      console.log(err);
+    res.status(500).json({ error: "Inrternal server error" });
+    }
+   
+}

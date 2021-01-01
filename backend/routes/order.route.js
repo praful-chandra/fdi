@@ -6,7 +6,7 @@ const router  = express.Router();
 const {authCheck,adminCheck} = require("../middlewares/auth.middleware");
 
 //Controllers
-const {addOrder,getOrder,listOrder,getAllOrders,changeOrderStatus} = require("../controllers/order.controller");
+const {addOrder,getOrder,listOrder,getAllOrders,changeOrderStatus,genPdf} = require("../controllers/order.controller");
 
 //Routes
 
@@ -15,5 +15,6 @@ router.get("/paymentStatus/:orderId",getOrder);
 router.post("/",authCheck,addOrder);
 router.post("/all",authCheck,adminCheck,getAllOrders);
 router.post("/changeStatus",authCheck,adminCheck,changeOrderStatus);
+router.get("/genInvoice/:orderId",authCheck,genPdf);
 
 module.exports = router;

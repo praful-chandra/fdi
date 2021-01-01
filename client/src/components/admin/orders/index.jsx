@@ -5,7 +5,7 @@ const {Option} = Select;
 import {EyeTwoTone} from "@ant-design/icons";
 import moment from "moment";
 import priceFormatter from "../../../functions/priceFormatter";
-import {getAllOrders,changeOrderStatus} from "../../../functions/order.function";
+import {getAllOrders,changeOrderStatus,genPdf} from "../../../functions/order.function";
 import {useToasts} from "react-toast-notifications";
 
 
@@ -100,13 +100,14 @@ const renderOrderStatusColor = (status)=>{
   },{
     title : "View order",
     key:"view",
-    render : (_,record)=> <Button icon={<EyeTwoTone />} size="large" />
+    render : (_,record)=> <Button icon={<EyeTwoTone /> } onClick={()=>{genPdf(record.orderId)}} size="large" />
   }
 
   ]
 
   return (
     <div className={styles.wrapper}>
+
       <h1 className={styles.heading}>Orders</h1>
         <Menu className={styles.menu} mode="horizontal" selectedKeys={status} onClick={(val)=>{setStatus(val.key);}}>
           <Menu.Item key={"all"}>All</Menu.Item>

@@ -21,7 +21,7 @@ function AdminPrivateRoute({ children, ...rest }) {
           setOk(true);
         })
         .catch((err) => {
-          addToast(err.response.data.error || err.message, {
+          addToast((err && err.response && err.response.data.error) || err.message, {
             appearance: "warning",
             autoDismiss: true,
           });
