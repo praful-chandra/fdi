@@ -22,7 +22,7 @@ const OrderSchema = new mongoose.Schema({
             productId : {
                 type : mongoose.Schema.Types.ObjectId,
                 ref:"ProductVarianceColor"
-            }
+            },
         },
         quantity : Number,
         addOns : [],
@@ -39,7 +39,7 @@ const OrderSchema = new mongoose.Schema({
       address : {},
       status:{
           type : String,
-          enum : ["Created","Processing","Packed","Shipped","Delivered","Failed","ReturnRequested","Returned"],
+          enum : ["Created","Processing","Packed","Shipped","Delivered","Failed"],
           default : "Created"
       },
       paymentStatus :{
