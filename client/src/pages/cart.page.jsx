@@ -38,17 +38,16 @@ function cartPage({ deleteCart, review, next }) {
     let sum = 0;
     cart.items.map((itm) => {
       itm.addOns.map((add) => {
-        sum +=( add.price * itm.quantiry);
+        sum += add.price * itm.quantity;
       });
     });
-
     return sum;
   };
 
   const calculateExchanges = () => {
     let sum = 0;
     cart.items.map((itm) => {
-      if (itm.exchange.exchangePrice) {
+      if (itm.exchange) {
         sum += itm.exchange.exchangePrice;
       }
     });
@@ -143,7 +142,7 @@ function cartPage({ deleteCart, review, next }) {
             </p>
           )}
 
-          {record.exchange.name && (
+          {record.exchange !== undefined && (
             <p>
               <span>Exchange :</span>
               <ul>

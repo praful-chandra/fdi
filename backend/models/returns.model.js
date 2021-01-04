@@ -4,11 +4,15 @@ const ReturnSchema = new mongoose.Schema({
   orderId: {
     type: String
   },
-  customerId: {
+  orderRef :{
+    type : mongoose.Schema.Types.ObjectId,
+    ref:"Order"
+  },
+  customer: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
-  productId: {
+  product: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "ProductVarianceColor",
     required : true

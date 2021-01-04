@@ -8,7 +8,7 @@ const INITIAL_STATE = {
 
 //Helpers
 import {addToCart,addToLocalCart,deleteLocalCart} from "../helpers/cart.helpers";
-import {getTotalPrice} from "../../functions/cart.function";
+import {getCartTotal} from "../../functions/cart.function";
 
 export default (state = INITIAL_STATE ,action)=>{
     switch(action.type){
@@ -17,7 +17,7 @@ export default (state = INITIAL_STATE ,action)=>{
             return {
                 ...state,
                 items : action.payload,
-                totalPrice : getTotalPrice(action.payload)
+                totalPrice : getCartTotal(action.payload)
             }
         }
 
@@ -25,7 +25,7 @@ export default (state = INITIAL_STATE ,action)=>{
             return {
                 ...state,
                 items : action.payload,
-                totalPrice : getTotalPrice(action.payload)
+                totalPrice : getCartTotal(action.payload)
             }
         }
 
@@ -33,7 +33,7 @@ export default (state = INITIAL_STATE ,action)=>{
             return {
                 ...state,
                 items : addToCart(state.items,action.payload),
-                totalPrice : getTotalPrice(addToCart(state.items,action.payload))
+                totalPrice : getCartTotal(addToCart(state.items,action.payload))
             }
         }
 
@@ -41,7 +41,7 @@ export default (state = INITIAL_STATE ,action)=>{
             return {
                 ...state,
                 items : addToLocalCart(state.items,action.payload),
-                totalPrice : getTotalPrice(addToLocalCart(state.items,action.payload))
+                totalPrice : getCartTotal(addToLocalCart(state.items,action.payload))
             }
         }
 
@@ -49,7 +49,7 @@ export default (state = INITIAL_STATE ,action)=>{
             return {
                 ...state,
                 items : deleteLocalCart(state.items , action.payload),
-                totalPrice : getTotalPrice(deleteLocalCart(state.items,action.payload))
+                totalPrice : getCartTotal(deleteLocalCart(state.items,action.payload))
             }
         }
 

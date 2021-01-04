@@ -10,7 +10,6 @@ const {transactionStatusEnum,paymentOptions} = require("../cashFree.helpers/enum
 
 router.post("/cashfree",async(req,res)=>{
     let callBackUrl = process.env.CASHFREE_CALLBACK_URL;
-
     let reqForm = req.body;
     
     reqForm.returnUrl = callBackUrl;

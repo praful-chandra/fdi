@@ -27,3 +27,45 @@ export const getReturn = async (orderId,productId) =>{
 
     }
 }
+
+export const deleteReturn = async (orderId,productId)=>{
+    try{
+        
+        const result = await axios.post("/return/delete",{orderId,productId});
+        if(result && result.data && !result.error){
+            return result.data;
+        }
+
+    }catch(err){
+        return {error : "Internal server error"}
+
+    }
+}
+
+export const listReturn = async ()=>{
+    try{
+        
+        const result = await axios.get("/return/");
+        if(result && result.data && !result.error){
+            return result.data;
+        }
+
+    }catch(err){
+        return {error : "Internal server error"}
+
+    }
+}
+
+export const changeStatus = async (id,newStatus)=>{
+    try{
+        
+        const result = await axios.post("/return/updateStatus",{id,newStatus});
+        if(result && result.data && !result.error){
+            return result.data;
+        }
+
+    }catch(err){
+        return {error : "Internal server error"}
+
+    }
+}

@@ -48,9 +48,9 @@ export const listOrders = async () => {
   }
 };
 
-export const getAllOrders = async (status) => {
+export const getAllOrders = async (status,limit,skip,search) => {
   try {
-    let order = await axios.post("/order/all", { status });
+    let order = await axios.post("/order/all", { status,limit,skip,search });
     if (order && !order.error) {
       return order.data;
     }

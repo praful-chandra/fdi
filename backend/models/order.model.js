@@ -47,7 +47,11 @@ const OrderSchema = new mongoose.Schema({
           enum : ["UnPaid","cancelled","failed","paid"],
           default : "UnPaid"
       },
-      paymentGatewayInformation:{}
+      paymentGatewayInformation:{},
+      viewed : {
+          type : Boolean,
+          default : false
+      }
 
 },{
     timestamps : true

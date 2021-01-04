@@ -1,0 +1,29 @@
+//imports
+@import "../../index.scss";
+
+.heading{
+    color: $primaryColor;
+    font-size: 3rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+
+.wrapper{
+    width: 95%;
+}
+
+.return{
+    &Product{
+        padding: 1rem;
+    }
+
+    &Image{
+        width: 30rem;
+        height:  35rem;
+        object-fit: contain;
+        object-position: center;
+    }
+}

@@ -5,6 +5,7 @@ function adminNavComponent({ user, selected, setSelected }) {
   const navItems = [
     "home",
     "Orders",
+    "Returns",
     "Categories",
     "sub categories",
     "Tags",

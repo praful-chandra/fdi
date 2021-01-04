@@ -15,6 +15,7 @@ import CouponComponent from "../../components/admin/coupon.component";
 import ManagerComponent from "../../components/admin/manager";
 import OrdersComponent from "../../components/admin/orders";
 import ExchangeComponent from "../../components/admin/exchange";
+import ReturnsComponent from "../../components/admin/returns";
 
 import styles from "../../sass/modules/userDashboard/userDash.module.scss";
 
@@ -31,18 +32,19 @@ function Dashboard(props) {
         switch (selected) {
             case 0: return <HomeComponent />;
             case 1: return <OrdersComponent />;
-            case 2: return <CategoryComponent />;
-            case 3: return <SubCategoryComponent />;
-            case 4: return <TagComponent />;
-            case 5: return <BrandComponent />;
-            case 6: return <ProductComponent />;
-            case 7: return <DealOfTheWeekComponent />;
-            case 8: return <BestSellerComponent />;
-            case 9: return <FDIRecommendedComponent />;
-            case 10 : return <CouponComponent />;
-            case 11: return <ResetPasswordComponent />;
-            case 12: return <ExchangeComponent />;
-            case 13: return <ManagerComponent />;
+            case 2 : return <ReturnsComponent />;
+            case 3: return <CategoryComponent />;
+            case 4: return <SubCategoryComponent />;
+            case 5: return <TagComponent />;
+            case 6: return <BrandComponent />;
+            case 7: return <ProductComponent />;
+            case 8: return <DealOfTheWeekComponent />;
+            case 9: return <BestSellerComponent />;
+            case 10: return <FDIRecommendedComponent />;
+            case 11 : return <CouponComponent />;
+            case 12: return <ResetPasswordComponent />;
+            case 13: return <ExchangeComponent />;
+            case 14: return <ManagerComponent />;
 
             default: return <HomeComponent />;
         }

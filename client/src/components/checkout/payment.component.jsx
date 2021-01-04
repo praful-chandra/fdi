@@ -19,11 +19,6 @@ function paymentComponent({cart,address}) {
                 notifyUrl : "",
             }
             
-
-
-            
-
-
             payNow(orderObj)
             .then(pd=>{
                 let details = {
@@ -33,7 +28,7 @@ function paymentComponent({cart,address}) {
 
                 console.log(details);
 
-                post(details); 
+                post(details);  
             });
 
         })

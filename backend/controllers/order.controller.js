@@ -3,8 +3,9 @@ const User = require("../models/user.model");
 const ProductVarianceColor = require("../models/productVarianceColor.model");
 const Deals = require("../models/dealOfTheWeek.model");
 const Coupon = require("../models/coupon.model");
+const Return = require("../models/returns.model");
 var uniqid = require("uniqid");
-const pdf = require('html-pdf');
+const pdf = require("html-pdf");
 const pdfTemplate = require("../documents/invoice");
 
 exports.addOrder = async (req, res) => {
@@ -53,7 +54,7 @@ exports.addOrder = async (req, res) => {
         totalSum += ad.price * i.quantity;
       });
 
-      if (i.exchange.exchangePrice) {
+      if (i.exchange !== undefined) {
         totalSum -= i.exchange.exchangePrice;
       }
     });
@@ -104,7 +105,7 @@ exports.listOrder = async (req, res) => {
     const orders = await Order.find({ customer: user._id }).sort({
       createdAt: -1,
     });
-    return res.json(orders);
+    res.json(orders);
   } catch (err) {
     res.status(500).json({ error: "Inrternal server error" });
   }
@@ -114,13 +115,22 @@ exports.getAllOrders = async (req, res) => {
   try {
     let statusEnums = Order.schema.path("status").enumValues;
 
-    const { status } = req.body;
+    let { status, limit, skip, search } = req.body;
 
     let searchQuery = {};
     if (status && status !== "all") {
-      searchQuery = { status };
+      searchQuery = { ...searchQuery ,status };
     }
+
+    search = search.trim();
+
+    if(search && search !== ""){
+      searchQuery = {...searchQuery ,orderId : search}
+    }
+
     const orders = await Order.find(searchQuery)
+      .skip(skip)
+      .limit(limit)
       .sort({ createdAt: -1 })
       .populate("customer");
     return res.json({ orders, statusEnums });
@@ -131,51 +141,48 @@ exports.getAllOrders = async (req, res) => {
 
 exports.changeOrderStatus = async (req, res) => {
   try {
-      
     const { orderId, newStatus } = req.body;
     const order = await Order.findOne({ orderId });
     order.status = newStatus;
     order.save();
     res.json({ success: true });
-
   } catch (err) {
     res.status(500).json({ error: "Inrternal server error" });
   }
 };
 
+exports.genPdf = async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const user = await User.findOne({ email: req.user.email });
 
-exports.genPdf = async (req,res)=>{
-    try{
-      const {orderId} = req.params;
-      const user = await User.findOne({email : req.user.email});
-
-      let searchQuery = {
-        orderId
-      }
-      if(user.role !== 'Admin'){
-        searchQuery.customer = user._id;       
-      }
-
-      let order = await Order.findOne(searchQuery);
-
-      if(!order){
-        return res.status(203).json({ error: "Not Authorized" });
-      }
-
-
-
-      pdf.create(pdfTemplate(order),{}).toBuffer((err,response)=>{
-        if(err){
-          return res.status(500).json({ error: "Inrternal server error" });
-        }else{
-          // res.contentType("application/pdf");
-          res.send(response);
-      }
-      })
-
-    }catch(err){
-      console.log(err);
-    res.status(500).json({ error: "Inrternal server error" });
+    let searchQuery = {
+      orderId,
+    };
+    if (user.role !== "Admin") {
+      searchQuery.customer = user._id;
     }
-   
-}
+
+    let order = await Order.findOne(searchQuery);
+
+    order.viewed = true;
+    await order.save();
+
+    if (!order) {
+      return res.status(203).json({ error: "Not Authorized" });
+    }
+
+    pdf.create(pdfTemplate(order), {}).toBuffer((err, response) => {
+      if (err) {
+        return res.status(500).json({ error: "Inrternal server error" });
+      } else {
+        // res.contentType("application/pdf");
+        res.send(response);
+      }
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Inrternal server error" });
+  }
+};
+

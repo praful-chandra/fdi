@@ -1,8 +1,9 @@
 import React, { useState,useEffect } from "react";
 import styles from "../../../sass/modules/adminDashboard/orders.module.scss";
-import { Menu,Table ,Tag,Button,Select} from "antd";
+import { Menu,Table ,Tag,Button,Select,Input} from "antd";
 const {Option} = Select;
-import {EyeTwoTone} from "@ant-design/icons";
+const {Search} = Input;
+import {EyeTwoTone,SearchOutlined} from "@ant-design/icons";
 import moment from "moment";
 import priceFormatter from "../../../functions/priceFormatter";
 import {getAllOrders,changeOrderStatus,genPdf} from "../../../functions/order.function";
@@ -15,13 +16,14 @@ function index() {
   const [flag,setFlag] = useState(false);
   const [statusEnums,setStatusEnums] = useState([]);
   const {addToast} = useToasts();
-
+  const [skip,setSkip] = useState(0);
+  const [search,setSearch] = useState("");
     useEffect(() => {
-       getAllOrders(status).then(data=>{
+       getAllOrders(status,15,skip,search).then(data=>{
            setOrders(data.orders);
            setStatusEnums(data.statusEnums);
        })
-    }, [status,flag])
+    }, [status,flag,skip,search])
 
     const handleStatusChange = (orderId,value) =>{
         let confirmFlag = confirm(`Do you want to change status to ${value.toUpperCase()}`)
@@ -109,20 +111,21 @@ const renderOrderStatusColor = (status)=>{
     <div className={styles.wrapper}>
 
       <h1 className={styles.heading}>Orders</h1>
-        <Menu className={styles.menu} mode="horizontal" selectedKeys={status} onClick={(val)=>{setStatus(val.key);}}>
+      <br/>
+      <Search placeholder="input search text" onSearch={(val)=>{setSearch(val)}} prefix="Order ID # " size="large" enterButton />
+    <br/>
+        <Menu className={styles.menu} mode="horizontal" selectedKeys={status} onClick={(val)=>{setStatus(val.key); setSkip(0)}}>
           <Menu.Item key={"all"}>All</Menu.Item>
           <Menu.Item key="Processing">Processing</Menu.Item>
           <Menu.Item key="Packed">Packed</Menu.Item>
           <Menu.Item key="Shipped">Shipped</Menu.Item>
           <Menu.Item key="Delivered">Delivered</Menu.Item>
           <Menu.Item key="Failed">Failed</Menu.Item>
-          <Menu.Item key="ReturnRequested">ReturnRequested</Menu.Item>
-          <Menu.Item key="Returned">Returned</Menu.Item>
           <Menu.Item key="Created">Created</Menu.Item>
         </Menu>
 
       <div className={styles.body}>
-        <Table columns={columns} dataSource={orders} pagination={false}/>
+        <Table columns={columns} dataSource={orders} pagination={{position : ["bottomCenter"],pageSize: 15, current : (skip + 1),onChange : (val)=>{setSkip(val - 1)} }} />
       </div>
     </div>
   );

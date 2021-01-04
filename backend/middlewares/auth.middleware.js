@@ -49,7 +49,6 @@ exports.checkPermission = (type) => {
   return async (req, res, next) => {
     const { email } = req.user;
     const user = await User.findOne({ email });
-
     if (user.role === "Admin") {
       next();
     } else if (user.role === "Manager") {  

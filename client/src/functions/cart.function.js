@@ -12,3 +12,21 @@ export const getTotalPrice = items =>{
     
     return totalPrice;
 }
+
+export const getCartTotal = items =>{
+    let totalPrice = 0;
+    items.map(i=>{
+        let basePrice = i.price;
+        let totalAddons = 0;
+        i.addOns.map(add=>{
+            totalAddons += add.price;
+        })
+        totalPrice += i.quantity * (basePrice + totalAddons);
+        
+        if(i.exchange){
+            totalPrice = totalPrice - i.exchange.exchangePrice;
+        }
+    })
+
+    return totalPrice;
+}
