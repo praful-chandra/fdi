@@ -14,7 +14,7 @@ import { isMobile } from "react-device-detect";
 
 const { Search } = Input;
 function cartPage({ deleteCart, review, next }) {
-  const { cart,user } = useSelector((state) => state);
+  const { cart, user } = useSelector((state) => state);
   const [deals, setDeals] = useState(false);
   const [coupon, setCoupon] = useState(false);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -46,12 +46,12 @@ function cartPage({ deleteCart, review, next }) {
 
   const calculateExchanges = () => {
     let sum = 0;
-    cart.items.map((itm) => {
-      if (itm.exchange) {
+    cart.items.map((itm,i) => {
+      if (itm.exchange !== undefined) {
+        // console.log("INDEX =>> ",i);
         sum += itm.exchange.exchangePrice;
       }
     });
-
     return sum;
   };
 
@@ -62,7 +62,8 @@ function cartPage({ deleteCart, review, next }) {
       let deal = await getDeal(cart.items[i].product);
       {
         if (deal) {
-          sum += (cart.items[i].price - deal.discountPrice) * cart.items[i].quantity;
+          sum +=
+            (cart.items[i].price - deal.discountPrice) * cart.items[i].quantity;
         }
       }
     }
@@ -83,7 +84,7 @@ function cartPage({ deleteCart, review, next }) {
   };
 
   const handleDelete = (record) => {
-    deleteCart(record.product,user);
+    deleteCart(record.product, user);
   };
 
   const checkCoupon = async (text) => {
@@ -142,7 +143,7 @@ function cartPage({ deleteCart, review, next }) {
             </p>
           )}
 
-          {record.exchange !== undefined && (
+          {record.exchange && record.exchange !== undefined && (
             <p>
               <span>Exchange :</span>
               <ul>
@@ -187,6 +188,7 @@ function cartPage({ deleteCart, review, next }) {
       ),
     });
   }
+  console.log(cart.items);
   return (
     <div className={`center ${styles.wrapper}`}>
       {!review && (
@@ -230,19 +232,21 @@ function cartPage({ deleteCart, review, next }) {
                           </p>
                         )}
 
-{itm.exchange.name && (
-            <p>
-              <span>Exchange :</span>
-              <ul>
-                <li>
-                  {itm.exchange.name} : -
-                  {priceFormatter(itm.exchange.exchangePrice)}
-                </li>
-              </ul>
-            </p>
-          )}
+                        {itm.exchange && (
+                          <p>
+                            <span>Exchange :</span>
+                            <ul>
+                              <li>
+                                {itm.exchange.name} : -
+                                {priceFormatter(itm.exchange.exchangePrice)}
+                              </li>
+                            </ul>
+                          </p>
+                        )}
                       </p>
-                      <span className={styles.mobilePrice} >{priceFormatter(itm.price)}</span>
+                      <span className={styles.mobilePrice}>
+                        {priceFormatter(itm.price)}
+                      </span>
                     </div>
                   </div>
                   {!review && (
@@ -336,7 +340,13 @@ function cartPage({ deleteCart, review, next }) {
             </>
           ) : (
             <>
-              <Link to={user.user && user.token  ? "/checkout" : {pathname : "/login" , state : {from :"/cart"}}}>
+              <Link
+                to={
+                  user.user && user.token
+                    ? "/checkout"
+                    : { pathname: "/login", state: { from: "/cart" } }
+                }
+              >
                 <button className={styles.checkout}>Checkout</button>
               </Link>
             </>

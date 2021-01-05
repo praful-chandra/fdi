@@ -1,4 +1,5 @@
 const Orders = require("../models/order.model");
+const User = require("../models/user.model");
 const express = require("express");
 const router = express.Router();
 const { authCheck } = require("../middlewares/auth.middleware");
@@ -24,7 +25,7 @@ router.post("/cashfree",async(req,res)=>{
         customerName : reqForm.customerName,
         customerPhone : reqForm.customerPhone,
         customerEmail : reqForm.customerEmail,
-        returnUrl : reqForm.returnUrl,
+        returnUrl : "http://localhost:8000/api/payment/callback",//reqForm.returnUrl,
         notifyUrl : reqForm.notifyUrl
     }
 
@@ -83,6 +84,8 @@ router.post("/callback",async(req,res)=>{
                         order.paymentStatus = "paid";
                         order.status = "Processing";
                         order.paymentGatewayInformation = {...fields,signature : null};
+                        let customer = order.customer;
+                        await User.findByIdAndUpdate(customer,{$set :{cart : []}})
                         await order.save();
                     }
                 }

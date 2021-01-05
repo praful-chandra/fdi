@@ -93,7 +93,7 @@ exports.getOrder = async (req, res) => {
   const { orderId } = req.params;
   try {
     const order = await Order.findOne({ orderId });
-    res.json({ paymentStatus: order.paymentStatus });
+    res.json({ paymentStatus: order.paymentStatus,orderId : order.orderId });
   } catch (err) {
     res.status(500).json({ error: "Inrternal server error" });
   }

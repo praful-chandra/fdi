@@ -13,6 +13,8 @@ export const addToCart = (allCart, product) => {
 };
 
 export const addToLocalCart = (allCart, product) => {
+
+  console.log(product);
   
   if ( product.product.quantity >= product.count ) {
     
@@ -26,7 +28,7 @@ export const addToLocalCart = (allCart, product) => {
     price : product.product.price,
     productImage : `/api/serveImage/product/${product.product.product}/0/thumb`,
     addOns : product.addOns,
-    exchange : product.exchangeProduct
+    exchange :  Object.keys(product.exchangeProduct).length > 0  ? product.exchangeProduct : undefined
   }]
 
   updateLocalStorage(finalCart);

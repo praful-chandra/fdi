@@ -3,8 +3,9 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Route, Switch ,BrowserRouter as Router } from "react-router-dom";
 
-import Header from "./components/nav/Header.component";
 import "./sass/index.scss";
+import Header from "./components/nav/Header.component";
+import Footer from "./components/footer.component";
 
 import Home from "./pages/Home";
 import Login from "./pages/auth/Login";
@@ -127,11 +128,12 @@ function App({
           component={ManagerIndex}
         />
       </Switch>
+      <Footer />
     </Router>
   );
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state) => ({ 
   user: state.user,
   categories: state.category.categories,
   subCategories: state.subCategory.subCategories,

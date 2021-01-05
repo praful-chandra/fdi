@@ -64,12 +64,13 @@ function paymentStatusPage(props) {
             }
 
             case "paid" : {
+                window.localStorage.removeItem("cart");
                 return  <Result
                 status="success"
                 title="The payment was Successful !"
                 subTitle={`Order Id: ${order.orderId}`} 
                 extra={[
-                  <Button type="primary" key="console">
+                  <Button type="primary" key="console" onClick={handleAction} >
                     Go to Orders
                   </Button>,
                 ]}

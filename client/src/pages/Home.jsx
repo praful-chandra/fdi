@@ -36,7 +36,7 @@ export default function Home() {
         <div>
             <CaroueseComponent />
             <InfoCard />
-            <BannerSmall />
+            {/* <BannerSmall /> */}
             <OfferSlider items={deals} deal={true} title={"deal of the week"} link="/deal" />
             <OfferSlider invert={true} items={bests} best={true} title={"Best Sellers"} link="/best" />
             {

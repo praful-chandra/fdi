@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Drawer, Menu, Input, Form } from "antd";
 import { CompassOutlined, FolderOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
-import  {Link} from "react-router-dom";
+import  {Link,useHistory} from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -17,8 +17,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 const { SubMenu } = Menu;
 const { Search } = Input;
-
 function mobileMenuSlider({ logOut,status, setClose }) {
+  const history = useHistory();
   const {
     category: { categories },
     subCategory: { subCategories },
@@ -26,7 +26,7 @@ function mobileMenuSlider({ logOut,status, setClose }) {
   } = useSelector((state) => state);
 
   const handleSearch = (val) => {
-    console.log(val);
+    history.push(`/shop?search=${val}`)
   };
 
   return (
@@ -38,11 +38,12 @@ function mobileMenuSlider({ logOut,status, setClose }) {
       onClose={setClose}
       style={{ fontSize: "3rem" }}
     >
-      <Form>
+      <Form action="/shop">
         <Search
           placeholder="input search text"
-          onSearch={handleSearch}
           enterButton
+          size="large"
+          onSearch={handleSearch}
         />
       </Form>
       <Menu
@@ -57,7 +58,9 @@ function mobileMenuSlider({ logOut,status, setClose }) {
               {subCategories
                 .filter((subCat) => subCat.parent._id === cat._id)
                 .map((subCat) => (
-                  <Menu.Item key={subCat._id}>{subCat.name}</Menu.Item>
+                  <Menu.Item key={subCat._id}>
+                    <a href={`/subcategory/${subCat.slug}`}>{subCat.name}</a>
+                  </Menu.Item>
                 ))}
             </Menu.ItemGroup>
           ))}
@@ -76,7 +79,7 @@ function mobileMenuSlider({ logOut,status, setClose }) {
            user ? (
              <>
               <Menu.Item icon={<FontAwesomeIcon icon={faTruck} />}>
-            Orders
+            <a href="/user/dashboard">Orders</a>
           </Menu.Item>
           <Menu.Item icon={<FontAwesomeIcon icon={faTachometerAlt} />}>
             {
