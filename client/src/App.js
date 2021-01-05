@@ -1,41 +1,41 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect } from "react";
+import React, { useEffect,Suspense } from "react";
 import { connect } from "react-redux";
-import { Route, Switch ,BrowserRouter as Router } from "react-router-dom";
+import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 
 import "./sass/index.scss";
-import Header from "./components/nav/Header.component";
-import Footer from "./components/footer.component";
+const Header = React.lazy(()=> import("./components/nav/Header.component")); ;
+const Footer = React.lazy(()=> import("./components/footer.component")); ;
 
-import Home from "./pages/Home";
-import Login from "./pages/auth/Login";
-import Register from "./pages/auth/Register";
-import RegisterComplete from "./pages/auth/RegisterComplete";
-import ResetPassword from "./pages/auth/ResetPassword";
-import Dashboard from "./pages/user/Dashboard";
-import AdminDash from "./pages/admin/Dashboard";
-import CreateProduct from "./pages/admin/CreateProduct/index";
-import EditProduct from "./pages/admin/editProduct/index";
-import DealPage from "./pages/deal.page";
-import BestPage from "./pages/bestSeller.page";
-import WishListPage from "./pages/wishList.page";
-import SingleProductPage from "./pages/singleProduct.page";
-import ShopPage from "./pages/shop.page";
-import CartPage from "./pages/cart.page";
-import CheckoutPage from "./pages/checkout.page";
-import ShopCategoryPage from "./pages/shopCategory";
-import ShopSubPage from "./pages/shopSub";
-import ManagerIndex from "./pages/manager";
-import PaymentStatusPage from "./pages/paymentStatus.page";
-  
+const Home = React.lazy(() => import("./pages/Home"));
+const Login = React.lazy(() => import("./pages/auth/Login"));
+const Register = React.lazy(() => import("./pages/auth/Register"));
+const RegisterComplete = React.lazy(() => import("./pages/auth/RegisterComplete"));
+const ResetPassword = React.lazy(() => import("./pages/auth/ResetPassword"));
+const Dashboard = React.lazy(() => import("./pages/user/Dashboard"));
+const AdminDash = React.lazy(() => import("./pages/admin/Dashboard"));
+const CreateProduct = React.lazy(() => import("./pages/admin/CreateProduct/index"));
+const EditProduct = React.lazy(() => import("./pages/admin/editProduct/index"));
+const DealPage = React.lazy(() => import("./pages/deal.page"));
+const BestPage = React.lazy(() => import("./pages/bestSeller.page"));
+const WishListPage = React.lazy(() => import("./pages/wishList.page"));
+const SingleProductPage = React.lazy(() => import("./pages/singleProduct.page"));
+const ShopPage = React.lazy(() => import("./pages/shop.page"));
+const CartPage = React.lazy(() => import("./pages/cart.page"));
+const CheckoutPage = React.lazy(() => import("./pages/checkout.page"));
+const ShopCategoryPage = React.lazy(() => import("./pages/shopCategory"));
+const ShopSubPage = React.lazy(() => import("./pages/shopSub"));
+const ManagerIndex = React.lazy(() => import("./pages/manager"));
+const PaymentStatusPage = React.lazy(() => import("./pages/paymentStatus.page"));
+
 import { auth } from "./firebase";
 
 import { currentUser } from "./functions/auth.function";
 import { signInUser } from "./redux/actions/userActions";
 import { listAllCategories } from "./redux/actions/categoryActions";
 import { listAllSubCategories } from "./redux/actions/subCategoryActions";
-import { listAllTags} from "./redux/actions/tagActions";
-import { listBrands} from "./redux/actions/BrandActions";
+import { listAllTags } from "./redux/actions/tagActions";
+import { listBrands } from "./redux/actions/BrandActions";
 
 //PrivateRoutes
 import UserPrivateRoute from "./components/routes/UserPrivate.route";
@@ -72,15 +72,16 @@ function App({
     if (categories.length === 0) listAllCategories();
     if (subCategories.length === 0) listAllSubCategories();
     if (tags.length === 0) listAllTags();
-    if(brands.length === 0) listBrands();
+    if (brands.length === 0) listBrands();
 
-    
+
     //cleanup
     return () => unsubscribe();
   }, []);
 
-  return (   
-    <Router>
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Router>
       <Header />
       <Switch>
         <Route exact path="/" component={Home} />
@@ -97,15 +98,10 @@ function App({
         <Route exact path="/cart" component={CartPage} />
         <Route exact path="/paymentstatus" component={PaymentStatusPage} />
 
-
-
         <UserPrivateRoute exact path="/user/dashboard" component={Dashboard} />
         <UserPrivateRoute exact path="/wishlist" component={WishListPage} />
         <UserPrivateRoute exact path="/checkout" component={CheckoutPage} />
-        
 
-
-        
         <AdminPrivateRoute
           exact
           path="/admin/dashboard"
@@ -116,13 +112,13 @@ function App({
           path="/admin/newproduct"
           component={CreateProduct}
         />
-         <AdminPrivateRoute
+        <AdminPrivateRoute
           exact
           path="/admin/editProduct/:slug"
           component={EditProduct}
         />
 
-        <ManagerPrivateRoute 
+        <ManagerPrivateRoute
           exact
           path="/manager/dashboard"
           component={ManagerIndex}
@@ -130,15 +126,16 @@ function App({
       </Switch>
       <Footer />
     </Router>
+   </Suspense>
   );
 }
 
-const mapStateToProps = (state) => ({ 
+const mapStateToProps = (state) => ({
   user: state.user,
   categories: state.category.categories,
   subCategories: state.subCategory.subCategories,
-  tags : state.tag.tags,
-  brands : state.brand.brands
+  tags: state.tag.tags,
+  brands: state.brand.brands
 });
 
 export default connect(mapStateToProps, {
