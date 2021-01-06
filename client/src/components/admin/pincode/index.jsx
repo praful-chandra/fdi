@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "../../../sass/modules/adminDashboard/pincode.module.scss";
-import { Button, Table } from "antd";
+import { Button, Table,Popconfirm } from "antd";
 import {
   AppstoreAddOutlined,
   EditFilled,
@@ -8,12 +8,13 @@ import {
 } from "@ant-design/icons";
 import PopupComponent from "../../showPopup.component";
 import CreatePin from "./createPin";
-import { listPincode } from "../../../functions/pincode.function";
+import { listPincode,deletePincode } from "../../../functions/pincode.function";
+import {useToasts} from "react-toast-notifications";
 
 function index() {
   const [popup, setpopup] = useState(false);
   const [pinList, setPinList] = useState([]);
-
+  const {addToast} = useToasts();
   const listPincodes = () => {
     listPincode().then((res) => {
       if (res && !res.error) {
@@ -28,6 +29,18 @@ function index() {
 
   const editPin = pin =>{
     setpopup(pin);
+  }
+
+  const removePincode = pin =>{
+    deletePincode(pin.groupName).then(res=>{
+      if(res && res.success){
+        addToast("Successfully deleted !",{appearance : "success" , autoDismiss : true});
+        listPincodes();
+      }else{
+        addToast("An error occured !",{appearance : "error" , autoDismiss : true});
+
+      }
+    })
   }
 
   const columns = [
@@ -59,11 +72,14 @@ function index() {
     {
       title: "Delete",
       key: "delete",
-      render: (_) => {
+      render: (_,record) => {
         return (
-          <DeleteFilled
+         <Popconfirm onConfirm={()=>removePincode(record)} title="Are you sure you want to delete this?">
+            <DeleteFilled
             style={{ cursor: "pointer", color: "red", fontSize: "2rem" }}
+            
           />
+         </Popconfirm>
         );
       },
     },
@@ -87,7 +103,7 @@ function index() {
         onClick={() => setpopup({new : true})}
       />
 
-      <Table columns={columns} dataSource={pinList} />
+      <Table columns={columns} dataSource={pinList} pagination={false} />
     </div>
   );
 }

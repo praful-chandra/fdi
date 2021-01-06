@@ -23,7 +23,7 @@ exports.checkPincode = async(req,res)=>{
             }
         })
 
-        res.json({result});
+        res.json(result);
 
     } catch (err) {
         res.status(500).json({ error: "Internal server error !" });

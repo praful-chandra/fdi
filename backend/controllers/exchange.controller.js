@@ -9,8 +9,8 @@ exports.addExchange = async(req,res) =>{
         let maxPrice = 0;
 
         type.map(t=>{
-            if(t.exchangePrice > maxPrice){
-                maxPrice = t.exchangePrice
+            if(parseInt(t.exchangePrice) > maxPrice){
+                maxPrice = parseInt(t.exchangePrice)
             }
         })
 
