@@ -9,6 +9,7 @@ import {addBanner} from "../../../functions/homepage.function";
 function newBannerComponent({close}) {
   const [bgImg, setBgImg] = useState(uploadBannerPlaceholder);
   const [itemImg, setItemImg] = useState(uploadBannerSmallPlaceHolder);
+  const [loading,setLoading] = useState(false);
 
   const [data, setData] = useState({
     backgroundImage: "",
@@ -43,7 +44,7 @@ function newBannerComponent({close}) {
   };
 
   const handleSave = () =>{
-
+    setLoading(true);
     const formData = new FormData();
 
     formData.append("backgroundImage",data.backgroundImage);
@@ -54,8 +55,9 @@ function newBannerComponent({close}) {
     addBanner(formData).then(res=>{
       if(res && !res.error){
         alert("SUCCESS !");
-        close();
       }
+      setLoading(false);
+      close();
     })
 
 

@@ -17,6 +17,7 @@ function adminNavComponent({ user, selected, setSelected }) {
     "coupons",
     "change password",
     "Exchange",
+    "PINCODE",
     "Manager"
   ];
   return (

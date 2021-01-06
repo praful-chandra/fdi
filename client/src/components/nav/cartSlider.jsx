@@ -16,7 +16,7 @@ function cartSlider({ status, setClose, cartItems,width}) {
       footer={
         <div className={styles.actionButton}>
           <Link to="/cart" >
-          <button  className={`text-center btn btn-primary btn-raised btn-block ${styles.actionBtn}`}>
+          <button  className={`text-center btn btn-primary btn-raised btn-block ${styles.actionBtn}`} onClick={setClose}>
             Go To Cart
           </button>
           </Link>

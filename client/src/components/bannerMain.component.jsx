@@ -14,11 +14,12 @@ export default function BannerMain({banner}) {
           <h4>{banner.description}</h4>
         </div>
         <div>
-          <img
+         { banner.foregroundImage && 
+            <img
             src={`${process.env.REACT_APP_API_ROOT_URI}${banner.foregroundImage}`}
             alt="banner"
             
-          />
+          />}
         </div>
       </div>
     </div>

@@ -5,6 +5,7 @@ import InfoCard from "../components/homepage/infoCard";
 import OfferSlider from "../components/offerSlider";
 import BannerSmall from "../components/bannerSmall";
 import CategorySlider from "../components/homepage/categorySlider.component";
+import Brands from "../components/brands";
 
 //import Functions
 import {listDeals} from "../functions/deal.functions";
@@ -37,13 +38,15 @@ export default function Home() {
             <CaroueseComponent />
             <InfoCard />
             {/* <BannerSmall /> */}
-            <OfferSlider items={deals} deal={true} title={"deal of the week"} link="/deal" />
-            <OfferSlider invert={true} items={bests} best={true} title={"Best Sellers"} link="/best" />
+            {deals.length > 0 && <OfferSlider items={deals} deal={true} title={"deal of the week"} link="/deal" />}
+            {bests.length > 0 && <OfferSlider invert={true} items={bests} best={true} title={"Best Sellers"} link="/best" />}
             {
                 categories.map((cat,i)=>{
                     return <CategorySlider invert={(i + 1) % 2 === 0} category={cat} />
                 })
             }
+
+            <Brands />
 
         </div>  
     )

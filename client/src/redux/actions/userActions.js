@@ -1,4 +1,4 @@
-import { userActionTypes } from "../types";
+import { userActionTypes,cartTypes } from "../types";
 import firebase from "firebase";
 import axios  from 'axios';
 
@@ -28,4 +28,7 @@ export const signoutUser = () => (dispatch) => {
   dispatch({
     type: userActionTypes.LOGOUT,
   });
+  dispatch({
+    type : cartTypes.EMPTY_CART
+  })
 };

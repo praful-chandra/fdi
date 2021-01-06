@@ -16,6 +16,7 @@ import ManagerComponent from "../../components/admin/manager";
 import OrdersComponent from "../../components/admin/orders";
 import ExchangeComponent from "../../components/admin/exchange";
 import ReturnsComponent from "../../components/admin/returns";
+import PinCodeComponent from "../../components/admin/pincode";
 
 import styles from "../../sass/modules/userDashboard/userDash.module.scss";
 
@@ -44,7 +45,9 @@ function Dashboard(props) {
             case 11 : return <CouponComponent />;
             case 12: return <ResetPasswordComponent />;
             case 13: return <ExchangeComponent />;
-            case 14: return <ManagerComponent />;
+            case 14 : return <PinCodeComponent />;
+            case 15: return <ManagerComponent />;
+            
 
             default: return <HomeComponent />;
         }

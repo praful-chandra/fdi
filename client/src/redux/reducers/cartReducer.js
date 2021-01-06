@@ -53,7 +53,14 @@ export default (state = INITIAL_STATE ,action)=>{
             }
         }
 
-
+        case cartTypes.EMPTY_CART :{
+            window.localStorage.removeItem("cart");
+            return{
+                ...state,
+                items : [],
+                totalPrice : 0
+            }
+        }
 
         default : return state
     }

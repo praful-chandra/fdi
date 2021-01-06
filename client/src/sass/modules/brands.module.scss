@@ -25,10 +25,11 @@
 
 
   .logos{
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
+    & button{  
+      background-color: $primaryColor !important;
+      border-radius: 100px;
+      transform: scale(0.7) !important;
+    }
       &>img{
           max-width: 10rem;
       }

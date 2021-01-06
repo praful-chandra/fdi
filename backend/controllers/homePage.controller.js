@@ -30,11 +30,14 @@ exports.addBanner = async (req, res) => {
       1920,
       1080
     );
-    const foregroundImage = await resizeImage(
-      req.files.foregroundImage[0],
-      500,
-      500
-    );
+    let foregroundImage = null;
+    if(req.files.foregrouneImage){
+       foregroundImage = await resizeImage(
+        req.files.foregroundImage[0],
+        500,
+        500
+      );
+    }
 
     const newHomePageBanner = await new homePageBannerModel({
       backgroundImage,
