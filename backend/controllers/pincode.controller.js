@@ -62,13 +62,14 @@ exports.updatePincode = async (req, res) => {
    if(existingPincode){
     existingPincode.pincodes = pincodes;
     existingPincode.estTime = estTime;
-    await groupName.save();
+    await existingPincode.save();
     res.json({success : true});
    }else{
        throw Error();
    }
 
   } catch (err) {
+    console.log(err);
     res.status(500).json({ error: "Internal server error !" });
   }
 };

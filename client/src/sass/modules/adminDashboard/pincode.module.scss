@@ -10,4 +10,56 @@
     text-align: center;
 }
 
+.wrapper{
+    position: relative;
+    width: 100%;
+    min-height: 75vh;
+}
 
+.addBtn{
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    background-color: $primaryColor !important;
+    color: #fff;
+
+    &:hover,&:active{
+        color: #fff;
+    }
+}
+
+.popup{
+    width: 80vw;
+    height: 80vh;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 3rem;
+    
+    &>form{
+        width: 100%;
+        @include totalCenter();
+        flex-direction: column;
+    }
+}
+
+.formItem{
+    width: 100%;
+    max-width: 500px;
+    margin-top: 5rem;
+    &>span{
+        font-weight: 700;
+        display: block;
+    }
+    &>input{
+        margin-top: 1rem;
+        width: 100%;
+    }
+}
+
+.formAction{
+    @include totalCenter();
+    justify-content: space-evenly;
+    width: 100%;
+    max-width: 500px;
+    margin: 3rem 0;
+}

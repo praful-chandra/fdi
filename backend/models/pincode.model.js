@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const PinCodeSchema = new mongoose.Schema({
 
-    pincodes : [{type : Number}],
+    pincodes : [{type : String}],
     estTime : {
         type : Number,
         required : true
