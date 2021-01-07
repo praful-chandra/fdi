@@ -5,11 +5,7 @@ import axios from "axios";
 export const addCart = (productId,addOns,count,exchangeProduct,user)=> async dispatch =>{
 
     try{
-        exchangeProduct = exchangeProduct ? {
-            name : exchangeProduct.name,
-            exchangePrice : exchangeProduct.exchangePrice,
-            exchangeItem : exchangeProduct._id
-        } : {}
+        exchangeProduct = exchangeProduct ? exchangeProduct : {}
 
         if(user.user && user.token){
             const res = await axios.post("/user/addCart",{productId,addOns,quantity :count,exchange : exchangeProduct});

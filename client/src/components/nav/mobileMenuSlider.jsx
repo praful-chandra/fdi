@@ -27,6 +27,7 @@ function mobileMenuSlider({ logOut,status, setClose }) {
 
   const handleSearch = (val) => {
     history.push(`/shop?search=${val}`)
+    setClose();
   };
 
   return (

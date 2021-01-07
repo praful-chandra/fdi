@@ -47,6 +47,7 @@ function renderItemComponent({ itm, order }) {
             Return
           </Button>
         )}
+        <div className={styles.orderItemSingleReturn}>
         {isRet && (
           <>
             <Tag
@@ -69,6 +70,7 @@ function renderItemComponent({ itm, order }) {
             </p>}
           </>
         )}
+        </div>
       </div>
       <div className={`${styles.orderItemSingleBody} col-md-10`}>
         <span className={styles.orderItemSingleName}>{itm.product.name}</span>
@@ -101,7 +103,7 @@ function renderItemComponent({ itm, order }) {
             <ul>
               <li>
                 {" "}
-                {itm.exchange.name} :{" "}
+                {itm.exchange.name} ( {itm.exchange.subType} )  :{" "}
                 <span>{priceFormatter(itm.exchange.exchangePrice)}</span>{" "}
               </li>
             </ul>

@@ -31,7 +31,8 @@
 
 .popup{
     width: 80vw;
-    min-height: 80vh;
+    height: 80vh;
+    overflow-y: scroll;
     background-color: #fff;
     border-radius: 10px;
     padding: 3rem;
@@ -55,6 +56,17 @@
         margin-top: 1rem;
         width: 100%;
     }
+}
+
+.formSubItem{
+    margin-left: 5rem;
+    margin-top : 2rem;
+
+}
+.formSubSubType{
+    margin-left: 10rem;
+    margin-top : 2rem;
+    margin-bottom : 2rem;
 }
 
 .formAction{

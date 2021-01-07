@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, connect } from "react-redux";
 import { Link } from "react-router-dom";
 import styles from "../sass/modules/cart.module.scss";
-import { Table, Space, Button, Spin, Input } from "antd";
+import { Table, Space, Button, Spin, Input, Radio } from "antd";
 import PriceFormatter from "../functions/priceFormatter";
 import { deleteCart } from "../redux/actions/cartActions";
 import priceFormatter from "../functions/priceFormatter";
@@ -17,6 +17,7 @@ function cartPage({ deleteCart, review, next }) {
   const { cart, user } = useSelector((state) => state);
   const [deals, setDeals] = useState(false);
   const [coupon, setCoupon] = useState(false);
+  const [paymentMode, setPaymentMode] = useState(null);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const { addToast } = useToasts();
 
@@ -46,7 +47,7 @@ function cartPage({ deleteCart, review, next }) {
 
   const calculateExchanges = () => {
     let sum = 0;
-    cart.items.map((itm,i) => {
+    cart.items.map((itm, i) => {
       if (itm.exchange !== undefined) {
         // console.log("INDEX =>> ",i);
         sum += itm.exchange.exchangePrice;
@@ -108,6 +109,7 @@ function cartPage({ deleteCart, review, next }) {
       items: cart.items,
       coupon,
       totalAmount: cart.totalPrice - deals - calculateCoupon(),
+      paymentStatus : paymentMode
     };
     next(finalCart);
   };
@@ -188,7 +190,6 @@ function cartPage({ deleteCart, review, next }) {
       ),
     });
   }
-  console.log(cart.items);
   return (
     <div className={`center ${styles.wrapper}`}>
       {!review && (
@@ -334,9 +335,24 @@ function cartPage({ deleteCart, review, next }) {
                 enterButton="Apply Coupon"
               />
 
-              <button className={styles.checkout} onClick={handleReviewNext}>
-                Pay Now
-              </button>
+              <br />
+              <br />
+
+              <Radio.Group onChange={(e) => {setPaymentMode(e.target.value)}} value={paymentMode}>
+                <Radio value={"COD"}>Cash on Delivery</Radio>
+                <Radio value={"Online"}>Online Payment</Radio>
+              </Radio.Group>
+
+              <br />
+              <br />
+
+              <Button
+                disabled={!paymentMode}
+                className={styles.checkout}
+                onClick={handleReviewNext}
+              >
+                Place your Order
+              </Button>
             </>
           ) : (
             <>
@@ -347,7 +363,7 @@ function cartPage({ deleteCart, review, next }) {
                     : { pathname: "/login", state: { from: "/cart" } }
                 }
               >
-                <button className={styles.checkout}>Checkout</button>
+                <Button className={styles.checkout} disabled={cart.items.length <= 0} >Checkout</Button>
               </Link>
             </>
           )}

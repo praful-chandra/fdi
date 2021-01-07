@@ -44,7 +44,7 @@ const OrderSchema = new mongoose.Schema({
       },
       paymentStatus :{
           type : String,
-          enum : ["UnPaid","cancelled","failed","paid"],
+          enum : ["UnPaid","cancelled","failed","paid","COD"],
           default : "UnPaid"
       },
       paymentGatewayInformation:{},

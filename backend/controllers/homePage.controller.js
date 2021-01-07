@@ -8,8 +8,8 @@ const resizeImage = (image, width, height) =>
   new Promise(async (resolve) => {
     const result = await sharp(image.buffer)
       .resize(width, height, {
-        fit: "contain",
-        background: { r: 000, g: 000, b: 000 ,alpha : 0},
+        fit :"fill",
+        background: { r: 255, g: 255, b: 255 ,alpha : 1},
       })
       .toFormat("png")
       .toBuffer();
@@ -27,8 +27,8 @@ exports.addBanner = async (req, res) => {
 
     const backgroundImage = await resizeImage(
       req.files.backgroundImage[0],
-      1920,
-      1080
+      1960,
+      600
     );
     let foregroundImage = null;
     if(req.files.foregrouneImage){
@@ -44,6 +44,7 @@ exports.addBanner = async (req, res) => {
       foregroundImage,
       title: newBody.title,
       description: newBody.description,
+      link : newBody.link
     }).save();
 
     res.json(newHomePageBanner);

@@ -33,7 +33,7 @@ module.exports = (order) => {
                ${
                  item.exchange
                    ? `<u>Exchange</u> <br/>
-                        type : ${item.exchange.name} <br/>
+                        type : ${item.exchange.name} ( ${item.exchange.subType} ) <br/>
                         offerPrice : ${currencyFormatter.format(
                           item.exchange.exchangePrice,
                           { code: "INR" }

@@ -105,3 +105,50 @@
       }
     }
   }
+
+  @media only screen and (max-width : 800px){
+    .order{
+      &Item{
+        &Head{
+          flex-wrap: wrap;
+          align-items: center;
+          justify-content: center;
+          &>div{
+            margin: 2rem;
+          }
+        }
+
+        &Single{
+          &Return{
+            &>span{
+              font-size: 4rem !important;
+              padding: 1rem
+            }
+            &>p{
+              font-size: 3rem !important;
+            }
+          }
+          &Body{
+            @include totalCenter();
+            flex-direction: column;
+            text-align: center;
+            &>*{
+              margin: 1rem 0;
+            }
+          }
+          &Name{
+            font-size: 3rem;
+            font-weight: 600;
+          }
+          &Price{
+            font-size: 4rem;
+          }
+          &Addons{
+            &>h4{
+              font-size: 3rem;
+            }
+          }
+        }
+      }
+    }
+  }

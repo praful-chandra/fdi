@@ -80,6 +80,20 @@ exports.addOrder = async (req, res) => {
       newOrder.total -= finalSum <= cpn.upto ? finalSum : cpn.upto;
     }
 
+    if (cart.paymentStatus === "COD") {
+      user.cart = [];
+      await user.save();
+      newOrder.paymentStatus = cart.paymentStatus;
+      newOrder.status = "Processing";
+
+      for (let i = 0; i < newOrder.cart.length; i++) {
+        let pvcId = newOrder.cart[i].product.productId;
+        await ProductVarianceColor.findByIdAndUpdate(pvcId, {
+          $inc: { quantity: -newOrder.cart[i].quantity },
+        });
+      }
+    }
+
     await newOrder.save();
 
     res.json({ order: newOrder });
@@ -93,7 +107,7 @@ exports.getOrder = async (req, res) => {
   const { orderId } = req.params;
   try {
     const order = await Order.findOne({ orderId });
-    res.json({ paymentStatus: order.paymentStatus,orderId : order.orderId });
+    res.json({ paymentStatus: order.paymentStatus, orderId: order.orderId });
   } catch (err) {
     res.status(500).json({ error: "Inrternal server error" });
   }
@@ -119,13 +133,13 @@ exports.getAllOrders = async (req, res) => {
 
     let searchQuery = {};
     if (status && status !== "all") {
-      searchQuery = { ...searchQuery ,status };
+      searchQuery = { ...searchQuery, status };
     }
 
     search = search.trim();
 
-    if(search && search !== ""){
-      searchQuery = {...searchQuery ,orderId : search}
+    if (search && search !== "") {
+      searchQuery = { ...searchQuery, orderId: search };
     }
 
     const orders = await Order.find(searchQuery)
@@ -185,4 +199,3 @@ exports.genPdf = async (req, res) => {
     res.status(500).json({ error: "Inrternal server error" });
   }
 };
-

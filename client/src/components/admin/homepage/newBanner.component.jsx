@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button } from "antd";
+import { Button ,Input} from "antd";
 import { UploadOutlined } from '@ant-design/icons';
 import styles from "../../../sass/modules/adminDashboard/homepage.module.scss";
 import uploadBannerPlaceholder from "../../../assets/uploadBanner.png";
@@ -16,6 +16,7 @@ function newBannerComponent({close}) {
     foregroundImage: "",
     title: "",
     description: "",
+    link : ""
   });
 
   const handleText = (e) => {
@@ -51,6 +52,7 @@ function newBannerComponent({close}) {
     formData.append("foregroundImage",data.foregroundImage);
     formData.append("title",data.title);
     formData.append("description",data.description);
+    formData.append("link",data.link);
 
     addBanner(formData).then(res=>{
       if(res && !res.error){
@@ -103,6 +105,10 @@ function newBannerComponent({close}) {
           <UploadOutlined />Upload Background Image
         <input type="file" onChange={handleBackgroundImage} hidden id="BackgroundImage" />
       </label>
+
+    <span>Enter the Link : </span>
+    <Input value={data.link} onChange={(e)=>setData(od=>({...od , link : e.target.value }))} />
+
       <div className={styles.newBannerFooter}>
         <Button type="primary" onClick={handleSave}  >Save</Button>
 

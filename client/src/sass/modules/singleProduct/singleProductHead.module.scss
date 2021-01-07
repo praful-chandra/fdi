@@ -434,7 +434,14 @@
   }
 }
 
+.shareLinks{
+  font-size: 2.5rem;
+}
+
 @media only screen and (max-width: 650px) {
+  .shareLinks{
+    font-size: 6rem;
+  }
   .head {
     flex-direction: column;
     padding: 0 2rem;

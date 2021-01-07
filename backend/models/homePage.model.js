@@ -5,6 +5,7 @@ const HomePageBannerSchema = new mongoose.Schema({
   foregroundImage: Buffer,
   title: String,
   description: String,
+  link : String
 });
 
 const HomePageDealSchema = new mongoose.Schema({

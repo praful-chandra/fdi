@@ -53,7 +53,7 @@ const UserSchema = new mongoose.Schema(
         city : String,
         state : String,
         pin : {
-          type : Number,
+          type : String,
           required : true
         }
       }

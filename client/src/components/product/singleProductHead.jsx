@@ -8,7 +8,8 @@ import {
   faHeart,
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as emptyHeart } from "@fortawesome/free-regular-svg-icons";
-import {  notification, Space } from 'antd';
+import {faFacebook,faTwitter,faWhatsapp,faTelegram} from "@fortawesome/free-brands-svg-icons";
+import {  notification, Popover } from 'antd';
 
 
 import DealOfTheWeekBanner from "../../assets/deal_of_the_week.svg";
@@ -92,6 +93,7 @@ import {toggleWishlist} from "../../redux/actions/wishListActions";
   };
 
   const handleAddCart = async (addOns,count,exchangeProduct) =>{
+    
    let data = await addCart(product.selectedProduct._id,addOns,count,exchangeProduct,user)
       if(data.success){
           openNotificationWithIcon()
@@ -144,7 +146,19 @@ import {toggleWishlist} from "../../redux/actions/wishListActions";
             <span> { avgR.avg > 0 ? avgR.avg : "NA" } </span> <FontAwesomeIcon icon={faStar} />{" "}
           </div>
           <div className={styles.productContentSocialShare}>
-            <FontAwesomeIcon icon={faShare} /> Share{" "}
+            <Popover 
+              content={<div className={`row ${styles.shareLinks}`}>
+                <a href={`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`} target="_blank" >
+                <div className="col-sm" style={{color : "#4267B2"}} > <FontAwesomeIcon icon={faFacebook} /> </div>
+                </a>
+                <a href={`https://api.whatsapp.com/send?text=${product.product.name} ${window.location.href}`} target='_blank'>
+                <div className="col-sm" style={{color : "#25D366"}}> <FontAwesomeIcon icon={faWhatsapp} /> </div>
+                </a>
+                <a href={`https://twitter.com/share?url=${window.location.href}&text=${product.product.name}`} target="_blank">
+                <div className="col-sm" style={{color : "	#1DA1F2"}}> <FontAwesomeIcon icon={faTwitter} /> </div>
+                </a>
+              </div>}
+            ><FontAwesomeIcon icon={faShare} /> Share{" "}</Popover>
           </div>
           <div className={styles.productContentSocialWishlist}
             onClick={()=>toggleWishlist(product.selectedProduct._id)}

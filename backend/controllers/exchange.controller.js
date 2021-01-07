@@ -1,50 +1,71 @@
 const Exchange = require("../models/exchange.model");
 
+exports.addExchange = async (req, res) => {
+  try {
+    const { subCategory, type } = req.body;
 
-exports.addExchange = async(req,res) =>{
+    let maxPrice = 0;
 
-    try{
-        const {categoryName, subCategory , type} = req.body;
+    type.map((t) => {
+      t.subType.map((st) => {
+        if (parseInt(st.exchangePrice) > maxPrice) {
+          maxPrice = parseInt(st.exchangePrice);
+        }
+      });
+    });
 
-        let maxPrice = 0;
+    const newExchange = await new Exchange({
+      subCategory,
+      type,
+      maxPrice,
+    }).save();
 
-        type.map(t=>{
-            if(parseInt(t.exchangePrice) > maxPrice){
-                maxPrice = parseInt(t.exchangePrice)
-            }
-        })
+    res.json(newExchange);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "An error has occured !" });
+  }
+};
 
-        const newExchange = await new Exchange({categoryName,subCategory,type,maxPrice}).save();
+exports.deleteExchange = async (req, res) => {
+  try {
+    const { id } = req.params;
 
-        res.json(newExchange);
+    const deletedExchange = await Exchange.findByIdAndDelete(id);
 
-    }catch(err){
-        res.status(500).json({error : "An error has occured !"})
-    }
+    res.json(deletedExchange);
+  } catch (err) {
+    res.status(500).json({ error: "An error has occured !" });
+  }
+};
 
-}
+exports.listExchange = async (req, res) => {
+  try {
+    const { subCategory } = req.params;
 
-exports.deleteExchange = async(req,res) =>{
-    try{
-        const {id} = req.params;
+    const exchange = await Exchange.findOne({ subCategory });
+    res.json(exchange);
+  } catch (err) {
+    res.status(500).json({ error: "An error has occured !" });
+  }
+};
 
-        const deletedExchange = await Exchange.findByIdAndDelete(id);
+exports.listAllExchange = async (req, res) => {
+  try {
+    const list = await Exchange.find().populate("subCategory");
+    res.json(list);
+  } catch (err) {
+    res.status(500).json({ error: "An error has occured !" });
+  }
+};
 
-        res.json(deletedExchange);
-    }catch(err){
-        res.status(500).json({error : "An error has occured !"})
+exports.updateExchange = async (req, res) => {
+  try {
+    const { subCategory, type } = req.body;
 
-    }
-}
-
-exports.listExchange = async(req,res) =>{
-    try{
-        const {subCategory} = req.params;
-
-        const exchange = await Exchange.findOne({subCategory});
-        res.json(exchange);
-    }catch(err){
-        res.status(500).json({error : "An error has occured !"})
-
-    }
-}
+    await Exchange.findOneAndUpdate({ subCategory }, { $set: { type } });
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: "An error has occured !" });
+  }
+};

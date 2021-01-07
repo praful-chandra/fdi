@@ -3,11 +3,11 @@
 
 .bannerMain {
   width: 100%;
-  height: 46rem;
+  height: 60rem;
   background-position: center;
   background-repeat: no-repeat;
-  // background-size: 120vw 100%;
-  
+  background-size: contain;
+  background-color: #fff;
 }
 
 .content{
@@ -47,8 +47,9 @@
 
 @media only screen and (max-width: 650px) {
   .bannerMain{
-    height: max-content;
+    // height: max-content;
     padding: 3rem 0;
+    height: 30rem;
   }
   .content{
     flex-direction: column;

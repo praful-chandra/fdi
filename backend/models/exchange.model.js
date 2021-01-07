@@ -1,15 +1,19 @@
 const mongoose = require("mongoose");
 
 const ExchangeSchema = new mongoose.Schema({
-    categoryName : String,
     subCategory :{
         type : mongoose.Schema.Types.ObjectId,
-        ref : "subCategory"
+        ref : "subCategory",
+        unique : true,
+        index : true
     },
     type :[
         {
             name  :String,
-            exchangePrice : Number
+            subType : [{
+                name : String,
+                exchangePrice : Number
+            }]
         }
     ],
     maxPrice : Number
