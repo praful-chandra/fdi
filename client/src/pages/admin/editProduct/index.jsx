@@ -76,7 +76,7 @@ function Index(props) {
     updateProduct(product.slug, formData)
       .then((response) => {
         alert("successfully Updated");
-        props.history.push(`/admin/dashboard?id=5`);
+        props.history.push(`/admin/dashboard?id=7`);
       })
       .catch((err) => {
         addToast("Some error occured !", {

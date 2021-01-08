@@ -13,13 +13,23 @@ import { useToasts } from "react-toast-notifications";
 import { isMobile } from "react-device-detect";
 
 const { Search } = Input;
-function cartPage({ deleteCart, review, next }) {
-  const { cart, user } = useSelector((state) => state);
+function cartPage({ deleteCart, review, next ,buyNow }) {
+  const [cart,setCart] = useState({items : [ ] , totalAmount : 0})
+  let { cart : storageCart, user } = useSelector((state) => state);
   const [deals, setDeals] = useState(false);
   const [coupon, setCoupon] = useState(false);
   const [paymentMode, setPaymentMode] = useState(null);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const { addToast } = useToasts();
+
+  useEffect(() => {
+    if(buyNow){
+      setCart(buyNow);
+    }else{
+      setCart(storageCart);
+    }
+  }, [buyNow,storageCart])
+
 
   useEffect(() => {
     calculateDiscount().then((val) => setDeals(val));
@@ -145,7 +155,7 @@ function cartPage({ deleteCart, review, next }) {
             </p>
           )}
 
-          {record.exchange && record.exchange !== undefined && (
+          {record.exchange && Object.keys(record.exchange).length > 0 && (
             <p>
               <span>Exchange :</span>
               <ul>
@@ -209,7 +219,9 @@ function cartPage({ deleteCart, review, next }) {
             />
           ) : (
             <div className={styles.mobileItems}>
-              {cart.items.map((itm) => (
+              {cart.items.map((itm) => {
+
+               return (
                 <div className={styles.mobileItemsItem}>
                   <div>
                     <img
@@ -218,7 +230,9 @@ function cartPage({ deleteCart, review, next }) {
                     />
                     <div>
                       <p>
+                        <Link to={`/product/${itm.slug}`}>
                         {itm.name}
+                        </Link>
                         {itm.addOns.length > 0 && (
                           <p>
                             <span>Addons : </span>
@@ -233,13 +247,13 @@ function cartPage({ deleteCart, review, next }) {
                           </p>
                         )}
 
-                        {itm.exchange && (
+                        {itm.exchange && Object.keys(itm.exchange).length > 0  && (
                           <p>
                             <span>Exchange :</span>
                             <ul>
                               <li>
-                                {itm.exchange.name} : -
-                                {priceFormatter(itm.exchange.exchangePrice)}
+                                {itm.exchange.name} ({itm.exchange.subType}) : 
+                                <span>{priceFormatter(itm.exchange.exchangePrice)}</span>
                               </li>
                             </ul>
                           </p>
@@ -251,12 +265,12 @@ function cartPage({ deleteCart, review, next }) {
                     </div>
                   </div>
                   {!review && (
-                    <Button danger block type="primary">
-                      Delete
-                    </Button>
+                    <Button danger block type="ghost" onClick={() => handleDelete(itm)} icon={<DeleteFilled />} />
+                      
                   )}
                 </div>
-              ))}
+              )
+              })}
             </div>
           )}
         </div>
@@ -339,7 +353,7 @@ function cartPage({ deleteCart, review, next }) {
               <br />
 
               <Radio.Group onChange={(e) => {setPaymentMode(e.target.value)}} value={paymentMode}>
-                <Radio value={"COD"}>Cash on Delivery</Radio>
+                <Radio value={"COD"}>Pay on Delivery</Radio>
                 <Radio value={"Online"}>Online Payment</Radio>
               </Radio.Group>
 

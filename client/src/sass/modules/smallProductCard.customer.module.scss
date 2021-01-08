@@ -97,9 +97,22 @@
   
   @media only screen and (max-width: 650px) {
     .card{
+      width: 60rem;
+      // box-shadow: 0 0 15px rgb(211, 211, 211);
       &Contents{
+        &>h3{
+          font-size: 3.5rem;
+        }
         &Bottom{
           margin-top: 2rem;
+          &>div:first-child {
+            font-size: 4rem;
+            font-weight: 700;
+          }
+        }
+
+        &Images{
+          height: 50rem;
         }
 
       }

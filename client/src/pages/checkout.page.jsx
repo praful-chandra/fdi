@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Steps, Button, message } from "antd";
+import {Steps} from "antd";
 const { Step } = Steps;
 import {isMobile} from "react-device-detect";
 import styles from "../sass/modules/checkout.module.scss";
@@ -9,7 +9,7 @@ import CartPage from "../pages/cart.page";
 import PaymentComponent from "../components/checkout/payment.component";
 
 
-function checkoutPage() {
+function checkoutPage(props) {
   const [current, setCurrent] = useState(0);
 
   const [address,setAddress] = useState(false);
@@ -20,10 +20,7 @@ function checkoutPage() {
     setCurrent(current + 1);
   };
 
-  const prev = () => {
-    setCurrent(current - 1);
-  };
-
+  const buyNow = props.location.state ? props.location.state.buyNow : null;
 
   const steps = [
     {
@@ -32,7 +29,7 @@ function checkoutPage() {
     },
     {
       title: "Review",
-      content: <CartPage review={true} next={(cartFull) => {setCart(cartFull);next()}} />,
+      content: <CartPage review={true} buyNow={buyNow} next={(cartFull) => {setCart(cartFull);next()}} />,
     },
     {
       title: "Payment",

@@ -389,9 +389,9 @@ exports.getRelated = async (req,res)=>{
     const {slug} = req.params;
 
     const product = await Product.findOne({slug});
-    const tagProducts = await Product.find({tags : {$in : product.tags}});
-    const subProducts = await Product.find({subCategory : product.subCategory , _id : {$nin : tagProducts.map(t => t._id)}});
-    const catProducts = await Product.find({category : product.category , _id : {$nin : [...tagProducts.map(t => t._id), ...subProducts.map(s=>s._id)]} } );
+    const tagProducts = await Product.find({tags : {$in : product.tags}, slug : {$ne : slug}});
+    const subProducts = await Product.find({subCategory : product.subCategory , _id : {$nin : tagProducts.map(t => t._id)}, slug : {$ne : slug}});
+    const catProducts = await Product.find({category : product.category , _id : {$nin : [...tagProducts.map(t => t._id), ...subProducts.map(s=>s._id)]}, slug : {$ne : slug} } );
     
 
     res.json([...tagProducts,...subProducts,...catProducts].slice(0,8));

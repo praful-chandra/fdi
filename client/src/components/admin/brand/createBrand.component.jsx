@@ -1,34 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import styles from "../../../sass/modules/adminDashboard/category.module.scss";
 import formStyles from "../../../sass/modules/auth/register.module.scss";
 import { Button } from "antd";
 import { useToasts } from "react-toast-notifications";
 
-import { addBrand } from "../../../redux/actions/BrandActions"; 
+import { addBrand } from "../../../redux/actions/BrandActions";
 
-function CreateBrandComponent({ addBrand, brand }) {
+function CreateBrandComponent({ addBrand, brand,close }) {
   const [name, setName] = useState("");
-  const [image,setImage] = useState({image : null , preview : null})
+  const [image, setImage] = useState({ image: null, preview: null });
   const { addToast } = useToasts();
 
-  const handleLogo = e =>{
-      const image = e.target.files[0];
+  const handleLogo = (e) => {
+    const image = e.target.files[0];
 
-      if(image)
+    if (image)
       setImage({
-          image ,
-          preview : URL.createObjectURL(image)
-      })
-  }
+        image,
+        preview: URL.createObjectURL(image),
+      });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const formData = new FormData();
 
-    formData.append('name',name);
-    formData.append('logo', image.image);
+    formData.append("name", name);
+    formData.append("logo", image.image);
 
     addBrand(formData)
       .then((result) => {
@@ -39,12 +39,13 @@ function CreateBrandComponent({ addBrand, brand }) {
             appearance: "success",
             autoDismiss: true,
           });
+          close();
         }
       })
       .catch((err) => {});
 
-      setName('');
-      setImage({image : null, preview : null});
+    setName("");
+    setImage({ image: null, preview: null });
   };
 
   return (
@@ -63,9 +64,26 @@ function CreateBrandComponent({ addBrand, brand }) {
             onChange={(e) => setName(e.target.value)}
           />
 
-          <label htmlFor="logo-in" style={{border : `1px solid`, minHeight  : `5rem`}}>
-                <img src={image.preview} className={`${styles.image} ${styles.toUpload}`}/>
-              <input type="file" name="logo" id="logo-in" hidden onChange={handleLogo}/>
+          <label
+            htmlFor="logo-in"
+            style={{
+              border: `1px solid`,
+              minHeight: `5rem`,
+              minWidth: "10rem",
+            }}
+          >
+          <span>Upload Image here :</span>
+            <img
+              src={image.preview}
+              className={`${styles.image} ${styles.toUpload}`}
+            />
+            <input
+              type="file"
+              name="logo"
+              id="logo-in"
+              hidden
+              onChange={handleLogo}
+            />
           </label>
 
           <Button
@@ -87,6 +105,4 @@ const mapStateToProps = (state) => ({
   brand: state.brand,
 });
 
-export default connect(mapStateToProps, { addBrand })(
-  CreateBrandComponent
-);
+export default connect(mapStateToProps, { addBrand })(CreateBrandComponent);

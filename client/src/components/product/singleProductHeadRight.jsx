@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Checkbox, Select, Radio, Input,Popover } from "antd";
+import { Checkbox, Select, Radio, Input, Card } from "antd";
 const { Option } = Select;
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -10,29 +10,32 @@ import {
 import priceFormatter from "../../functions/priceFormatter";
 import { lookupPin } from "../../functions/pincode.function";
 import styles from "../../sass/modules/singleProduct/singleProductHead.module.scss";
+import PopUpComponent from "../showPopup.component";
 
-function singleProductHeadRight({ product, addCart, exchange }) {
+function singleProductHeadRight({ product, addCart, exchange,buyNow }) {
   const [addOns, setAddOns] = useState([]);
   const [count, setCount] = useState(1);
   const [selected, setSelected] = useState(1);
   const [exchangeProduct, setExchangeProduct] = useState(null);
   const [exchangeProductSub, setExchangeProductSub] = useState(false);
-
+  const [popup, setPopup] = useState(false);
   const [pincode, setPincode] = useState({
     est: false,
     loading: false,
   });
 
   const handlePinCheck = (pin) => {
-    console.log(pin);
-    setPincode((op) => ({ ...op, loading: true }));
-    lookupPin(pin).then((res) => {
-      if (res && !res.error) {
-        setPincode({ est: res, loading: false });
-      } else {
-        setPincode({ est: -1, loading: false });
-      }
-    });
+    if(pin){
+      setPincode((op) => ({ ...op, loading: true }));
+      lookupPin(pin).then((res) => {
+        if (res && !res.error) {
+          setPincode({ est: res, loading: false });
+        } else {
+          setPincode({ est: -1, loading: false });
+        }
+      });
+    }
+   
   };
 
   const handleAddOn = (e) => {
@@ -48,20 +51,36 @@ function singleProductHeadRight({ product, addCart, exchange }) {
   };
 
   const handleCartAdd = () => {
-    let exchangeObj = null
-    
-    if(exchangeProduct && exchangeProductSub){
+    let exchangeObj = {};
+
+    if (exchangeProduct && exchangeProductSub) {
       exchangeObj = {
-        name : exchangeProduct.name,
-        exchangeId : exchangeProduct._id,
-        type : exchangeProduct.type,
-        subTypeId : exchangeProductSub._id,
-        subType : exchangeProductSub.name,
-        exchangePrice : exchangeProductSub.exchangePrice
-      }
+        name: exchangeProduct.name,
+        exchangeId: exchangeProduct._id,
+        type: exchangeProduct.type,
+        subTypeId: exchangeProductSub._id,
+        subType: exchangeProductSub.name,
+        exchangePrice: exchangeProductSub.exchangePrice,
+      };
     }
     addCart(addOns, count, exchangeObj);
   };
+
+  const handleBuyNow = ()=>{
+    let exchangeObj = {};
+
+    if (exchangeProduct && exchangeProductSub) {
+      exchangeObj = {
+        name: exchangeProduct.name,
+        exchangeId: exchangeProduct._id,
+        type: exchangeProduct.type,
+        subTypeId: exchangeProductSub._id,
+        subType: exchangeProductSub.name,
+        exchangePrice: exchangeProductSub.exchangePrice,
+      };
+    }
+    buyNow(addOns, count, exchangeObj);
+  }
 
   const renderQtyItems = () => {
     let data = [];
@@ -90,38 +109,20 @@ function singleProductHeadRight({ product, addCart, exchange }) {
                   checked={addOns.find((ad) => ad._id === add._id)}
                 />
                 <div>
+                  <div>{add.title}</div>
                   <div>
-                    {add.title}
-                    
+                    {add.price > 0 && priceFormatter(add.price)}{" "}
+                    {add.details && (
+                      <span onClick={() => setPopup(add)}>Details</span>
+                    )}{" "}
                   </div>
-                  <div> 
-                  {
-                    add.price > 0 &&(priceFormatter(add.price))
-                  }
-                  {" "}
-                    {
-                      add.details && (
-                        <Popover content={ <div> 
-                          <p>
-                            {add.details}
-                          </p>
-                        </div> }>
-                        <span>Details</span>
-                        </Popover>
-                      )
-                    } </div>
                 </div>
               </div>
             );
           })}
         </div>
       )}
-      <div className={styles.buyProductQuantity}>
-        <span>Quantity : </span>{" "}
-        <Select value={count} onChange={(val) => setCount(val)}>
-          {renderQtyItems()}
-        </Select>
-      </div>
+     
       <div className={styles.buyProductPin}>
         <span>Delivery : </span>{" "}
         <Input.Search
@@ -145,6 +146,12 @@ function singleProductHeadRight({ product, addCart, exchange }) {
       <div className={styles.buyProductAction}>
         {product.selectedProduct.quantity > 0 ? (
           <div>
+          <div className={styles.buyProductQuantity}>
+        <span>Quantity : </span>{" "}
+        <Select value={count} onChange={(val) => setCount(val)}>
+          {renderQtyItems()}
+        </Select>
+      </div>
             <button
               onClick={handleCartAdd}
               className={`${styles.buyProductButton} ${styles.buyProductButtonCart}`}
@@ -152,12 +159,13 @@ function singleProductHeadRight({ product, addCart, exchange }) {
               <FontAwesomeIcon icon={faCartPlus} />
               <span>Add to Cart</span>
             </button>
-            {/* <button
+            <button
               className={`${styles.buyProductButton} ${styles.buyProductButtonBag}`}
+              onClick={handleBuyNow}
             >
               <FontAwesomeIcon icon={faShoppingBag} />
               <span>Buy Now</span>
-            </button> */}
+            </button>
           </div>
         ) : (
           <button
@@ -232,24 +240,25 @@ function singleProductHeadRight({ product, addCart, exchange }) {
             }
             style={{ width: "100%" }}
           >
-          
             {exchange.type.map((t) => (
               <Option value={t._id} key={t._id}>
                 {t.name}
               </Option>
             ))}
           </Select>
-          <div style={{height : "2rem"}} ></div>
+          <div style={{ height: "2rem" }}></div>
           {exchangeProduct && (
-            <Select 
-            style={{ width: "100%" }}
-            value={setExchangeProductSub && exchangeProductSub._id}
-            onChange={(val)=>{
-              setExchangeProductSub(()=>{
-               let type =  exchange.type.find(e => e._id === exchangeProduct._id);
-               return type.subType.find(e=>e._id === val)
-              })
-            }}
+            <Select
+              style={{ width: "100%" }}
+              value={setExchangeProductSub && exchangeProductSub._id}
+              onChange={(val) => {
+                setExchangeProductSub(() => {
+                  let type = exchange.type.find(
+                    (e) => e._id === exchangeProduct._id
+                  );
+                  return type.subType.find((e) => e._id === val);
+                });
+              }}
             >
               {exchangeProduct.subType.map((st) => [
                 <Option value={st._id} key={st._id}>
@@ -260,7 +269,7 @@ function singleProductHeadRight({ product, addCart, exchange }) {
           )}
 
           <h3 style={{ marginTop: "1rem", color: "green" }}>
-            {exchangeProduct && exchangeProductSub &&(
+            {exchangeProduct && exchangeProductSub && (
               <span>
                 {" "}
                 Save upto {priceFormatter(exchangeProductSub.exchangePrice)}
@@ -276,6 +285,22 @@ function singleProductHeadRight({ product, addCart, exchange }) {
 
   return (
     <div className={styles.buyProduct}>
+      {popup && (
+        <PopUpComponent
+          child={
+            <div>
+              <Card
+                title={popup.title}
+                style={{ width: "80vw", height: "80vh" }}
+                extra={<span style={{cursor : "pointer" , fontSize : "3rem" , fontWeight : "800"}} onClick={() => setPopup(false)}>X</span>}
+              >
+                <p>{popup.details}</p>
+              </Card>
+            </div>
+          }
+          close={() => setPopup(false)}
+        />
+      )}
       <Radio.Group
         value={selected}
         onChange={(e) => setSelected(e.target.value)}

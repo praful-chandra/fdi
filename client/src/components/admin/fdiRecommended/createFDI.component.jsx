@@ -78,7 +78,7 @@ function CreateFDIComponent({ reset }) {
   const selectColor = () => {
     return (
       <div className={styles.selectColor}>
-        <div className={styles.selectColorHead}>Washing machine</div>
+        <div className={styles.selectColorHead}>FI RECOMMENDED</div>
         <div className={styles.selectColorBody}>
           {selectedProduct.images[0] && (
             <img

@@ -54,11 +54,11 @@ exports.addOrder = async (req, res) => {
         totalSum += ad.price * i.quantity;
       });
 
-      if (i.exchange !== undefined) {
+      if (i.exchange !== undefined && Object.keys(i.exchange).length > 0) {
         totalSum -= i.exchange.exchangePrice;
       }
     });
-
+    
     const newOrder = new Order({
       orderId: uniqid(),
       customer: user._id,

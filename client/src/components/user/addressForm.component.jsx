@@ -40,6 +40,18 @@ function addressFormComponent({ close, selected }) {
 
   const handleAddessSave = async (e) => {
     e.preventDefault();
+    
+    let flag = true;
+    Object.keys(address).map(a=>{
+     if(a !== "gst" && address[a] === ""){
+       flag = false;
+     }
+    })
+    if(!flag){
+      alert("Fillup all the required fields");
+      return;
+    }
+
 
     const lookedPin = await lookupPin(address.pin);
 
@@ -73,45 +85,50 @@ function addressFormComponent({ close, selected }) {
         </button>
         <div className="row">
           <div className={`col-md ${styles.inputGroup}`}>
-            <label htmlFor="firstName">First Name</label>
+            <label htmlFor="firstName">First Name <span style={{color : "red"}}>*</span> </label>
             <input
               type="text"
               name="firstName"
               id="firstName"
               value={address.firstName}
               onChange={handleAddressChange}
+              required
             />
           </div>
           <div className={`col-md ${styles.inputGroup}`}>
-            <label htmlFor="lastName">Last Name</label>
+            <label htmlFor="lastName">Last Name <span style={{color : "red"}}>*</span></label>
             <input
               type="text"
               name="lastName"
               id="lastName"
               value={address.lastName}
               onChange={handleAddressChange}
+              required
+
             />
           </div>
         </div>
 
         <div className="row">
           <div className={`col-md ${styles.inputGroup}`}>
-            <label htmlFor="emailAddress">Email</label>
+            <label htmlFor="emailAddress">Email <span style={{color : "red"}}>*</span></label>
             <input
               type="email"
               name="emailAddress"
               id="emailAddress"
               value={address.emailAddress}
+              required
               onChange={handleAddressChange}
             />
           </div>
           <div className={`col-md ${styles.inputGroup}`}>
-            <label htmlFor="phoneNumber">Phone Number</label>
+            <label htmlFor="phoneNumber">Phone Number <span style={{color : "red"}}>*</span></label>
             <input
               type="tel"
               name="phoneNumber"
               id="phoneNumber"
               value={address.phoneNumber}
+              required
               onChange={handleAddressChange}
             />
           </div>
@@ -119,17 +136,18 @@ function addressFormComponent({ close, selected }) {
 
         <div className="row">
           <div className={`col-md ${styles.inputGroup}`}>
-            <label htmlFor="country">Country</label>
+            <label htmlFor="country">Country <span style={{color : "red"}}>*</span></label>
             <input
               type="text"
               name="country"
               id="country"
               value={address.country}
+              required
               onChange={handleAddressChange}
             />
           </div>
           <div className={`col-md ${styles.inputGroup}`}>
-            <label htmlFor="gst">GST Number</label>
+            <label htmlFor="gst">GST Number </label>
             <input
               type="text"
               name="gst"
@@ -142,43 +160,47 @@ function addressFormComponent({ close, selected }) {
 
         <div className="row">
           <div className={`col-md ${styles.inputGroup}`}>
-            <label htmlFor="address">Address</label>
+            <label htmlFor="address">Address <span style={{color : "red"}}>*</span></label>
             <textarea
               rows="5"
               style={{ padding: "2rem" }}
               value={address.address}
               name="address"
+              required
               onChange={handleAddressChange}
             ></textarea>
           </div>
         </div>
         <div className="row">
           <div className={`col-md ${styles.inputGroup}`}>
-            <label htmlFor="city">city</label>
+            <label htmlFor="city">city <span style={{color : "red"}}>*</span></label>
             <input
               type="text"
               name="city"
               id="city"
               value={address.city}
+              required
               onChange={handleAddressChange}
             />
           </div>
           <div className={`col-md ${styles.inputGroup}`}>
-            <label htmlFor="state">state</label>
+            <label htmlFor="state">state <span style={{color : "red"}}>*</span></label>
             <input
               type="text"
               name="state"
               id="state"
+              required
               value={address.state}
               onChange={handleAddressChange}
             />
           </div>
 
           <div className={`col-md ${styles.inputGroup}`}>
-            <label htmlFor="pincode">PIN</label>
+            <label htmlFor="pincode">PIN <span style={{color : "red"}}>*</span></label>
             <input
               type="text"
               name="pin"
+              required
               id="pinCode"
               value={address.pin}
               onChange={handleAddressChange}
@@ -192,11 +214,11 @@ function addressFormComponent({ close, selected }) {
           </div>
         </div>
 
-        <Button type="primary" onClick={handleAddessSave}>
+        <button className="btn btn-primary btn-lg active" style={{marginRight : "4rem"}} onSubmit={handleAddessSave}>
           {" "}
           Save{" "}
-        </Button>
-
+        </button>
+  
         {selected && (
           <Button type="primary" danger onClick={handleDelete}>
             {" "}

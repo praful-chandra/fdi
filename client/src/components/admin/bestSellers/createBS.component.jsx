@@ -78,7 +78,7 @@ function CreateBSComponent({ reset }) {
   const selectColor = () => {
     return (
       <div className={styles.selectColor}>
-        <div className={styles.selectColorHead}>Washing machine</div>
+        <div className={styles.selectColorHead}>Best Sellers</div>
         <div className={styles.selectColorBody}>
           {selectedProduct.images[0] && (
             <img

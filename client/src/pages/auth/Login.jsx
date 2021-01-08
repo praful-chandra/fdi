@@ -212,10 +212,11 @@ const Login = function ({
             loading={user.userLoading}
             onClick={handleSubmit}
             disabled={!email || !password}
+            style={{marginBottom : "3rem"}}
           >
             Login
           </Button>
-          <br />
+
 
           <Button
             danger
@@ -223,16 +224,16 @@ const Login = function ({
             icon={<GoogleCircleFilled />}
             shape="round"
             onClick={handleGoogleLogin}
+            style={{marginBottom : "3rem"}}
           >
             Login with google
           </Button>
-          <br/>
           <Button
-            
             type="primary"
             icon={<PhoneFilled />}
             shape="round"
             onClick={()=>setPopup(true)}
+            style={{marginBottom : "3rem"}}
           >
             Login with phoneNumber
           </Button>

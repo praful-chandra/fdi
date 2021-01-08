@@ -39,7 +39,7 @@ export default function bestSeller({items, title, bestBadge , invert }) {
           infinite
           breakpoints={{
             590: {
-              slidesPerPage: 2,
+              slidesPerPage: 1.6,
               arrows: false,
             },
           }}

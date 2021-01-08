@@ -58,7 +58,7 @@ function Index({ brand, listBrands, removeBrand }) {
 
       {create && (
         <PopupComponent
-          child={<CreateBrandComponent />}
+          child={<CreateBrandComponent close={() => setCreate(false)} />}
           close={() => setCreate(false)}
         />
       )}

@@ -133,7 +133,7 @@ function Header({
                 {user.user && user.token && (
                   <>
                     <li>
-                      <Link to="/login">
+                      <Link to="/user/dashboard">
                         <FontAwesomeIcon icon={faTruck} />
                         <span>Orders</span>
                       </Link>

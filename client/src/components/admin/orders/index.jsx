@@ -70,7 +70,7 @@ const renderOrderStatusColor = (status)=>{
   },{
     title : "Customer Name",
     key : "custName",
-    render : (_,record)=><span>{record.customer.name}</span>
+    render : (_,record)=><span>{record.address.firstName} {record.address.lastName}</span>
 },{
     title : "Date",
     dataIndex : "createdAt",

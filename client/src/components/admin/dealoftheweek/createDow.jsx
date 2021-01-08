@@ -81,7 +81,7 @@ function CreateDow({ product, closeEdit }) {
   const selectColor = () => {
     return (
       <div className={styles.selectColor}>
-        <div className={styles.selectColorHead}>Washing machine</div>
+        <div className={styles.selectColorHead}>Deal of The Week</div>
         <div className={styles.selectColorBody}>
           {selectedProduct.images[0] && (
             <img

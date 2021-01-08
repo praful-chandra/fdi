@@ -160,7 +160,7 @@
 @media only screen and (max-width : 650px){
     .cart{
         &Body{
-            flex-direction: column-reverse;
+            flex-direction: column;
             align-items: center;
             justify-content: unset;
         }
@@ -186,6 +186,48 @@
 
            
         }
+    }
+
+    .mobile{
+        &Items{
+            & img{
+    
+            }
+            & p{
+                font-size: 4rem;
+            }
+            
+        }
+
+        &Price{
+           &>span{
+            font-size: 5rem !important;
+           }
+        }
+    }
+
+    .head{
+        align-items: center;
+        justify-content: center;
+        margin-top: 5rem;
+        &>h5{
+            font-size: 5rem;
+        }
+    }
+
+    .cartTotal{
+        &>li{
+            font-size: 3.5rem;
+        }
+    }
+
+    .cartFinal{
+        font-size: 4rem;
+    }
+
+    .checkout{
+        font-size: 4rem;
+        height: 10rem;
     }
 }
 

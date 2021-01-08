@@ -20,7 +20,7 @@ function carouselComponent() {
   },[])
   return (
     <div className={styles.wrapper}>
-      <Carousel infiniteLoop={true} showStatus={false}>
+      <Carousel infiniteLoop={true} showStatus={false} showThumbs={false}>
         {
             list.map(data=>{
                return <BannerMainComponent banner={data} key={`homepage carousel banner ${data._id}`} />
